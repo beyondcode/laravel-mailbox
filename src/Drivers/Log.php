@@ -13,8 +13,6 @@ class Log
     {
         $email = InboundEmail::fromMessage($log->message);
 
-        if ($email->isValid()) {
-            Mailbox::callMailboxes($email);
-        }
+        Mailbox::callMailboxes($email);
     }
 }

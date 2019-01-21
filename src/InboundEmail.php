@@ -20,7 +20,7 @@ class InboundEmail extends Model
         'message'
     ];
 
-    public static function fromMessage(string $message)
+    public static function fromMessage($message)
     {
         return new static([
             'message' => $message

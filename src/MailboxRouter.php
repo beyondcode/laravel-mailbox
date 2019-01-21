@@ -52,9 +52,11 @@ class MailboxRouter
 
     public function callMailboxes(InboundEmail $email)
     {
-        $this->routes->match($email)->map(function (MailboxRoute $route) use ($email) {
-            $route->run($email);
-        });
+        if ($email->isValid()) {
+            $this->routes->match($email)->map(function (MailboxRoute $route) use ($email) {
+                $route->run($email);
+            });
+        }
     }
 
 }

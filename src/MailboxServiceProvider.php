@@ -3,6 +3,8 @@
 namespace BeyondCode\Mailbox;
 
 use BeyondCode\Mailbox\Drivers\Log;
+use BeyondCode\Mailbox\Http\Controllers\MailgunController;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Log\Events\MessageLogged;
 
@@ -18,6 +20,8 @@ class MailboxServiceProvider extends ServiceProvider
                 __DIR__.'/../database/migrations/create_mailbox_inbound_emails_table.php.stub' => database_path('migrations/'.date('Y_m_d_His', time()).'_create_mailbox_inbound_emails_table.php'),
             ], 'migrations');
         }
+
+        $this->registerRoutes();
     }
 
     /**
@@ -39,5 +43,12 @@ class MailboxServiceProvider extends ServiceProvider
     protected function registerLogDriver()
     {
         $this->app['events']->listen(MessageLogged::class, [new Log, 'processLog']);
+    }
+
+    protected function registerRoutes()
+    {
+        Route::prefix(config('mailbox.path'))->group(function () {
+            Route::post('/mailgun/mime', MailgunController::class);
+        });
     }
 }

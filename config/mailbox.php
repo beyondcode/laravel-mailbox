@@ -2,6 +2,16 @@
 
 return [
 
-    'driver' => env('MAILBOX_DRIVER', 'log'),
+    'driver' => env('MAIL_DRIVER', 'log'),
+
+    'path' => 'laravel-mailbox',
+
+    'services' => [
+
+        'mailgun' => [
+            'key' => env('MAILBOX_MAILGUN_KEY'),
+        ]
+
+    ]
 
 ];

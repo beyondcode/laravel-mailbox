@@ -1,0 +1,49 @@
+<?php
+
+namespace BeyondCode\Mailbox\Tests\Controllers;
+
+use BeyondCode\Mailbox\Tests\TestCase;
+
+class MailgunTest extends TestCase
+{
+
+    /** @test */
+    public function it_verifies_mailgun_signatures()
+    {
+        $this->post('/laravel-mailbox/mailgun/mime', [
+            'timestamp' => 1548104992,
+            'signature' => 'something'
+        ])->assertStatus(401);
+
+        $timestamp = time();
+        $token = uniqid();
+
+        $this->app['config']['mailbox.services.mailgun.key'] = '12345';
+
+        $validSignature = hash_hmac('sha256', $timestamp . $token, '12345');
+
+        $this->post('/laravel-mailbox/mailgun/mime', [
+            'timestamp' => $timestamp,
+            'token' => $token,
+            'signature' => $validSignature
+        ])->assertStatus(200);
+    }
+
+    /** @test */
+    public function it_verifies_fresh_timestamps()
+    {
+        $timestamp = now()->subMinutes(5)->timestamp;
+        $token = uniqid();
+
+        $this->app['config']['mailbox.services.mailgun.key'] = '12345';
+
+        $validSignature = hash_hmac('sha256', $timestamp . $token, '12345');
+
+        $this->post('/laravel-mailbox/mailgun/mime', [
+            'timestamp' => $timestamp,
+            'token' => $token,
+            'signature' => $validSignature
+        ])->assertStatus(401);
+    }
+
+}

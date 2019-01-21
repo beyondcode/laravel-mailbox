@@ -13,6 +13,8 @@ class CreateMailboxInboundEmails extends Migration
     {
         Schema::create('mailbox_inbound_emails', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('message_id');
+            $table->longText('message');
             $table->nullableTimestamps();
         });
     }
