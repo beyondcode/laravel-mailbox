@@ -2,11 +2,7 @@
 
 namespace BeyondCode\Mailbox;
 
-use BeyondCode\Mailbox\Drivers\Log;
-use BeyondCode\Mailbox\Http\Controllers\MailgunController;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Log\Events\MessageLogged;
 
 class MailboxServiceProvider extends ServiceProvider
 {
