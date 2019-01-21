@@ -18,7 +18,7 @@ class MailgunRequest extends FormRequest
             'signature' => 'required'
         ]);
 
-        $validator->after(function ($validator) {
+        $validator->after(function () {
             $this->verifySignature();
         });
 
