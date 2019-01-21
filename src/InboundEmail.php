@@ -20,6 +20,13 @@ class InboundEmail extends Model
         'message'
     ];
 
+    public static function fromMessage(string $message)
+    {
+        return new static([
+            'message' => $message
+        ]);
+    }
+
     public function id(): string
     {
         return $this->message()->getHeaderValue('Message-Id', str_random());

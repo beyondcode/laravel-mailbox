@@ -11,9 +11,7 @@ class Log
 
     public function processLog(MessageLogged $log)
     {
-        $email = new InboundEmail([
-            'message' => $log->message
-        ]);
+        $email = InboundEmail::fromMessage($log->message);
 
         if ($email->isValid()) {
             Mailbox::callMailboxes($email);
