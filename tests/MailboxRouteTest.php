@@ -4,7 +4,6 @@ namespace BeyondCode\Mailbox\Tests;
 
 use Zend\Mail\Message as TestMail;
 use BeyondCode\Mailbox\InboundEmail;
-use PHPUnit\Framework\TestCase;
 use BeyondCode\Mailbox\MailboxRoute;
 
 class MailboxRouteTest extends TestCase

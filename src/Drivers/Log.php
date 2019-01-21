@@ -2,21 +2,21 @@
 
 namespace BeyondCode\Mailbox\Drivers;
 
-use BeyondCode\Mailbox\Facades\Mailbox;
 use BeyondCode\Mailbox\InboundEmail;
-use Illuminate\Log\Logger;
+use BeyondCode\Mailbox\Facades\Mailbox;
+use Illuminate\Log\Events\MessageLogged;
 
 class Log
 {
-    public function __construct(Logger $logger)
-    {
-        $logger->listen(function ($log) {
 
-        });
-    }
-
-    public function processInboundEmail(InboundEmail $email)
+    public function processLog(MessageLogged $log)
     {
-        Mailbox::callMailboxes($email);
+        $email = new InboundEmail([
+            'message' => $log->message
+        ]);
+
+        if ($email->isValid()) {
+            Mailbox::callMailboxes($email);
+        }
     }
 }

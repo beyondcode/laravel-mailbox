@@ -116,4 +116,9 @@ class InboundEmail extends Model
             'text' => $this->text()
         ]);
     }
+
+    public function isValid(): bool
+    {
+        return $this->from() !== '' && ($this->text() !== '' || $this->html() !== '');
+    }
 }
