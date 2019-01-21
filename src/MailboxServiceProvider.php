@@ -21,7 +21,7 @@ class MailboxServiceProvider extends ServiceProvider
             ], 'migrations');
         }
 
-        $this->registerRoutes();
+        $this->registerDriver();
     }
 
     /**
@@ -34,21 +34,10 @@ class MailboxServiceProvider extends ServiceProvider
         $this->app->singleton('mailbox', function () {
             return new MailboxRouter($this->app);
         });
-
-        if (config('mail.driver') === 'log') {
-            $this->registerLogDriver();
-        }
     }
 
-    protected function registerLogDriver()
+    protected function registerDriver()
     {
-        $this->app['events']->listen(MessageLogged::class, [new Log, 'processLog']);
-    }
-
-    protected function registerRoutes()
-    {
-        Route::prefix(config('mailbox.path'))->group(function () {
-            Route::post('/mailgun/mime', MailgunController::class);
-        });
+        (new MailboxManager($this->app))->mailbox()->register();
     }
 }

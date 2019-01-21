@@ -11,11 +11,12 @@ use Illuminate\Support\Facades\Mail;
 class LogTest extends TestCase
 {
 
-    protected function getPackageProviders($app)
+    protected function getEnvironmentSetUp($app)
     {
-        $app['config']['mail.driver'] = 'log';
+        parent::getEnvironmentSetUp($app);
 
-        return parent::getPackageProviders($app);
+        $app['config']['mail.driver'] = 'log';
+        $app['config']['mailbox.driver'] = 'log';
     }
 
     /** @test */

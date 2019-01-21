@@ -6,6 +6,12 @@ use BeyondCode\Mailbox\Tests\TestCase;
 
 class MailgunTest extends TestCase
 {
+    protected function getEnvironmentSetUp($app)
+    {
+        parent::getEnvironmentSetUp($app);
+
+        $app['config']['mailbox.driver'] = 'mailgun';
+    }
 
     /** @test */
     public function it_verifies_mailgun_signatures()
