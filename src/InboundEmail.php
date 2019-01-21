@@ -129,10 +129,25 @@ class InboundEmail extends Model
 
     public function forward($recipients)
     {
-        return Mail::to($recipients)->send([
-            'html' => $this->html(),
-            'text' => $this->text()
-        ]);
+        return Mail::send([], [], function ($message) use ($recipients) {
+            $message->to($recipients)
+                ->setBody($this->body());
+        });
+    }
+
+    public function body()
+    {
+        return $this->isHtml() ? $this->html() : $this->text();
+    }
+
+    public function isHtml()
+    {
+        return $this->html() !== '';
+    }
+
+    public function isText()
+    {
+        return $this->text() !== '';
     }
 
     public function isValid(): bool
