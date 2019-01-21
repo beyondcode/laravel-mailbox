@@ -3,8 +3,6 @@
 namespace BeyondCode\Mailbox;
 
 use BeyondCode\Mailbox\Drivers\Log;
-use Illuminate\Log\Logger;
-use ZBateson\MailMimeParser\Message;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Log\Events\MessageLogged;
 
