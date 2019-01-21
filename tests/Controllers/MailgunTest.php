@@ -11,7 +11,9 @@ class MailgunTest extends TestCase
     public function it_verifies_mailgun_signatures()
     {
         $this->post('/laravel-mailbox/mailgun/mime', [
+            'body-mime' => 'mime',
             'timestamp' => 1548104992,
+            'token' => 'something',
             'signature' => 'something'
         ])->assertStatus(401);
 
@@ -23,6 +25,7 @@ class MailgunTest extends TestCase
         $validSignature = hash_hmac('sha256', $timestamp . $token, '12345');
 
         $this->post('/laravel-mailbox/mailgun/mime', [
+            'body-mime' => 'mime',
             'timestamp' => $timestamp,
             'token' => $token,
             'signature' => $validSignature
@@ -40,6 +43,7 @@ class MailgunTest extends TestCase
         $validSignature = hash_hmac('sha256', $timestamp . $token, '12345');
 
         $this->post('/laravel-mailbox/mailgun/mime', [
+            'body-mime' => 'mime',
             'timestamp' => $timestamp,
             'token' => $token,
             'signature' => $validSignature
