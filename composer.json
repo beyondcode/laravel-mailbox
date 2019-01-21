@@ -1,0 +1,59 @@
+{
+    "name": "beyondcode/laravel-mailbox",
+    "description": ":package_description",
+    "keywords": [
+        "beyondcode",
+        "laravel-mailbox"
+    ],
+    "homepage": "https://github.com/beyondcode/laravel-mailbox",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marcel Pociot",
+            "email": "marcel@beyondco.de",
+            "homepage": "https://beyondcode.de",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "illuminate/log": "5.7.*",
+        "illuminate/container": "5.7.*",
+        "illuminate/database": "^5.7",
+        "illuminate/routing": "5.7.*",
+        "illuminate/support": "5.7.*",
+        "zbateson/mail-mime-parser": "^1.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.0",
+        "zendframework/zend-mail": "^2.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "BeyondCode\\Mailbox\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BeyondCode\\Mailbox\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "BeyondCode\\Mailbox\\MailboxServiceProvider"
+            ],
+            "aliases": {
+                "Mailbox": "BeyondCode\\Mailbox\\MailboxFacade"
+            }
+        }
+    }
+}
