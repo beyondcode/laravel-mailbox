@@ -13,6 +13,8 @@ use ZBateson\MailMimeParser\Header\Part\AddressPart;
 
 class InboundEmail extends Model
 {
+    protected $table = 'mailbox_inbound_emails';
+
     /** @var MimeMessage */
     protected $mimeMessage;
 
@@ -23,8 +25,17 @@ class InboundEmail extends Model
     public static function fromMessage($message)
     {
         return new static([
-            'message' => $message
+            'message' => $message,
         ]);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->message_id = $model->id();
+        });
     }
 
     public function id(): string

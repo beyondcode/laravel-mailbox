@@ -17,9 +17,9 @@
     ],
     "require": {
         "php": "^7.1",
-        "illuminate/log": "5.7.*",
         "illuminate/container": "5.7.*",
         "illuminate/database": "^5.7",
+        "illuminate/log": "5.7.*",
         "illuminate/routing": "5.7.*",
         "illuminate/support": "5.7.*",
         "zbateson/mail-mime-parser": "^1.1"

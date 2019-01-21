@@ -53,10 +53,25 @@ class MailboxRouter
     public function callMailboxes(InboundEmail $email)
     {
         if ($email->isValid()) {
+
+            if ($this->shouldStoreInboundEmails()) {
+                $this->storeEmail($email);
+            }
+
             $this->routes->match($email)->map(function (MailboxRoute $route) use ($email) {
                 $route->run($email);
             });
         }
+    }
+
+    protected function shouldStoreInboundEmails(): bool
+    {
+        return config('mailbox.retention_in_days') > 0;
+    }
+
+    protected function storeEmail(InboundEmail $email)
+    {
+        $email->save();
     }
 
 }

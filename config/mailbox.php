@@ -6,6 +6,8 @@ return [
 
     'path' => 'laravel-mailbox',
 
+    'retention_in_days' => 1,
+
     'services' => [
 
         'mailgun' => [
