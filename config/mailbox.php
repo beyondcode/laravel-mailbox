@@ -44,7 +44,7 @@ return [
      */
     'basic_auth' => [
         'username' => env('MAILBOX_HTTP_USERNAME', 'laravel-mailbox'),
-        'password' => env('MAILBOX_HTTP_PASSWORD')
+        'password' => env('MAILBOX_HTTP_PASSWORD'),
     ],
 
     /*
@@ -56,6 +56,6 @@ return [
             'key' => env('MAILBOX_MAILGUN_KEY'),
         ],
 
-    ]
+    ],
 
 ];

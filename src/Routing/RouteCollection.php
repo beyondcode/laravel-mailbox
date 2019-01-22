@@ -2,8 +2,8 @@
 
 namespace BeyondCode\Mailbox\Routing;
 
-use BeyondCode\Mailbox\InboundEmail;
 use Illuminate\Support\Collection;
+use BeyondCode\Mailbox\InboundEmail;
 
 class RouteCollection
 {
