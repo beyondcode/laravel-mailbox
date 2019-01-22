@@ -1,14 +1,15 @@
 <?php
 
-namespace BeyondCode\Mailbox;
+namespace BeyondCode\Mailbox\Routing;
 
+use BeyondCode\Mailbox\InboundEmail;
 use Illuminate\Support\Collection;
 
-class MailboxRouteCollection
+class RouteCollection
 {
     protected $routes = [];
 
-    public function add(MailboxRoute $route)
+    public function add(Route $route)
     {
         $this->routes[] = $route;
     }

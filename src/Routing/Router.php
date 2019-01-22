@@ -1,12 +1,13 @@
 <?php
 
-namespace BeyondCode\Mailbox;
+namespace BeyondCode\Mailbox\Routing;
 
+use BeyondCode\Mailbox\InboundEmail;
 use Illuminate\Container\Container;
 
-class MailboxRouter
+class Router
 {
-    /** @var MailboxRouteCollection */
+    /** @var RouteCollection */
     protected $routes;
 
     /** @var Container */
@@ -16,27 +17,27 @@ class MailboxRouter
     {
         $this->container = $container ?: new Container;
 
-        $this->routes = new MailboxRouteCollection;
+        $this->routes = new RouteCollection;
     }
 
     public function from(string $pattern, $action)
     {
-        $this->addRoute(MailboxRoute::FROM, $pattern, $action);
+        $this->addRoute(Route::FROM, $pattern, $action);
     }
 
     public function to(string $pattern, $action)
     {
-        $this->addRoute(MailboxRoute::TO, $pattern, $action);
+        $this->addRoute(Route::TO, $pattern, $action);
     }
 
     public function cc(string $pattern, $action)
     {
-        $this->addRoute(MailboxRoute::CC, $pattern, $action);
+        $this->addRoute(Route::CC, $pattern, $action);
     }
 
     public function subject(string $pattern, $action)
     {
-        $this->addRoute(MailboxRoute::SUBJECT, $pattern, $action);
+        $this->addRoute(Route::SUBJECT, $pattern, $action);
     }
 
     protected function addRoute(string $subject, string $pattern, $action)
@@ -46,7 +47,7 @@ class MailboxRouter
 
     protected function createRoute(string $subject, string $pattern, $action)
     {
-        return (new MailboxRoute($subject, $pattern, $action))
+        return (new Route($subject, $pattern, $action))
             ->setContainer($this->container);
     }
 
@@ -58,7 +59,7 @@ class MailboxRouter
                 $this->storeEmail($email);
             }
 
-            $this->routes->match($email)->map(function (MailboxRoute $route) use ($email) {
+            $this->routes->match($email)->map(function (Route $route) use ($email) {
                 $route->run($email);
             });
         }

@@ -1,9 +1,10 @@
 <?php
 
-namespace BeyondCode\Mailbox;
+namespace BeyondCode\Mailbox\Routing;
 
 use BeyondCode\Mailbox\Concerns\HandlesParameters;
 use BeyondCode\Mailbox\Concerns\HandlesRegularExpressions;
+use BeyondCode\Mailbox\InboundEmail;
 use Illuminate\Container\Container;
 use Illuminate\Routing\RouteDependencyResolverTrait;
 use Illuminate\Support\Collection;
@@ -11,7 +12,7 @@ use Illuminate\Support\Str;
 use ReflectionFunction;
 use ZBateson\MailMimeParser\Header\Part\AddressPart;
 
-class MailboxRoute
+class Route
 {
     use HandlesParameters;
     use HandlesRegularExpressions;

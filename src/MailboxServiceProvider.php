@@ -2,6 +2,7 @@
 
 namespace BeyondCode\Mailbox;
 
+use BeyondCode\Mailbox\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
 class MailboxServiceProvider extends ServiceProvider
@@ -28,7 +29,7 @@ class MailboxServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/mailbox.php', 'mailbox');
 
         $this->app->singleton('mailbox', function () {
-            return new MailboxRouter($this->app);
+            return new Router($this->app);
         });
     }
 
