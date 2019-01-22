@@ -8,7 +8,7 @@
 Handle incoming emails in your Laravel application.
 
 ``` php
-Mailbox::from('{username}@gmail.com', function(InboundEmail $email, $username) {
+Mailbox::from('{username}@gmail.com', function (InboundEmail $email, $username) {
     // Access email attributes and content
     $subject = $email->subject();
     
