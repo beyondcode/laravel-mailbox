@@ -3,9 +3,9 @@
 namespace BeyondCode\Mailbox;
 
 use Carbon\Carbon;
-use EmailReplyParser\EmailReplyParser;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
+use EmailReplyParser\EmailReplyParser;
 use Illuminate\Contracts\Mail\Mailable;
 use Illuminate\Database\Eloquent\Model;
 use ZBateson\MailMimeParser\Header\AddressHeader;
