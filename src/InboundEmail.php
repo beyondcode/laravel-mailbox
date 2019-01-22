@@ -22,13 +22,6 @@ class InboundEmail extends Model
         'message'
     ];
 
-    public static function fromMessage($message)
-    {
-        return new static([
-            'message' => $message,
-        ]);
-    }
-
     protected static function boot()
     {
         parent::boot();
@@ -36,6 +29,13 @@ class InboundEmail extends Model
         static::creating(function ($model) {
             $model->message_id = $model->id();
         });
+    }
+
+    public static function fromMessage($message)
+    {
+        return new static([
+            'message' => $message,
+        ]);
     }
 
     public function id(): string
