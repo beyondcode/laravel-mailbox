@@ -3,12 +3,12 @@
 namespace BeyondCode\Mailbox;
 
 use Carbon\Carbon;
-use Illuminate\Contracts\Mail\Mailable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
-use ZBateson\MailMimeParser\Message as MimeMessage;
+use Illuminate\Contracts\Mail\Mailable;
+use Illuminate\Database\Eloquent\Model;
 use ZBateson\MailMimeParser\Header\AddressHeader;
+use ZBateson\MailMimeParser\Message as MimeMessage;
 use ZBateson\MailMimeParser\Header\Part\AddressPart;
 use ZBateson\MailMimeParser\Message\Part\MessagePart;
 
@@ -20,7 +20,7 @@ class InboundEmail extends Model
     protected $mimeMessage;
 
     protected $fillable = [
-        'message'
+        'message',
     ];
 
     protected static function boot()

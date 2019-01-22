@@ -8,7 +8,6 @@ use Illuminate\Log\Events\MessageLogged;
 
 class Log implements DriverInterface
 {
-
     public function register()
     {
         app('events')->listen(MessageLogged::class, [$this, 'processLog']);

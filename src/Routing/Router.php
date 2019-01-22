@@ -2,9 +2,9 @@
 
 namespace BeyondCode\Mailbox\Routing;
 
-use BeyondCode\Mailbox\InboundEmail;
-use Illuminate\Container\Container;
 use Illuminate\Support\Collection;
+use Illuminate\Container\Container;
+use BeyondCode\Mailbox\InboundEmail;
 
 class Router
 {
@@ -71,7 +71,6 @@ class Router
     public function callMailboxes(InboundEmail $email)
     {
         if ($email->isValid()) {
-
             $matchedRoutes = $this->routes->match($email)->map(function (Route $route) use ($email) {
                 $route->run($email);
             });
@@ -116,5 +115,4 @@ class Router
     {
         $email->save();
     }
-
 }

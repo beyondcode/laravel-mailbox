@@ -2,15 +2,14 @@
 
 namespace BeyondCode\Mailbox\Tests\Drivers;
 
-use BeyondCode\Mailbox\Facades\Mailbox;
-use BeyondCode\Mailbox\InboundEmail;
-use BeyondCode\Mailbox\Tests\TestCase;
 use Illuminate\Mail\Mailable;
+use BeyondCode\Mailbox\InboundEmail;
 use Illuminate\Support\Facades\Mail;
+use BeyondCode\Mailbox\Tests\TestCase;
+use BeyondCode\Mailbox\Facades\Mailbox;
 
 class LogTest extends TestCase
 {
-
     protected function getEnvironmentSetUp($app)
     {
         parent::getEnvironmentSetUp($app);
@@ -22,7 +21,7 @@ class LogTest extends TestCase
     /** @test */
     public function it_catches_logged_mails()
     {
-        Mailbox::from('{name}@beyondco.de', function(InboundEmail $email, $name) {
+        Mailbox::from('{name}@beyondco.de', function (InboundEmail $email, $name) {
             $this->assertSame($name, 'example');
             $this->assertSame($email->from(), 'example@beyondco.de');
             $this->assertSame($email->subject(), 'This is a subject');
