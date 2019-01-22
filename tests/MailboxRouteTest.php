@@ -8,7 +8,6 @@ use BeyondCode\Mailbox\Routing\Route;
 
 class MailboxRouteTest extends TestCase
 {
-
     public function emailDataProvider()
     {
         return [

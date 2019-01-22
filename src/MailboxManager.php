@@ -2,14 +2,13 @@
 
 namespace BeyondCode\Mailbox;
 
-use BeyondCode\Mailbox\Drivers\SendGrid;
 use Illuminate\Support\Manager;
 use BeyondCode\Mailbox\Drivers\Log;
 use BeyondCode\Mailbox\Drivers\Mailgun;
+use BeyondCode\Mailbox\Drivers\SendGrid;
 
 class MailboxManager extends Manager
 {
-
     public function mailbox($name = null)
     {
         return $this->driver($name);

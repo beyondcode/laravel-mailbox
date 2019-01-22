@@ -2,10 +2,10 @@
 
 namespace BeyondCode\Mailbox\Http\Requests;
 
-use BeyondCode\Mailbox\InboundEmail;
 use Carbon\Carbon;
-use Illuminate\Foundation\Http\FormRequest;
+use BeyondCode\Mailbox\InboundEmail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 
 class MailgunRequest extends FormRequest
 {
@@ -15,7 +15,7 @@ class MailgunRequest extends FormRequest
             'body-mime' => 'required',
             'timestamp' => 'required',
             'token' => 'required',
-            'signature' => 'required'
+            'signature' => 'required',
         ]);
 
         $validator->after(function () {

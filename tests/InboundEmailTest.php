@@ -2,14 +2,13 @@
 
 namespace BeyondCode\Mailbox\Tests;
 
-use BeyondCode\Mailbox\Facades\Mailbox;
-use BeyondCode\Mailbox\InboundEmail;
 use Illuminate\Mail\Mailable;
+use BeyondCode\Mailbox\InboundEmail;
 use Illuminate\Support\Facades\Mail;
+use BeyondCode\Mailbox\Facades\Mailbox;
 
 class InboundEmailTest extends TestCase
 {
-
     protected function getEnvironmentSetUp($app)
     {
         parent::getEnvironmentSetUp($app);
@@ -21,7 +20,7 @@ class InboundEmailTest extends TestCase
     /** @test */
     public function it_stores_inbound_emails()
     {
-        Mailbox::to('someone@beyondco.de', function($email) {
+        Mailbox::to('someone@beyondco.de', function ($email) {
         });
 
         Mail::to('someone@beyondco.de')->send(new TestMail);
@@ -35,7 +34,7 @@ class InboundEmailTest extends TestCase
     {
         $this->app['config']['mailbox.only_store_matching_emails'] = false;
 
-        Mailbox::to('someone@beyondco.de', function($email) {
+        Mailbox::to('someone@beyondco.de', function ($email) {
         });
 
         Mail::to('someone@beyondco.de')->send(new TestMail);
@@ -47,7 +46,7 @@ class InboundEmailTest extends TestCase
     /** @test */
     public function it_can_use_fallbacks()
     {
-        Mailbox::fallback(function(InboundEmail $email) {
+        Mailbox::fallback(function (InboundEmail $email) {
             Mail::fake();
 
             $email->reply(new ReplyMail);
@@ -61,10 +60,10 @@ class InboundEmailTest extends TestCase
     /** @test */
     public function it_can_use_catchall()
     {
-        Mailbox::to('someone@beyondco.de', function($email) {
+        Mailbox::to('someone@beyondco.de', function ($email) {
         });
 
-        Mailbox::catchAll(function(InboundEmail $email) {
+        Mailbox::catchAll(function (InboundEmail $email) {
             Mail::fake();
 
             $email->reply(new ReplyMail);
@@ -80,7 +79,7 @@ class InboundEmailTest extends TestCase
     {
         $this->app['config']['mailbox.store_incoming_emails_for_days'] = 0;
 
-        Mailbox::from('example@beyondco.de', function($email) {
+        Mailbox::from('example@beyondco.de', function ($email) {
         });
 
         Mail::to('someone@beyondco.de')->send(new TestMail);
@@ -92,8 +91,7 @@ class InboundEmailTest extends TestCase
     /** @test */
     public function it_can_reply_to_mails()
     {
-
-        Mailbox::from('example@beyondco.de', function(InboundEmail $email) {
+        Mailbox::from('example@beyondco.de', function (InboundEmail $email) {
             Mail::fake();
 
             $email->reply(new ReplyMail);
@@ -103,7 +101,6 @@ class InboundEmailTest extends TestCase
 
         Mail::assertSent(ReplyMail::class);
     }
-
 }
 
 class TestMail extends Mailable
