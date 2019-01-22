@@ -21,13 +21,13 @@ class InboundEmailTest extends TestCase
     /** @test */
     public function it_stores_inbound_emails()
     {
-        Mailbox::from('example@beyondco.de', function($email) {
+        Mailbox::to('someone@beyondco.de', function($email) {
         });
 
         Mail::to('someone@beyondco.de')->send(new TestMail);
-        Mail::to('someone@beyondco.de')->send(new TestMail);
+        Mail::to('someone-else@beyondco.de')->send(new TestMail);
 
-        $this->assertSame(2, InboundEmail::query()->count());
+        $this->assertSame(1, InboundEmail::query()->count());
     }
 
     /** @test */

@@ -55,13 +55,13 @@ class Router
     {
         if ($email->isValid()) {
 
-            if ($this->shouldStoreInboundEmails()) {
-                $this->storeEmail($email);
-            }
-
-            $this->routes->match($email)->map(function (Route $route) use ($email) {
+            $matchedRoutes = $this->routes->match($email)->map(function (Route $route) use ($email) {
                 $route->run($email);
             });
+
+            if ($this->shouldStoreInboundEmails() && $matchedRoutes->isNotEmpty()) {
+                $this->storeEmail($email);
+            }
         }
     }
 
