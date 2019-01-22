@@ -24,7 +24,7 @@ return [
      * application. You can use the cleanup artisan command to
      * delete all older inbound emails on a regular basis.
      */
-    'store_incoming_emails_for_days' => 1,
+    'store_incoming_emails_for_days' => 7,
 
     /*
      * Some services do not have their own authentication methods to
