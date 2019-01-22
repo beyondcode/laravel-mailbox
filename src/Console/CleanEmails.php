@@ -14,7 +14,7 @@ class CleanEmails extends Command
 
     public function handle()
     {
-        $this->comment('Cleaning WebSocket Statistics...');
+        $this->comment('Cleaning old incoming email logs...');
 
         $maxAgeInDays = config('mailbox.store_incoming_emails_for_days');
 
