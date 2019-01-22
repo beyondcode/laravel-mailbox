@@ -103,7 +103,7 @@ class MailboxRouteTest extends TestCase
         $this->assertFalse($route->matches($message));
 
         $route = new Route(Route::FROM, '{from}@domain.com', 'SomeAction@handle');
-        $route->where('from', '[a-z]+');
+        $route->where('from', '[A-Za-z]+');
 
         $this->assertTrue($route->matches($message));
     }

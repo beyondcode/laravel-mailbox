@@ -26,9 +26,7 @@ composer require beyondcode/laravel-mailbox
 
 ## Usage
 
-``` php
-
-```
+Take a look at the [official documentation](https://docs.beyondco.de/laravel-mailbox).
 
 ### Testing
 

@@ -26,6 +26,11 @@ return [
      */
     'store_incoming_emails_for_days' => 7,
 
+    /*
+     * By default, this package only stores incoming email messages
+     * when they match one of your mailboxes. To store all incoming
+     * messages, modify this value.
+     */
     'only_store_matching_emails' => true,
 
     /*

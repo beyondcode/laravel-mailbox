@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use ZBateson\MailMimeParser\Message as MimeMessage;
 use ZBateson\MailMimeParser\Header\AddressHeader;
 use ZBateson\MailMimeParser\Header\Part\AddressPart;
+use ZBateson\MailMimeParser\Message\Part\MessagePart;
 
 class InboundEmail extends Model
 {
@@ -110,6 +111,9 @@ class InboundEmail extends Model
         return [];
     }
 
+    /**
+     * @return MessagePart[]
+     */
     public function attachments()
     {
         return $this->message()->getAllAttachmentParts();
