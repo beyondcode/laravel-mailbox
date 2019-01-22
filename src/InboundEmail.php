@@ -131,7 +131,8 @@ class InboundEmail extends Model
     {
         return Mail::send([], [], function ($message) use ($recipients) {
             $message->to($recipients)
-                ->setBody($this->body());
+                ->subject($this->subject())
+                ->setBody($this->body(), $this->message()->getContentType());
         });
     }
 
