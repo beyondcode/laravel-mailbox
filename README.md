@@ -7,6 +7,15 @@
 
 Handle incoming emails in your Laravel application.
 
+``` php
+Mailbox::from('{username}@gmail.com', function(InboundEmail $email, $username) {
+    // Access email attributes and content
+    $subject = $email->subject();
+    
+    $email->reply(new ReplyMailable);
+});
+```
+
 ## Installation
 
 You can install the package via composer:
@@ -18,8 +27,7 @@ composer require beyondcode/laravel-mailbox
 ## Usage
 
 ``` php
-$Mailbox = new BeyondCode\Mailbox();
-echo $Mailbox->echoPhrase('Hello, BeyondCode!');
+
 ```
 
 ### Testing
