@@ -26,6 +26,10 @@ class MailboxServiceProvider extends ServiceProvider
 
         Route::aliasMiddleware('laravel-mailbox', MailboxBasicAuthentication::class);
 
+        $this->commands([
+            Console\CleanEmails::class
+        ]);
+
         $this->registerDriver();
     }
 
