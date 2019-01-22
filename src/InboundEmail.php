@@ -3,6 +3,7 @@
 namespace BeyondCode\Mailbox;
 
 use Carbon\Carbon;
+use EmailReplyParser\EmailReplyParser;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\Mail\Mailable;
@@ -52,6 +53,11 @@ class InboundEmail extends Model
     public function text(): ?string
     {
         return $this->message()->getTextContent();
+    }
+
+    public function visibleText(): ?string
+    {
+        return EmailReplyParser::parseReply($this->text());
     }
 
     public function html(): ?string
