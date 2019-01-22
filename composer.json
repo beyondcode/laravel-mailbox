@@ -1,6 +1,6 @@
 {
     "name": "beyondcode/laravel-mailbox",
-    "description": ":package_description",
+    "description": "Handle incoming emails in your Laravel application.",
     "keywords": [
         "beyondcode",
         "laravel-mailbox"
