@@ -8,7 +8,7 @@ return [
      *
      * Supported drivers: "log", "mailgun"
      */
-    'driver' => env('MAIL_DRIVER', 'log'),
+    'driver' => env('MAILBOX_DRIVER', 'log'),
 
     /*
      * The path for driver specific routes. This is where

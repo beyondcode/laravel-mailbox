@@ -12,11 +12,15 @@ class MailboxServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (! class_exists('CreateMailboxInboundEmails')) {
+        if (! class_exists('CreateMailboxInboundEmailsTable')) {
             $this->publishes([
                 __DIR__.'/../database/migrations/create_mailbox_inbound_emails_table.php.stub' => database_path('migrations/'.date('Y_m_d_His', time()).'_create_mailbox_inbound_emails_table.php'),
             ], 'migrations');
         }
+
+        $this->publishes([
+            __DIR__.'/../config/mailbox.php' => config_path('mailbox.php')
+        ], 'config');
 
         $this->registerDriver();
     }

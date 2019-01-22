@@ -54,7 +54,7 @@
                 "BeyondCode\\Mailbox\\MailboxServiceProvider"
             ],
             "aliases": {
-                "Mailbox": "BeyondCode\\Mailbox\\MailboxFacade"
+                "Mailbox": "BeyondCode\\Mailbox\\Facades\\Mailbox"
             }
         }
     }

@@ -2,6 +2,7 @@
 
 namespace BeyondCode\Mailbox;
 
+use BeyondCode\Mailbox\Drivers\SendGrid;
 use Illuminate\Support\Manager;
 use BeyondCode\Mailbox\Drivers\Log;
 use BeyondCode\Mailbox\Drivers\Mailgun;
@@ -22,6 +23,11 @@ class MailboxManager extends Manager
     public function createMailgunDriver()
     {
         return new Mailgun;
+    }
+
+    public function createSendGridDriver()
+    {
+        return new SendGrid;
     }
 
     public function getDefaultDriver()

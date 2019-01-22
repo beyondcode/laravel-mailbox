@@ -16,6 +16,6 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
     {
         include_once __DIR__.'/../database/migrations/create_mailbox_inbound_emails_table.php.stub';
 
-        (new \CreateMailboxInboundEmails())->up();
+        (new \CreateMailboxInboundEmailsTable())->up();
     }
 }
