@@ -6,7 +6,7 @@ return [
 
     'path' => 'laravel-mailbox',
 
-    'retention_in_days' => 1,
+    'store_incoming_emails_for_days' => 1,
 
     'services' => [
 

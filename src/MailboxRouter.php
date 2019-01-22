@@ -66,7 +66,7 @@ class MailboxRouter
 
     protected function shouldStoreInboundEmails(): bool
     {
-        return config('mailbox.retention_in_days') > 0;
+        return config('mailbox.store_incoming_emails_for_days') > 0;
     }
 
     protected function storeEmail(InboundEmail $email)
