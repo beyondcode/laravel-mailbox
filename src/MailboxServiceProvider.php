@@ -2,7 +2,9 @@
 
 namespace BeyondCode\Mailbox;
 
+use BeyondCode\Mailbox\Http\Middleware\MailboxBasicAuthentication;
 use BeyondCode\Mailbox\Routing\Router;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class MailboxServiceProvider extends ServiceProvider
@@ -21,6 +23,8 @@ class MailboxServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/mailbox.php' => config_path('mailbox.php')
         ], 'config');
+
+        Route::aliasMiddleware('laravel-mailbox', MailboxBasicAuthentication::class);
 
         $this->registerDriver();
     }
