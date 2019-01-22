@@ -26,6 +26,8 @@ return [
      */
     'store_incoming_emails_for_days' => 7,
 
+    'only_store_matching_emails' => true,
+
     /*
      * Some services do not have their own authentication methods to
      * verify the incoming request. For these services, you need

@@ -22,6 +22,8 @@ class Route
     const TO = 'to';
     const CC = 'cc';
     const SUBJECT = 'subject';
+    const FALLBACK = 'fallback';
+    const CATCH_ALL = 'catch-all';
 
     protected $mailbox;
 

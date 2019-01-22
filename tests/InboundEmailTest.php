@@ -31,6 +31,51 @@ class InboundEmailTest extends TestCase
     }
 
     /** @test */
+    public function it_stores_all_inbound_emails()
+    {
+        $this->app['config']['mailbox.only_store_matching_emails'] = false;
+
+        Mailbox::to('someone@beyondco.de', function($email) {
+        });
+
+        Mail::to('someone@beyondco.de')->send(new TestMail);
+        Mail::to('someone-else@beyondco.de')->send(new TestMail);
+
+        $this->assertSame(2, InboundEmail::query()->count());
+    }
+
+    /** @test */
+    public function it_can_use_fallbacks()
+    {
+        Mailbox::fallback(function(InboundEmail $email) {
+            Mail::fake();
+
+            $email->reply(new ReplyMail);
+        });
+
+        Mail::to('someone@beyondco.de')->send(new TestMail);
+
+        Mail::assertSent(ReplyMail::class);
+    }
+
+    /** @test */
+    public function it_can_use_catchall()
+    {
+        Mailbox::to('someone@beyondco.de', function($email) {
+        });
+
+        Mailbox::catchAll(function(InboundEmail $email) {
+            Mail::fake();
+
+            $email->reply(new ReplyMail);
+        });
+
+        Mail::to('someone@beyondco.de')->send(new TestMail);
+
+        Mail::assertSent(ReplyMail::class);
+    }
+
+    /** @test */
     public function it_does_not_store_inbound_emails_if_configured()
     {
         $this->app['config']['mailbox.store_incoming_emails_for_days'] = 0;
@@ -57,17 +102,6 @@ class InboundEmailTest extends TestCase
         Mail::to('someone@beyondco.de')->send(new TestMail);
 
         Mail::assertSent(ReplyMail::class);
-    }
-
-    /** @test */
-    public function it_can_forward_mails()
-    {
-
-        Mailbox::from('example@beyondco.de', function(InboundEmail $email) {
-            $email->forward('forward@beyondco.de');
-        });
-
-        Mail::to('someone@beyondco.de')->send(new TestMail);
     }
 
 }
