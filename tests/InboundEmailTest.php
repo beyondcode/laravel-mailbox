@@ -75,6 +75,46 @@ class InboundEmailTest extends TestCase
     }
 
     /** @test */
+    public function it_stores_inbound_emails_with_catchall()
+    {
+        Mailbox::catchAll(function ($email) {
+        });
+
+        Mail::to('someone@beyondco.de')->send(new TestMail);
+        Mail::to('someone-else@beyondco.de')->send(new TestMail);
+
+        $this->assertSame(2, InboundEmail::query()->count());
+    }
+
+    /** @test */
+    public function it_stores_inbound_emails_with_fallback()
+    {
+        Mailbox::fallback(function ($email) {
+        });
+
+        Mail::to('someone@beyondco.de')->send(new TestMail);
+        Mail::to('someone-else@beyondco.de')->send(new TestMail);
+
+        $this->assertSame(2, InboundEmail::query()->count());
+    }
+
+    /** @test */
+    public function it_stores_inbound_emails_with_fallback_and_catchall_only_once()
+    {
+        Mailbox::fallback(function ($email) {
+        });
+
+        Mailbox::catchAll(function ($email) {
+        });
+
+        Mail::to('someone@beyondco.de')->send(new TestMail);
+        Mail::to('someone-else@beyondco.de')->send(new TestMail);
+
+        $this->assertSame(2, InboundEmail::query()->count());
+    }
+
+
+    /** @test */
     public function it_does_not_store_inbound_emails_if_configured()
     {
         $this->app['config']['mailbox.store_incoming_emails_for_days'] = 0;

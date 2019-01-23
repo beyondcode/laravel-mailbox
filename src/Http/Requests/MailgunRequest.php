@@ -27,7 +27,7 @@ class MailgunRequest extends FormRequest
 
     public function email()
     {
-        return InboundEmail::fromMessage($this->get('body-mime	'));
+        return InboundEmail::fromMessage($this->get('body-mime'));
     }
 
     protected function verifySignature()

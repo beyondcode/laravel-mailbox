@@ -75,29 +75,19 @@ class Router
                 $route->run($email);
             });
 
-            if ($matchedRoutes->isEmpty()) {
-                $this->callFallback($email);
+            if ($matchedRoutes->isEmpty() && $this->fallbackRoute) {
+                $matchedRoutes[] = $this->fallbackRoute;
+                $this->fallbackRoute->run($email);
             }
 
-            $this->callCatchAll($email);
+            if ($this->catchAllRoute) {
+                $matchedRoutes[] = $this->catchAllRoute;
+                $this->catchAllRoute->run($email);
+            }
 
             if ($this->shouldStoreInboundEmails() && $this->shouldStoreAllInboundEmails($matchedRoutes)) {
                 $this->storeEmail($email);
             }
-        }
-    }
-
-    protected function callFallback(InboundEmail $email)
-    {
-        if ($this->fallbackRoute) {
-            $this->fallbackRoute->run($email);
-        }
-    }
-
-    protected function callCatchAll(InboundEmail $email)
-    {
-        if ($this->catchAllRoute) {
-            $this->catchAllRoute->run($email);
         }
     }
 
