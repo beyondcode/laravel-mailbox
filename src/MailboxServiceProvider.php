@@ -4,8 +4,8 @@ namespace BeyondCode\Mailbox;
 
 use Illuminate\Support\Facades\Route;
 use BeyondCode\Mailbox\Routing\Router;
-use Illuminate\Support\ServiceProvider;
 use BeyondCode\Mailbox\Facades\Mailbox;
+use Illuminate\Support\ServiceProvider;
 use BeyondCode\Mailbox\Http\Middleware\MailboxBasicAuthentication;
 
 class MailboxServiceProvider extends ServiceProvider
