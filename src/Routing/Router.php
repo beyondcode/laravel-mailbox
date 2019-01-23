@@ -27,24 +27,24 @@ class Router
         $this->routes = new RouteCollection;
     }
 
-    public function from(string $pattern, $action)
+    public function from(string $pattern, $action) : Route
     {
-        $this->addRoute(Route::FROM, $pattern, $action);
+        return $this->addRoute(Route::FROM, $pattern, $action);
     }
 
-    public function to(string $pattern, $action)
+    public function to(string $pattern, $action) : Route
     {
-        $this->addRoute(Route::TO, $pattern, $action);
+        return $this->addRoute(Route::TO, $pattern, $action);
     }
 
-    public function cc(string $pattern, $action)
+    public function cc(string $pattern, $action) : Route
     {
-        $this->addRoute(Route::CC, $pattern, $action);
+        return $this->addRoute(Route::CC, $pattern, $action);
     }
 
-    public function subject(string $pattern, $action)
+    public function subject(string $pattern, $action) : Route
     {
-        $this->addRoute(Route::SUBJECT, $pattern, $action);
+        return $this->addRoute(Route::SUBJECT, $pattern, $action);
     }
 
     public function fallback($action)
@@ -57,12 +57,16 @@ class Router
         $this->catchAllRoute = $this->createRoute(Route::CATCH_ALL, '', $action);
     }
 
-    protected function addRoute(string $subject, string $pattern, $action)
+    protected function addRoute(string $subject, string $pattern, $action) : Route
     {
-        $this->routes->add($this->createRoute($subject, $pattern, $action));
+        $route = $this->createRoute($subject, $pattern, $action);
+
+        $this->routes->add($route);
+
+        return $route;
     }
 
-    protected function createRoute(string $subject, string $pattern, $action)
+    protected function createRoute(string $subject, string $pattern, $action) : Route
     {
         return (new Route($subject, $pattern, $action))
             ->setContainer($this->container);
