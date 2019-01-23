@@ -2,10 +2,10 @@
 
 namespace BeyondCode\Mailbox\Routing;
 
-use BeyondCode\Mailbox\MailboxManager;
 use Illuminate\Support\Collection;
 use Illuminate\Container\Container;
 use BeyondCode\Mailbox\InboundEmail;
+use BeyondCode\Mailbox\MailboxManager;
 use Illuminate\Support\Traits\ForwardsCalls;
 
 class Router
