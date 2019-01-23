@@ -5,6 +5,7 @@ namespace BeyondCode\Mailbox;
 use Illuminate\Support\Facades\Route;
 use BeyondCode\Mailbox\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use BeyondCode\Mailbox\Facades\Mailbox;
 use BeyondCode\Mailbox\Http\Middleware\MailboxBasicAuthentication;
 
 class MailboxServiceProvider extends ServiceProvider
@@ -43,10 +44,14 @@ class MailboxServiceProvider extends ServiceProvider
         $this->app->singleton('mailbox', function () {
             return new Router($this->app);
         });
+
+        $this->app->singleton(MailboxManager::class, function () {
+            return new MailboxManager($this->app);
+        });
     }
 
     protected function registerDriver()
     {
-        (new MailboxManager($this->app))->mailbox()->register();
+        Mailbox::mailbox()->register();
     }
 }

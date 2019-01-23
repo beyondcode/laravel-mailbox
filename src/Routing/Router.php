@@ -2,12 +2,16 @@
 
 namespace BeyondCode\Mailbox\Routing;
 
+use BeyondCode\Mailbox\MailboxManager;
 use Illuminate\Support\Collection;
 use Illuminate\Container\Container;
 use BeyondCode\Mailbox\InboundEmail;
+use Illuminate\Support\Traits\ForwardsCalls;
 
 class Router
 {
+    use ForwardsCalls;
+
     /** @var RouteCollection */
     protected $routes;
 
@@ -108,5 +112,12 @@ class Router
     protected function storeEmail(InboundEmail $email)
     {
         $email->save();
+    }
+
+    public function __call($method, $parameters)
+    {
+        return $this->forwardCallTo(
+            $this->container->make(MailboxManager::class), $method, $parameters
+        );
     }
 }
