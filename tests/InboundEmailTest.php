@@ -113,7 +113,6 @@ class InboundEmailTest extends TestCase
         $this->assertSame(2, InboundEmail::query()->count());
     }
 
-
     /** @test */
     public function it_does_not_store_inbound_emails_if_configured()
     {
