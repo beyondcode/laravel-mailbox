@@ -6,6 +6,7 @@ use Illuminate\Support\Manager;
 use BeyondCode\Mailbox\Drivers\Log;
 use BeyondCode\Mailbox\Drivers\Mailgun;
 use BeyondCode\Mailbox\Drivers\SendGrid;
+use BeyondCode\Mailbox\Drivers\MailCare;
 
 class MailboxManager extends Manager
 {
@@ -27,6 +28,11 @@ class MailboxManager extends Manager
     public function createSendGridDriver()
     {
         return new SendGrid;
+    }
+
+    public function createMailCareDriver()
+    {
+        return new MailCare;
     }
 
     public function getDefaultDriver()
