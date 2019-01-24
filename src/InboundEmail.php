@@ -153,12 +153,12 @@ class InboundEmail extends Model
 
     public function isHtml()
     {
-        return $this->html() !== '';
+        return empty($this->html());
     }
 
     public function isText()
     {
-        return $this->text() !== '';
+        return empty($this->text());
     }
 
     public function isValid(): bool
