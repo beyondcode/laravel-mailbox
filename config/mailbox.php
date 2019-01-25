@@ -6,7 +6,7 @@ return [
      * The driver to use when listening for incoming emails.
      * It defaults to the mail driver that you are using.
      *
-     * Supported drivers: "log", "mailgun", "sendgrid"
+     * Supported drivers: "log", "mailgun", "sendgrid", "postmark"
      */
     'driver' => env('MAILBOX_DRIVER', 'log'),
 
