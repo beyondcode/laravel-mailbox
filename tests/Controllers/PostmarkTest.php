@@ -17,7 +17,7 @@ class PostmarkTest extends TestCase
     public function it_expects_to_receive_raw_email_field()
     {
         $this->withoutMiddleware();
-        
+
         $this->post('/laravel-mailbox/postmark', [
             'something' => 'value',
         ])->assertSessionHasErrors('RawEmail')->assertStatus(302);
