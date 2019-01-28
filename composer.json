@@ -22,6 +22,7 @@
         "illuminate/log": "5.7.*",
         "illuminate/routing": "5.7.*",
         "illuminate/support": "5.7.*",
+        "willdurand/email-reply-parser": "^2.8",
         "zbateson/mail-mime-parser": "^1.1"
     },
     "require-dev": {

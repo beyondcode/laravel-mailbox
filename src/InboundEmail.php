@@ -5,6 +5,7 @@ namespace BeyondCode\Mailbox;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
+use EmailReplyParser\EmailReplyParser;
 use Illuminate\Contracts\Mail\Mailable;
 use Illuminate\Database\Eloquent\Model;
 use ZBateson\MailMimeParser\Header\AddressHeader;
@@ -52,6 +53,11 @@ class InboundEmail extends Model
     public function text(): ?string
     {
         return $this->message()->getTextContent();
+    }
+
+    public function visibleText(): ?string
+    {
+        return EmailReplyParser::parseReply($this->text());
     }
 
     public function html(): ?string
