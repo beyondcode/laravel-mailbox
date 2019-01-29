@@ -171,4 +171,9 @@ class InboundEmail extends Model
     {
         return $this->from() !== '' && ($this->text() !== '' || $this->html() !== '');
     }
+    
+    public function headerValue(string $headerName): string
+    {
+        return $this->message()->getHeaderValue($headerName, null);
+    }
 }
