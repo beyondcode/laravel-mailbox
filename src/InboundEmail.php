@@ -64,6 +64,11 @@ class InboundEmail extends Model
     {
         return $this->message()->getHtmlContent();
     }
+    
+    public function headerValue($headerName): string
+    {
+        return $this->message()->getHeaderValue($headerName, null);
+    }
 
     public function subject(): ?string
     {
@@ -170,10 +175,5 @@ class InboundEmail extends Model
     public function isValid(): bool
     {
         return $this->from() !== '' && ($this->text() !== '' || $this->html() !== '');
-    }
-    
-    public function headerValue($headerName): string
-    {
-        return $this->message()->getHeaderValue($headerName, null);
     }
 }
