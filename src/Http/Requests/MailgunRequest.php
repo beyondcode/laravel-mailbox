@@ -29,6 +29,7 @@ class MailgunRequest extends FormRequest
     {
         /** @var InboundEmail $modelClass */
         $modelClass = config('mailbox.model');
+
         return $modelClass::fromMessage($this->get('body-mime'));
     }
 

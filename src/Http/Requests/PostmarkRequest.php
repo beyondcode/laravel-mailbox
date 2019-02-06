@@ -19,6 +19,7 @@ class PostmarkRequest extends FormRequest
     {
         /** @var InboundEmail $modelClass */
         $modelClass = config('mailbox.model');
+
         return $modelClass::fromMessage($this->get('RawEmail'));
     }
 }
