@@ -16,7 +16,7 @@ class Log implements DriverInterface
     public function processLog(MessageSent $event)
     {
         if (config('mail.driver') !== 'log') {
-            return;    
+            return;
         }
 
         /** @var InboundEmail $modelClass */
