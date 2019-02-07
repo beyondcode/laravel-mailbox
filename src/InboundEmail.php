@@ -64,7 +64,7 @@ class InboundEmail extends Model
     {
         return $this->message()->getHtmlContent();
     }
-    
+
     public function headerValue($headerName): string
     {
         return $this->message()->getHeaderValue($headerName, null);
