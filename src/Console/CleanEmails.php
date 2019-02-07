@@ -20,7 +20,14 @@ class CleanEmails extends Command
 
         $cutOffDate = Carbon::now()->subDay($maxAgeInDays)->format('Y-m-d H:i:s');
 
-        $amountDeleted = InboundEmail::where('created_at', '<', $cutOffDate)->delete();
+        /** @var InboundEmail $modelClass */
+        $modelClass = config('mailbox.model');
+
+        $models = $modelClass::where('created_at', '<', $cutOffDate)->get();
+
+        $models->each->delete();
+
+        $amountDeleted = $models->count();
 
         $this->info("Deleted {$amountDeleted} record(s) from the Mailbox logs.");
 
