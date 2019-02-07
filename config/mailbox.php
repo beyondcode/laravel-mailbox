@@ -11,6 +11,12 @@ return [
     'driver' => env('MAILBOX_DRIVER', 'log'),
 
     /*
+     * The model class to use when converting an incoming email to a message.
+     * It must extend the default model class
+     */
+    'model' => \BeyondCode\Mailbox\InboundEmail::class,
+
+    /*
      * The path for driver specific routes. This is where
      * you need to point your driver specific callbacks
      * to.

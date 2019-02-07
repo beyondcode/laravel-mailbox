@@ -17,6 +17,9 @@ class SendGridRequest extends FormRequest
 
     public function email()
     {
-        return InboundEmail::fromMessage($this->get('email'));
+        /** @var InboundEmail $modelClass */
+        $modelClass = config('mailbox.model');
+
+        return $modelClass::fromMessage($this->get('email'));
     }
 }

@@ -140,6 +140,18 @@ class InboundEmailTest extends TestCase
 
         Mail::assertSent(ReplyMail::class);
     }
+
+    /** @test */
+    public function it_uses_the_configured_model()
+    {
+        $this->app['config']['mailbox.model'] = ExtendedInboundEmail::class;
+
+        Mailbox::from('example@beyondco.de', function ($email) {
+            $this->assertInstanceOf(ExtendedInboundEmail::class, $email);
+        });
+
+        Mail::to('someone@beyondco.de')->send(new TestMail);
+    }
 }
 
 class TestMail extends Mailable
@@ -160,4 +172,8 @@ class ReplyMail extends Mailable
             ->subject('This is my reply')
             ->html('Hi!');
     }
+}
+
+class ExtendedInboundEmail extends InboundEmail
+{
 }

@@ -15,7 +15,9 @@ class Log implements DriverInterface
 
     public function processLog(MessageLogged $log)
     {
-        $email = InboundEmail::fromMessage($log->message);
+        /** @var InboundEmail $modelClass */
+        $modelClass = config('mailbox.model');
+        $email = $modelClass::fromMessage($log->message);
 
         Mailbox::callMailboxes($email);
     }
