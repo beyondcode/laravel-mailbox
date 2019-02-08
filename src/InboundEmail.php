@@ -157,23 +157,23 @@ class InboundEmail extends Model
         });
     }
 
-    public function body()
+    public function body(): ?string
     {
         return $this->isHtml() ? $this->html() : $this->text();
     }
 
-    public function isHtml()
+    public function isHtml(): bool
     {
-        return !empty($this->html());
+        return ! empty($this->html());
     }
 
-    public function isText()
+    public function isText(): bool
     {
-        return !empty($this->text());
+        return ! empty($this->text());
     }
 
     public function isValid(): bool
     {
-        return $this->from() !== '' && ($this->isText()|| $this->isHtml());
+        return $this->from() !== '' && ($this->isText() || $this->isHtml());
     }
 }
