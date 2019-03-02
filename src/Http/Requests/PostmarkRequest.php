@@ -6,12 +6,12 @@ use BeyondCode\Mailbox\InboundEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SendGridRequest extends FormRequest
+class PostmarkRequest extends FormRequest
 {
     public function validator()
     {
         return Validator::make($this->all(), [
-            'email' => 'required',
+            'RawEmail' => 'required',
         ]);
     }
 
@@ -20,6 +20,6 @@ class SendGridRequest extends FormRequest
         /** @var InboundEmail $modelClass */
         $modelClass = config('mailbox.model');
 
-        return $modelClass::fromMessage($this->get('email'));
+        return $modelClass::fromMessage($this->get('RawEmail'));
     }
 }

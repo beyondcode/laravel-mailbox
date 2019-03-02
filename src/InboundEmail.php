@@ -5,6 +5,7 @@ namespace BeyondCode\Mailbox;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
+use EmailReplyParser\EmailReplyParser;
 use Illuminate\Contracts\Mail\Mailable;
 use Illuminate\Database\Eloquent\Model;
 use ZBateson\MailMimeParser\Header\AddressHeader;
@@ -54,9 +55,19 @@ class InboundEmail extends Model
         return $this->message()->getTextContent();
     }
 
+    public function visibleText(): ?string
+    {
+        return EmailReplyParser::parseReply($this->text());
+    }
+
     public function html(): ?string
     {
         return $this->message()->getHtmlContent();
+    }
+
+    public function headerValue($headerName): string
+    {
+        return $this->message()->getHeaderValue($headerName, null);
     }
 
     public function subject(): ?string
@@ -146,23 +157,23 @@ class InboundEmail extends Model
         });
     }
 
-    public function body()
+    public function body(): ?string
     {
         return $this->isHtml() ? $this->html() : $this->text();
     }
 
-    public function isHtml()
+    public function isHtml(): bool
     {
-        return $this->html() !== '';
+        return ! empty($this->html());
     }
 
-    public function isText()
+    public function isText(): bool
     {
-        return $this->text() !== '';
+        return ! empty($this->text());
     }
 
     public function isValid(): bool
     {
-        return $this->from() !== '' && ($this->text() !== '' || $this->html() !== '');
+        return $this->from() !== '' && ($this->isText() || $this->isHtml());
     }
 }

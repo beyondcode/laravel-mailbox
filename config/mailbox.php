@@ -6,9 +6,15 @@ return [
      * The driver to use when listening for incoming emails.
      * It defaults to the mail driver that you are using.
      *
-     * Supported drivers: "log", "mailgun", "sendgrid"
+     * Supported drivers: "log", "mailgun", "sendgrid", "postmark"
      */
     'driver' => env('MAILBOX_DRIVER', 'log'),
+
+    /*
+     * The model class to use when converting an incoming email to a message.
+     * It must extend the default model class
+     */
+    'model' => \BeyondCode\Mailbox\InboundEmail::class,
 
     /*
      * The path for driver specific routes. This is where

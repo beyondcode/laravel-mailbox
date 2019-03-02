@@ -4,18 +4,24 @@ namespace BeyondCode\Mailbox\Drivers;
 
 use BeyondCode\Mailbox\InboundEmail;
 use BeyondCode\Mailbox\Facades\Mailbox;
-use Illuminate\Log\Events\MessageLogged;
+use Illuminate\Mail\Events\MessageSent;
 
 class Log implements DriverInterface
 {
     public function register()
     {
-        app('events')->listen(MessageLogged::class, [$this, 'processLog']);
+        app('events')->listen(MessageSent::class, [$this, 'processLog']);
     }
 
-    public function processLog(MessageLogged $log)
+    public function processLog(MessageSent $event)
     {
-        $email = InboundEmail::fromMessage($log->message);
+        if (config('mail.driver') !== 'log') {
+            return;
+        }
+
+        /** @var InboundEmail $modelClass */
+        $modelClass = config('mailbox.model');
+        $email = $modelClass::fromMessage($event->message);
 
         Mailbox::callMailboxes($email);
     }
