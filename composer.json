@@ -16,19 +16,20 @@
         }
     ],
     "require": {
-        "php": "^7.1",
-        "illuminate/container": "5.7.*",
-        "illuminate/database": "^5.7",
-        "illuminate/log": "5.7.*",
-        "illuminate/routing": "5.7.*",
-        "illuminate/support": "5.7.*",
+        "php": "^7.1.3",
+        "illuminate/container": "5.8.*",
+        "illuminate/database": "^5.8",
+        "illuminate/log": "5.8.*",
+        "illuminate/routing": "5.8.*",
+        "illuminate/support": "5.8.*",
         "willdurand/email-reply-parser": "^2.8",
-        "zbateson/mail-mime-parser": "^1.1"
+        "zbateson/mail-mime-parser": "^1.1",
+        "beyondcode/laravel-mailbox": "dev-master"
     },
     "require-dev": {
         "mockery/mockery": "^1.2",
-        "orchestra/testbench": "3.7.*",
-        "phpunit/phpunit": "^7.0",
+        "orchestra/testbench": "3.8.*",
+        "phpunit/phpunit": "^7.5",
         "zendframework/zend-mail": "^2.10"
     },
     "autoload": {
