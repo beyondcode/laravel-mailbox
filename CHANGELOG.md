@@ -2,10 +2,6 @@
 
 All notable changes to `laravel-mailbox` will be documented in this file
 
-## 1.1.1 - 2019-03-30
-
-- Support Laravel 5.8.
-
 ## 1.1.0 - 2019-01-28
 
 - Added visibleText method. Get email visible text in one line
