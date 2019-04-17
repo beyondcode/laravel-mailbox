@@ -11,7 +11,7 @@ use BeyondCode\Mailbox\Tests\TestCase;
 
 class CleanEmailsTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
