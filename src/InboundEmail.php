@@ -33,10 +33,12 @@ class InboundEmail extends Model
         });
     }
 
-    public static function fromMessage($message)
+    public static function fromMessage($message, $spam_score=null, $spam_report=null)
     {
         return new static([
             'message' => $message,
+            'spam_score' => $spam_score,
+            'spam_report' => $spam_report,
         ]);
     }
 
@@ -97,6 +99,16 @@ class InboundEmail extends Model
         return '';
     }
 
+    public function spamScore(): float
+    {
+        return $this->spam_score;
+    }
+
+    public function spamReport(): string
+    {
+        return $this->spam_report;
+    }
+
     /**
      * @return AddressPart[]
      */
@@ -125,7 +137,7 @@ class InboundEmail extends Model
     /**
      * @return MessagePart[]
      */
-    public function attachments()
+    public function attachments(): array
     {
         return $this->message()->getAllAttachmentParts();
     }

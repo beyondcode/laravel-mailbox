@@ -20,6 +20,6 @@ class SendGridRequest extends FormRequest
         /** @var InboundEmail $modelClass */
         $modelClass = config('mailbox.model');
 
-        return $modelClass::fromMessage($this->get('email'));
+        return $modelClass::fromMessage($this->get('email'), $this->get('spam_score'), $this->get('spam_report'));
     }
 }
