@@ -17,11 +17,11 @@
     ],
     "require": {
         "php": "^7.1",
-        "illuminate/container": "^5.7|^5.8",
-        "illuminate/database": "^5.7|^5.8",
-        "illuminate/log": "^5.7|^5.8",
-        "illuminate/routing": "^5.7|^5.8",
-        "illuminate/support": "^5.7|^5.8",
+        "illuminate/container": "^5.7|^5.8|^6.0",
+        "illuminate/database": "^5.7|^5.8|^6.0",
+        "illuminate/log": "^5.7|^5.8|^6.0",
+        "illuminate/routing": "^5.7|^5.8|^6.0",
+        "illuminate/support": "^5.7|^5.8|^6.0",
         "willdurand/email-reply-parser": "^2.8",
         "zbateson/mail-mime-parser": "^1.1"
     },

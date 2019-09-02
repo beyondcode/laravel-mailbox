@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use EmailReplyParser\EmailReplyParser;
 use Illuminate\Contracts\Mail\Mailable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use ZBateson\MailMimeParser\Header\AddressHeader;
 use ZBateson\MailMimeParser\Message as MimeMessage;
 use ZBateson\MailMimeParser\Header\Part\AddressPart;
@@ -42,7 +43,7 @@ class InboundEmail extends Model
 
     public function id(): string
     {
-        return $this->message()->getHeaderValue('Message-Id', str_random());
+        return $this->message()->getHeaderValue('Message-Id', Str::random());
     }
 
     public function date(): Carbon
