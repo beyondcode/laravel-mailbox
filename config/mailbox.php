@@ -29,6 +29,7 @@ return [
      * The amount of days that incoming emails should be stored in your
      * application. You can use the cleanup artisan command to
      * delete all older inbound emails on a regular basis.
+     * Set to INF to disable the cleanup artisan command.
      */
     'store_incoming_emails_for_days' => 7,
 
