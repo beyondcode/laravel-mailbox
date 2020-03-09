@@ -2,8 +2,8 @@
 
 namespace BeyondCode\Mailbox\Drivers;
 
-use Illuminate\Support\Facades\Route;
 use BeyondCode\Mailbox\Http\Controllers\MailgunController;
+use Illuminate\Support\Facades\Route;
 
 class Mailgun implements DriverInterface
 {

@@ -2,9 +2,9 @@
 
 namespace BeyondCode\Mailbox\Console;
 
+use BeyondCode\Mailbox\InboundEmail;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use BeyondCode\Mailbox\InboundEmail;
 
 class CleanEmails extends Command
 {

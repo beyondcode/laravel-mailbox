@@ -2,10 +2,10 @@
 
 namespace BeyondCode\Mailbox\Http\Requests;
 
-use Carbon\Carbon;
 use BeyondCode\Mailbox\InboundEmail;
-use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Validator;
 
 class MailgunRequest extends FormRequest
 {

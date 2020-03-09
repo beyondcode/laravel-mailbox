@@ -2,10 +2,10 @@
 
 namespace BeyondCode\Mailbox\Tests;
 
-use Illuminate\Mail\Mailable;
-use BeyondCode\Mailbox\InboundEmail;
-use Illuminate\Support\Facades\Mail;
 use BeyondCode\Mailbox\Facades\Mailbox;
+use BeyondCode\Mailbox\InboundEmail;
+use Illuminate\Mail\Mailable;
+use Illuminate\Support\Facades\Mail;
 
 class InboundEmailTest extends TestCase
 {

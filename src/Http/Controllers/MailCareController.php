@@ -2,9 +2,9 @@
 
 namespace BeyondCode\Mailbox\Http\Controllers;
 
-use Illuminate\Routing\Controller;
 use BeyondCode\Mailbox\Facades\Mailbox;
 use BeyondCode\Mailbox\Http\Requests\MailCareRequest;
+use Illuminate\Routing\Controller;
 
 class MailCareController extends Controller
 {

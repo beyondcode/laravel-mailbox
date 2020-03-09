@@ -2,10 +2,10 @@
 
 namespace BeyondCode\Mailbox\Tests;
 
-use Zend\Mail\Message as TestMail;
 use BeyondCode\Mailbox\InboundEmail;
 use BeyondCode\Mailbox\Routing\Route;
 use BeyondCode\Mailbox\Routing\RouteCollection;
+use Zend\Mail\Message as TestMail;
 
 class MailboxRouteCollectionTest extends TestCase
 {

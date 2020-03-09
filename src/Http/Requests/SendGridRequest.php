@@ -3,8 +3,8 @@
 namespace BeyondCode\Mailbox\Http\Requests;
 
 use BeyondCode\Mailbox\InboundEmail;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Validator;
 
 class SendGridRequest extends FormRequest
 {

@@ -3,15 +3,15 @@
 namespace BeyondCode\Mailbox;
 
 use Carbon\Carbon;
-use Illuminate\Support\Str;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Mail;
 use EmailReplyParser\EmailReplyParser;
 use Illuminate\Contracts\Mail\Mailable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use ZBateson\MailMimeParser\Header\AddressHeader;
-use ZBateson\MailMimeParser\Message as MimeMessage;
 use ZBateson\MailMimeParser\Header\Part\AddressPart;
+use ZBateson\MailMimeParser\Message as MimeMessage;
 use ZBateson\MailMimeParser\Message\Part\MessagePart;
 
 class InboundEmail extends Model
