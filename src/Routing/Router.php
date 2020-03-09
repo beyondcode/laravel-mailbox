@@ -2,10 +2,10 @@
 
 namespace BeyondCode\Mailbox\Routing;
 
-use Illuminate\Support\Collection;
-use Illuminate\Container\Container;
 use BeyondCode\Mailbox\InboundEmail;
 use BeyondCode\Mailbox\MailboxManager;
+use Illuminate\Container\Container;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\ForwardsCalls;
 
 class Router
@@ -31,22 +31,22 @@ class Router
         $this->routes = new RouteCollection;
     }
 
-    public function from(string $pattern, $action) : Route
+    public function from(string $pattern, $action): Route
     {
         return $this->addRoute(Route::FROM, $pattern, $action);
     }
 
-    public function to(string $pattern, $action) : Route
+    public function to(string $pattern, $action): Route
     {
         return $this->addRoute(Route::TO, $pattern, $action);
     }
 
-    public function cc(string $pattern, $action) : Route
+    public function cc(string $pattern, $action): Route
     {
         return $this->addRoute(Route::CC, $pattern, $action);
     }
 
-    public function subject(string $pattern, $action) : Route
+    public function subject(string $pattern, $action): Route
     {
         return $this->addRoute(Route::SUBJECT, $pattern, $action);
     }
@@ -61,7 +61,7 @@ class Router
         $this->catchAllRoute = $this->createRoute(Route::CATCH_ALL, '', $action);
     }
 
-    protected function addRoute(string $subject, string $pattern, $action) : Route
+    protected function addRoute(string $subject, string $pattern, $action): Route
     {
         $route = $this->createRoute($subject, $pattern, $action);
 
@@ -70,7 +70,7 @@ class Router
         return $route;
     }
 
-    protected function createRoute(string $subject, string $pattern, $action) : Route
+    protected function createRoute(string $subject, string $pattern, $action): Route
     {
         return (new Route($subject, $pattern, $action))
             ->setContainer($this->container);

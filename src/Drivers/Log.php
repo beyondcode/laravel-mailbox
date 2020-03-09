@@ -2,8 +2,8 @@
 
 namespace BeyondCode\Mailbox\Drivers;
 
-use BeyondCode\Mailbox\InboundEmail;
 use BeyondCode\Mailbox\Facades\Mailbox;
+use BeyondCode\Mailbox\InboundEmail;
 use Illuminate\Mail\Events\MessageSent;
 
 class Log implements DriverInterface

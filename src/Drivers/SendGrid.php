@@ -2,8 +2,8 @@
 
 namespace BeyondCode\Mailbox\Drivers;
 
-use Illuminate\Support\Facades\Route;
 use BeyondCode\Mailbox\Http\Controllers\SendGridController;
+use Illuminate\Support\Facades\Route;
 
 class SendGrid implements DriverInterface
 {

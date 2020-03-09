@@ -2,8 +2,8 @@
 
 namespace BeyondCode\Mailbox\Drivers;
 
-use Illuminate\Support\Facades\Route;
 use BeyondCode\Mailbox\Http\Controllers\PostmarkController;
+use Illuminate\Support\Facades\Route;
 
 class Postmark implements DriverInterface
 {

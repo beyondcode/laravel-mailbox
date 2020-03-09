@@ -2,9 +2,9 @@
 
 namespace BeyondCode\Mailbox\Http\Controllers;
 
-use Illuminate\Routing\Controller;
 use BeyondCode\Mailbox\Facades\Mailbox;
 use BeyondCode\Mailbox\Http\Requests\SendGridRequest;
+use Illuminate\Routing\Controller;
 
 class SendGridController extends Controller
 {

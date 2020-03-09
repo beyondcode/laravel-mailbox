@@ -2,11 +2,11 @@
 
 namespace BeyondCode\Mailbox\Tests\Drivers;
 
-use Illuminate\Mail\Mailable;
-use BeyondCode\Mailbox\InboundEmail;
-use Illuminate\Support\Facades\Mail;
-use BeyondCode\Mailbox\Tests\TestCase;
 use BeyondCode\Mailbox\Facades\Mailbox;
+use BeyondCode\Mailbox\InboundEmail;
+use BeyondCode\Mailbox\Tests\TestCase;
+use Illuminate\Mail\Mailable;
+use Illuminate\Support\Facades\Mail;
 
 class LogTest extends TestCase
 {

@@ -3,11 +3,11 @@
 namespace BeyondCode\Mailbox\Tests\Console;
 
 use Artisan;
-use Carbon\Carbon;
-use Illuminate\Support\Str;
-use Illuminate\Support\Collection;
 use BeyondCode\Mailbox\InboundEmail;
 use BeyondCode\Mailbox\Tests\TestCase;
+use Carbon\Carbon;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class CleanEmailsTest extends TestCase
 {

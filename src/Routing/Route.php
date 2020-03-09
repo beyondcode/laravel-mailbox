@@ -2,15 +2,15 @@
 
 namespace BeyondCode\Mailbox\Routing;
 
-use ReflectionFunction;
-use Illuminate\Support\Str;
-use Illuminate\Support\Collection;
-use Illuminate\Container\Container;
-use BeyondCode\Mailbox\InboundEmail;
 use BeyondCode\Mailbox\Concerns\HandlesParameters;
-use Illuminate\Routing\RouteDependencyResolverTrait;
-use ZBateson\MailMimeParser\Header\Part\AddressPart;
 use BeyondCode\Mailbox\Concerns\HandlesRegularExpressions;
+use BeyondCode\Mailbox\InboundEmail;
+use Illuminate\Container\Container;
+use Illuminate\Routing\RouteDependencyResolverTrait;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
+use ReflectionFunction;
+use ZBateson\MailMimeParser\Header\Part\AddressPart;
 
 class Route
 {
