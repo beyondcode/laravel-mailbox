@@ -18,9 +18,9 @@ class CleanEmails extends Command
 
         $maxAgeInDays = config('mailbox.store_incoming_emails_for_days');
 
-        if ($maxAgeInDays === INF)
-        {
-            $this->error($this->signature . ' is disabled because store_incoming_emails_for_days is set to INF.');
+        if ($maxAgeInDays === INF) {
+            $this->error($this->signature.' is disabled because store_incoming_emails_for_days is set to INF.');
+
             return 1;
         }
 
