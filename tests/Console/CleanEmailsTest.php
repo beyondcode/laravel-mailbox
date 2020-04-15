@@ -40,4 +40,25 @@ class CleanEmailsTest extends TestCase
 
         $this->assertCount(0, InboundEmail::where('created_at', '<', $cutOffDate)->get());
     }
+
+    /** @test */
+    public function it_errors_if_max_age_inf()
+    {
+        $this->app['config']->set('mailbox.store_incoming_emails_for_days', INF);
+
+        Collection::times(60)->each(function (int $index) {
+            InboundEmail::forceCreate([
+                'message' => Str::random(),
+                'created_at' => Carbon::now()->subDays($index)->startOfDay(),
+            ]);
+        });
+
+        $this->assertCount(60, InboundEmail::all());
+
+        $this->artisan('mailbox:clean')
+             ->expectsOutput('mailbox:clean is disabled because store_incoming_emails_for_days is set to INF.')
+             ->assertExitCode(1);
+
+        $this->assertCount(60, InboundEmail::all());
+    }
 }

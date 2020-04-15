@@ -18,6 +18,12 @@ class CleanEmails extends Command
 
         $maxAgeInDays = config('mailbox.store_incoming_emails_for_days');
 
+        if ($maxAgeInDays === INF)
+        {
+            $this->error($this->signature . ' is disabled because store_incoming_emails_for_days is set to INF.');
+            return 1;
+        }
+
         $cutOffDate = Carbon::now()->subDay($maxAgeInDays)->format('Y-m-d H:i:s');
 
         /** @var InboundEmail $modelClass */
