@@ -17,17 +17,17 @@
     ],
     "require": {
         "php": "^7.1",
-        "illuminate/container": "^5.7|^5.8|^6.0|^7.0",
-        "illuminate/database": "^5.7|^5.8|^6.0|^7.0",
-        "illuminate/log": "^5.7|^5.8|^6.0|^7.0",
-        "illuminate/routing": "^5.7|^5.8|^6.0|^7.0",
-        "illuminate/support": "^5.7|^5.8|^6.0|^7.0",
+        "illuminate/container": "^6.0|^7.0",
+        "illuminate/database": "^6.0|^7.0",
+        "illuminate/log": "^6.0|^7.0",
+        "illuminate/routing": "^6.0|^7.0",
+        "illuminate/support": "^6.0|^7.0",
         "willdurand/email-reply-parser": "^2.8",
         "zbateson/mail-mime-parser": "^1.1"
     },
     "require-dev": {
         "mockery/mockery": "^1.2",
-        "orchestra/testbench": "^3.7|^3.8|^4.0|^5.0",
+        "orchestra/testbench": "^4.0|^5.0",
         "phpunit/phpunit": "^7.0|^8.0",
         "zendframework/zend-mail": "^2.10"
     },

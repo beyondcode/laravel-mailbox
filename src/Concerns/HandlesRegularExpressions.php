@@ -24,11 +24,11 @@ trait HandlesRegularExpressions
 
         $regex = $route->compile()->getRegex();
 
-        $regex = preg_replace('/^#\^\/(.*)/', '#^$1', $regex);
+        $regex = preg_replace('/^{\^\/(.*)/', '{^$1', $regex);
 
         $regex = str_replace('>[^/]+)', '>.+)', $regex);
 
-        $regex = str_replace('$#sD', '$#sDi', $regex);
+        $regex = str_replace('$}sD', '$}sDi', $regex);
 
         return $regex;
     }
