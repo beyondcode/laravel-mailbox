@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": "^7.1",
+        "php": "^7.3",
         "illuminate/container": "^6.0|^7.0",
         "illuminate/database": "^6.0|^7.0",
         "illuminate/log": "^6.0|^7.0",
