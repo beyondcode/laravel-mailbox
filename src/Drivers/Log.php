@@ -15,7 +15,7 @@ class Log implements DriverInterface
 
     public function processLog(MessageSent $event)
     {
-        if (config('mail.default') !== 'log') {
+        if (config('mail.driver') !== 'log' && config('mail.default') !== 'log') {
             return;
         }
 
