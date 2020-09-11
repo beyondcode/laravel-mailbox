@@ -46,6 +46,11 @@ class Router
         return $this->addRoute(Route::CC, $pattern, $action);
     }
 
+    public function bcc(string $pattern, $action): Route
+    {
+        return $this->addRoute(Route::BCC, $pattern, $action);
+    }
+
     public function subject(string $pattern, $action): Route
     {
         return $this->addRoute(Route::SUBJECT, $pattern, $action);
