@@ -72,6 +72,24 @@ class MailboxRouteTest extends TestCase
 
     /**
      * @test
+     * @dataProvider emailDataProvider
+     */
+    public function it_matches_bcc_mails($bccMail, $successfulPattern, $failingPattern)
+    {
+        $testMail = (new TestMail())
+            ->setBcc($bccMail);
+
+        $message = new InboundEmail(['message' => $testMail->toString()]);
+
+        $route = new Route(Route::BCC, $successfulPattern, 'SomeAction@handle');
+        $this->assertTrue($route->matches($message));
+
+        $route = new Route(Route::BCC, $failingPattern, 'SomeAction@handle');
+        $this->assertFalse($route->matches($message));
+    }
+
+    /**
+     * @test
      * @dataProvider subjectDataProvider
      */
     public function it_matches_subjects($subject, $successfulPattern, $failingPattern)

@@ -21,6 +21,7 @@ class Route
     const FROM = 'from';
     const TO = 'to';
     const CC = 'cc';
+    const BCC = 'bcc';
     const SUBJECT = 'subject';
     const FALLBACK = 'fallback';
     const CATCH_ALL = 'catch-all';
@@ -89,6 +90,9 @@ class Route
             case self::CC:
                 return $this->convertMessageAddresses($message->cc());
             break;
+            case self::BCC:
+                return $this->convertMessageAddresses($message->bcc());
+                break;
             case self::SUBJECT:
                 return [$message->subject()];
             break;

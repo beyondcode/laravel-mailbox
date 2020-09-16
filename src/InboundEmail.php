@@ -114,6 +114,14 @@ class InboundEmail extends Model
         return $this->convertAddressHeader($this->message()->getHeader('Cc'));
     }
 
+    /**
+     * @return AddressPart[]
+     */
+    public function bcc(): array
+    {
+        return $this->convertAddressHeader($this->message()->getHeader('Bcc'));
+    }
+
     protected function convertAddressHeader($header): array
     {
         if ($header instanceof AddressHeader) {
