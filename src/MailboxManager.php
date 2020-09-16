@@ -43,6 +43,6 @@ class MailboxManager extends Manager
 
     public function getDefaultDriver()
     {
-        return $this->app['config']['mailbox.driver'];
+        return $this->container['config']['mailbox.driver'];
     }
 }
