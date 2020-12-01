@@ -2,47 +2,48 @@
 
 namespace BeyondCode\Mailbox;
 
-use BeyondCode\Mailbox\Drivers\Log;
-use BeyondCode\Mailbox\Drivers\MailCare;
-use BeyondCode\Mailbox\Drivers\Mailgun;
-use BeyondCode\Mailbox\Drivers\Postmark;
-use BeyondCode\Mailbox\Drivers\SendGrid;
+use BeyondCode\Mailbox\Drivers\DriverInterface;
+use Closure;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Manager;
 
 class MailboxManager extends Manager
 {
-    public function mailbox($name = null)
+    /**
+     * Create a new manager instance.
+     *
+     * @param Container $container
+     * @return void
+     */
+    public function __construct(Container $container)
     {
-        return $this->driver($name);
-    }
+        parent::__construct($container);
 
-    public function createLogDriver()
-    {
-        return new Log;
-    }
-
-    public function createMailgunDriver()
-    {
-        return new Mailgun;
-    }
-
-    public function createSendGridDriver()
-    {
-        return new SendGrid;
-    }
-
-    public function createMailCareDriver()
-    {
-        return new MailCare;
-    }
-
-    public function createPostmarkDriver()
-    {
-        return new Postmark;
+        $this->registerDrivers();
     }
 
     public function getDefaultDriver()
     {
         return $this->container['config']['mailbox.driver'];
+    }
+
+    protected function registerDrivers(): void
+    {
+        $supported = config('mailbox.supported_drivers');
+
+        foreach ($supported as $driver => $mappedTo) {
+
+            $callback = is_callable($mappedTo) ?
+                $mappedTo : $this->registerDriverCallable($mappedTo);
+
+            $this->extend($driver, $callback);
+        }
+    }
+
+    protected function registerDriverCallable(DriverInterface $driver): Closure
+    {
+        return function () use ($driver) {
+            return new $driver;
+        };
     }
 }
