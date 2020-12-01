@@ -15,14 +15,14 @@ class MailboxServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (!class_exists('CreateMailboxInboundEmailsTable')) {
+        if (! class_exists('CreateMailboxInboundEmailsTable')) {
             $this->publishes([
-                __DIR__ . '/../database/migrations/create_mailbox_inbound_emails_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_mailbox_inbound_emails_table.php'),
+                __DIR__.'/../database/migrations/create_mailbox_inbound_emails_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_mailbox_inbound_emails_table.php'),
             ], 'migrations');
         }
 
         $this->publishes([
-            __DIR__ . '/../config/mailbox.php' => config_path('mailbox.php'),
+            __DIR__.'/../config/mailbox.php' => config_path('mailbox.php'),
         ], 'config');
 
         Route::aliasMiddleware('laravel-mailbox-auth', MailboxBasicAuthentication::class);
@@ -39,7 +39,7 @@ class MailboxServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/mailbox.php', 'mailbox');
+        $this->mergeConfigFrom(__DIR__.'/../config/mailbox.php', 'mailbox');
 
         $this->app->singleton('mailbox', function () {
             return new Router($this->app);
