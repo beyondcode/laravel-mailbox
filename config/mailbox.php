@@ -40,7 +40,7 @@ return [
      *
      * For example: /laravel-mailbox/sendgrid/
      */
-    'route_path' => 'laravel-mailbox',
+    'route_prefix' => 'laravel-mailbox',
 
     /*
      * The amount of days that incoming emails should be stored in your

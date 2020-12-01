@@ -40,9 +40,9 @@ class MailboxManager extends Manager
         }
     }
 
-    protected function registerDriverCallable(DriverInterface $driver): Closure
+    protected function registerDriverCallable(string $driver): Closure
     {
-        return function () use ($driver) {
+        return function () use ($driver): DriverInterface {
             return new $driver;
         };
     }
