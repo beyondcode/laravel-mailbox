@@ -16,8 +16,7 @@ return [
     'driver' => env('MAILBOX_DRIVER', 'log'),
 
     /**
-     * Supported driver keys and what they map to.
-     * Can map to a class or a callback.
+     * Supported driver keys and what they map to. Can map to a class or a callback.
      * If class is used, it must implement DriverInterface.
      */
     'supported_drivers' => [
@@ -41,7 +40,7 @@ return [
      *
      * For example: /laravel-mailbox/sendgrid/
      */
-    'path' => 'laravel-mailbox',
+    'route_path' => 'laravel-mailbox',
 
     /*
      * The amount of days that incoming emails should be stored in your

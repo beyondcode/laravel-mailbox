@@ -9,7 +9,7 @@ class SendGrid implements DriverInterface
 {
     public function register()
     {
-        Route::prefix(config('mailbox.path'))->group(function () {
+        Route::prefix(config('mailbox.route_path'))->group(function () {
             Route::post('/sendgrid', SendGridController::class);
         });
     }
