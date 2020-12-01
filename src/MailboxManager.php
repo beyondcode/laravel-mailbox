@@ -32,7 +32,6 @@ class MailboxManager extends Manager
         $supported = config('mailbox.supported_drivers');
 
         foreach ($supported as $driver => $mappedTo) {
-
             $callback = is_callable($mappedTo) ?
                 $mappedTo : $this->registerDriverCallable($mappedTo);
 
