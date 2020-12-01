@@ -10,7 +10,7 @@ class PostmarkController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('laravel-mailbox');
+        $this->middleware('laravel-mailbox-auth');
     }
 
     public function __invoke(PostmarkRequest $request)
