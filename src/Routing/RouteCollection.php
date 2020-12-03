@@ -16,7 +16,7 @@ class RouteCollection
 
     public function match(InboundEmail $message): Collection
     {
-        return Collection::make($this->routes)->filter(function ($route) use ($message) {
+        return Collection::make($this->routes)->filter(function (Route $route) use ($message) {
             return $route->matches($message);
         });
     }
