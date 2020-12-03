@@ -91,14 +91,14 @@ class Router
             $route->run($email);
         });
 
-        if ($matchedRoutes->isEmpty() && $this->fallbackRoute) {
-            $matchedRoutes[] = $this->fallbackRoute;
-            $this->fallbackRoute->run($email);
-        }
-
         if ($this->catchAllRoute) {
             $matchedRoutes[] = $this->catchAllRoute;
             $this->catchAllRoute->run($email);
+        }
+
+        if ($matchedRoutes->isEmpty() && $this->fallbackRoute) {
+            $matchedRoutes[] = $this->fallbackRoute;
+            $this->fallbackRoute->run($email);
         }
 
         if ($this->shouldStoreInboundEmails() && $this->shouldStoreAllInboundEmails($matchedRoutes)) {
