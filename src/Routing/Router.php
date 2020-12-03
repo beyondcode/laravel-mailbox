@@ -83,24 +83,26 @@ class Router
 
     public function callMailboxes(InboundEmail $email)
     {
-        if ($email->isValid()) {
-            $matchedRoutes = $this->routes->match($email)->map(function (Route $route) use ($email) {
-                $route->run($email);
-            });
+        if (!$email->isValid()) {
+            return;
+        }
 
-            if ($matchedRoutes->isEmpty() && $this->fallbackRoute) {
-                $matchedRoutes[] = $this->fallbackRoute;
-                $this->fallbackRoute->run($email);
-            }
+        $matchedRoutes = $this->routes->match($email)->map(function (Route $route) use ($email) {
+            $route->run($email);
+        });
 
-            if ($this->catchAllRoute) {
-                $matchedRoutes[] = $this->catchAllRoute;
-                $this->catchAllRoute->run($email);
-            }
+        if ($matchedRoutes->isEmpty() && $this->fallbackRoute) {
+            $matchedRoutes[] = $this->fallbackRoute;
+            $this->fallbackRoute->run($email);
+        }
 
-            if ($this->shouldStoreInboundEmails() && $this->shouldStoreAllInboundEmails($matchedRoutes)) {
-                $this->storeEmail($email);
-            }
+        if ($this->catchAllRoute) {
+            $matchedRoutes[] = $this->catchAllRoute;
+            $this->catchAllRoute->run($email);
+        }
+
+        if ($this->shouldStoreInboundEmails() && $this->shouldStoreAllInboundEmails($matchedRoutes)) {
+            $this->storeEmail($email);
         }
     }
 
