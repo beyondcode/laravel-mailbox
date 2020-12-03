@@ -83,7 +83,7 @@ class Router
 
     public function callMailboxes(InboundEmail $email)
     {
-        if (!$email->isValid()) {
+        if (! $email->isValid()) {
             return;
         }
 
