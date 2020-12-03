@@ -83,19 +83,16 @@ class Route
         switch ($this->subject) {
             case self::FROM:
                 return [$message->from()];
-            break;
             case self::TO:
                 return $this->convertMessageAddresses($message->to());
-            break;
             case self::CC:
                 return $this->convertMessageAddresses($message->cc());
-            break;
             case self::BCC:
                 return $this->convertMessageAddresses($message->bcc());
-                break;
             case self::SUBJECT:
                 return [$message->subject()];
-            break;
+            default:
+                return '';
         }
     }
 
