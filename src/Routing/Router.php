@@ -91,7 +91,7 @@ class Router
             $route->run($email);
         });
 
-        if ($this->catchAllRoute) {
+        if ($matchedRoutes->isEmpty() && $this->catchAllRoute) {
             $matchedRoutes[] = $this->catchAllRoute;
             $this->catchAllRoute->run($email);
         }
