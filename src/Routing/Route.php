@@ -92,7 +92,7 @@ class Route
             case self::SUBJECT:
                 return [$message->subject()];
             default:
-                return '';
+                return [];
         }
     }
 
