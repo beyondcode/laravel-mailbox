@@ -18,9 +18,6 @@ class Mailbox
     /** @var Route */
     protected $fallbackRoute;
 
-    /** @var Route */
-    protected $catchAllRoute;
-
     /** @var Container */
     protected $container;
 
@@ -61,11 +58,6 @@ class Mailbox
         $this->fallbackRoute = $this->createRoute(Route::FALLBACK, '', $action);
     }
 
-    public function catchAll($action)
-    {
-        $this->catchAllRoute = $this->createRoute(Route::CATCH_ALL, '', $action);
-    }
-
     protected function addRoute(string $matchBy, string $pattern, $action): Route
     {
         $route = $this->createRoute($matchBy, $pattern, $action);
@@ -90,11 +82,6 @@ class Mailbox
         $matchedRoutes = $this->routes->match($email)->map(function (Route $route) use ($email) {
             $route->run($email);
         });
-
-        if ($matchedRoutes->isEmpty() && $this->catchAllRoute) {
-            $matchedRoutes[] = $this->catchAllRoute;
-            $this->catchAllRoute->run($email);
-        }
 
         if ($matchedRoutes->isEmpty() && $this->fallbackRoute) {
             $matchedRoutes[] = $this->fallbackRoute;

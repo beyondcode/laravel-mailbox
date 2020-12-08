@@ -84,19 +84,9 @@ This mailbox will be called whenever the email subject matches.
 Mailbox::subject('Feedback Request', MyMailbox::class);
 ```
 
-## Catch-All
-
-In some cases you might want to create a mailbox that receives all incoming emails, no matter what they contain.
-
-You can use the `Mailbox::catchAll` method for this. This method only receives a closure/class name that will be called every time your application receives an email.
-
-```php
-Mailbox::catchAll(CatchAllMailbox::class);
-```
-
 ## Fallback
 
-Similar to the "catch-all" mailbox, you might also want to create a fallback mailbox that will be called when none of your other mailboxes match the incoming email. While the `catchAll` mailbox will be called for **every** incoming email, the `fallback` mailbox will only be called when no other mailbox matches.
+Fallback mailbox will be called when none of your other mailboxes match the incoming email.
 
 ```php
 Mailbox::fallback(FallbackMailbox::class);
