@@ -8,7 +8,7 @@ use Illuminate\Container\Container;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\ForwardsCalls;
 
-class Router
+class Mailbox
 {
     use ForwardsCalls;
 
@@ -66,9 +66,9 @@ class Router
         $this->catchAllRoute = $this->createRoute(Route::CATCH_ALL, '', $action);
     }
 
-    protected function addRoute(string $subject, string $pattern, $action): Route
+    protected function addRoute(string $matchBy, string $pattern, $action): Route
     {
-        $route = $this->createRoute($subject, $pattern, $action);
+        $route = $this->createRoute($matchBy, $pattern, $action);
 
         $this->routes->add($route);
 

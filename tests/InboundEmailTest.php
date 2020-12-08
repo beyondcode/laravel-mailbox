@@ -60,12 +60,12 @@ class InboundEmailTest extends TestCase
     /** @test */
     public function it_can_use_catchall()
     {
+        Mail::fake();
+
         Mailbox::to('someone@beyondco.de', function ($email) {
         });
 
         Mailbox::catchAll(function (InboundEmail $email) {
-            Mail::fake();
-
             $email->reply(new ReplyMail);
         });
 

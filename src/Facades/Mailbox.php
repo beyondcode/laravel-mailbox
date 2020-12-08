@@ -2,11 +2,10 @@
 
 namespace BeyondCode\Mailbox\Facades;
 
-use BeyondCode\Mailbox\Routing\Router;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see Router
+ * @see \BeyondCode\Mailbox\Routing\Mailbox
  */
 class Mailbox extends Facade
 {
