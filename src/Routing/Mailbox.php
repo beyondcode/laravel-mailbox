@@ -21,6 +21,8 @@ class Mailbox
     /** @var Container */
     protected $container;
 
+    protected $matchAll = false;
+
     public function __construct(Container $container = null)
     {
         $this->container = $container ?: new Container;
@@ -113,5 +115,10 @@ class Mailbox
         return $this->forwardCallTo(
             $this->container->make(MailboxManager::class), $method, $parameters
         );
+    }
+
+    public function matchAll(bool $shouldMatch)
+    {
+        $this->matchAll = $shouldMatch;
     }
 }

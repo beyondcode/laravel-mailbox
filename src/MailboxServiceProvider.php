@@ -5,6 +5,7 @@ namespace BeyondCode\Mailbox;
 use BeyondCode\Mailbox\Drivers\DriverInterface;
 use BeyondCode\Mailbox\Http\Middleware\MailboxBasicAuthentication;
 use BeyondCode\Mailbox\Routing\Mailbox;
+use BeyondCode\Mailbox\Routing\MailboxGroup;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
@@ -41,7 +42,7 @@ class MailboxServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../config/mailbox.php', 'mailbox');
 
-        $this->app->singleton('mailbox', function () {
+        $this->app->bind('mailbox', function () {
             return new Mailbox($this->app);
         });
 
@@ -61,5 +62,44 @@ class MailboxServiceProvider extends ServiceProvider
         $driver = $manager->driver();
 
         $driver->register();
+    }
+
+    public function test()
+    {
+        // TODO: REMOVE
+
+        $email = new InboundEmail();
+        $pattern = '';
+        $action = '';
+
+        $mbGroup = new MailboxGroup();
+        $mbGroup->stopAfterFirstMatch(true);
+
+        /**
+         * @var $mailbox Mailbox
+         */
+        $mailbox = app('mailbox');
+        $mailbox->from($pattern, $action);
+        $mailbox->from($pattern, $action);
+        $mailbox->matchAll(true);
+
+        /**
+         * @var $mailbox2 Mailbox
+         */
+        $mailbox2 = app('mailbox');
+        $mailbox2->from($pattern, $action);
+        $mailbox2->to($pattern, $action);
+
+        /**
+         * @var $mailbox3 Mailbox
+         */
+        $mailbox3 = app('mailbox');
+        $mailbox3->subject($pattern, $action);
+
+        $mbGroup->add($mailbox);
+        $mbGroup->add($mailbox2);
+        $mbGroup->add($mailbox3);
+
+        $mbGroup->callMailboxes($email);
     }
 }
