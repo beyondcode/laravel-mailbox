@@ -67,9 +67,9 @@ class Mailbox
         return $route;
     }
 
-    protected function createRoute(string $subject, string $pattern, $action): Route
+    protected function createRoute(string $matchBy, string $pattern, $action): Route
     {
-        return (new Route($subject, $pattern, $action))
+        return (new Route($matchBy, $pattern, $action))
             ->setContainer($this->container);
     }
 

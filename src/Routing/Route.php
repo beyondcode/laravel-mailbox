@@ -28,7 +28,7 @@ class Route
 
     protected $mailbox;
 
-    protected $subject;
+    protected $matchBy;
 
     protected $pattern;
 
@@ -40,9 +40,9 @@ class Route
 
     protected $wheres = [];
 
-    public function __construct(string $subject, string $pattern, $action)
+    public function __construct(string $matchBy, string $pattern, $action)
     {
-        $this->subject = $subject;
+        $this->matchBy = $matchBy;
         $this->pattern = $pattern;
         $this->action = $action;
     }
@@ -56,7 +56,7 @@ class Route
 
     public function subject()
     {
-        return $this->subject;
+        return $this->matchBy;
     }
 
     public function action()
@@ -80,7 +80,7 @@ class Route
 
     protected function gatherMatchSubjectsFromMessage(InboundEmail $message)
     {
-        switch ($this->subject) {
+        switch ($this->matchBy) {
             case self::FROM:
                 return [$message->from()];
             case self::TO:
