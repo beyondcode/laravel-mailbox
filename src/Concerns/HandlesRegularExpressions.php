@@ -6,28 +6,38 @@ use Symfony\Component\Routing\Route;
 
 trait HandlesRegularExpressions
 {
-    protected function matchesRegularExpression(string $subject)
+    protected function matchesRegularExpression(string $matchValue, string $regex)
     {
-        return (bool) preg_match($this->getRegularExpression(), $subject, $this->matches);
+        preg_match($this->getRegularExpression($regex), $matchValue, $matches);
+
+        foreach ($matches as $key => $value) {
+            if (is_int($key)) {
+                unset($matches[$key]);
+            }
+        }
+
+        $this->matches[] = $matches;
+
+        return (bool)$matches;
     }
 
     /**
      * We do not want to create the regular expression on our own,
-     * so we just use Symfonys Route for this.
+     * so we just use Symfony's Route for this.
      *
+     * @param string $regex
      * @return string
      */
-    protected function getRegularExpression(): string
+    protected function getRegularExpression(string $regex): string
     {
-        $route = new Route($this->pattern);
+        $route = new Route($regex);
+
         $route->setRequirements($this->wheres);
 
         $regex = $route->compile()->getRegex();
 
         $regex = preg_replace('/^(#|{)\^\/(.*)/', '$1^$2', $regex);
-
         $regex = str_replace('>[^/]+)', '>.+)', $regex);
-
         $regex = str_replace('$#sD', '$#sDi', $regex);
         $regex = str_replace('$}sD', '$}sDi', $regex);
 

@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use EmailReplyParser\EmailReplyParser;
 use Illuminate\Contracts\Mail\Mailable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use ZBateson\MailMimeParser\Header\AddressHeader;
@@ -125,7 +124,7 @@ class InboundEmail extends Model
     protected function convertAddressHeader($header): array
     {
         if ($header instanceof AddressHeader) {
-            return Collection::make($header->getAddresses())->toArray();
+            return collect($header->getAddresses())->toArray();
         }
 
         return [];

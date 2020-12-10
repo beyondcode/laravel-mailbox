@@ -2,112 +2,224 @@
 
 namespace BeyondCode\Mailbox\Routing;
 
+use BeyondCode\Mailbox\Concerns\HandlesParameters;
+use BeyondCode\Mailbox\Concerns\HandlesRegularExpressions;
 use BeyondCode\Mailbox\InboundEmail;
 use BeyondCode\Mailbox\MailboxManager;
+use Exception;
 use Illuminate\Container\Container;
+use Illuminate\Routing\RouteDependencyResolverTrait;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
+use ReflectionFunction;
+use ZBateson\MailMimeParser\Header\Part\AddressPart;
 
 class Mailbox
 {
-    use ForwardsCalls;
+    use HandlesParameters,
+        HandlesRegularExpressions,
+        RouteDependencyResolverTrait,
+        ForwardsCalls;
 
-    /** @var RouteCollection */
-    protected $routes;
+    protected ?Container $container;
 
-    /** @var Route */
-    protected $fallbackRoute;
+    protected $action;
 
-    /** @var Container */
-    protected $container;
+    protected array $matches = [];
 
-    protected $matchAll = false;
+    protected array $wheres = [];
+
+    protected array $patterns = [];
+
+    protected int $priority = 0;
+
+    protected bool $matchEither = false;
 
     public function __construct(Container $container = null)
     {
         $this->container = $container ?: new Container;
-
-        $this->routes = new RouteCollection;
     }
 
-    public function from(string $pattern, $action): Route
+    public function from(string $regex): self
     {
-        return $this->addRoute(Route::FROM, $pattern, $action);
+        $this->setPattern(Pattern::FROM, $regex);
+
+        return $this;
     }
 
-    public function to(string $pattern, $action): Route
+    public function to(string $regex): self
     {
-        return $this->addRoute(Route::TO, $pattern, $action);
+        $this->setPattern(Pattern::TO, $regex);
+
+        return $this;
     }
 
-    public function cc(string $pattern, $action): Route
+    public function cc(string $regex): self
     {
-        return $this->addRoute(Route::CC, $pattern, $action);
+        $this->setPattern(Pattern::CC, $regex);
+
+        return $this;
     }
 
-    public function bcc(string $pattern, $action): Route
+    public function bcc(string $regex): self
     {
-        return $this->addRoute(Route::BCC, $pattern, $action);
+        $this->setPattern(Pattern::BCC, $regex);
+
+        return $this;
     }
 
-    public function subject(string $pattern, $action): Route
+    public function subject(string $regex): self
     {
-        return $this->addRoute(Route::SUBJECT, $pattern, $action);
+        $this->setPattern(Pattern::SUBJECT, $regex);
+
+        return $this;
     }
 
-    public function fallback($action)
+    protected function setPattern(string $matchBy, string $pattern): void
     {
-        $this->fallbackRoute = $this->createRoute(Route::FALLBACK, '', $action);
+        $this->patterns[] = new Pattern($matchBy, $pattern);
     }
 
-    protected function addRoute(string $matchBy, string $pattern, $action): Route
+    public function matchEither(): self
     {
-        $route = $this->createRoute($matchBy, $pattern, $action);
+        $this->matchEither = true;
 
-        $this->routes->add($route);
-
-        return $route;
+        return $this;
     }
 
-    protected function createRoute(string $matchBy, string $pattern, $action): Route
+    public function action($action): self
     {
-        return (new Route($matchBy, $pattern, $action))
-            ->setContainer($this->container);
+        $this->action = $action;
+
+        return $this;
     }
 
-    public function callMailboxes(InboundEmail $email)
+    public function priority(int $priority): self
     {
-        if (! $email->isValid()) {
-            return;
+        $this->priority = $priority;
+
+        return $this;
+    }
+
+    public function run(InboundEmail $email): bool
+    {
+        if (!$email->isValid()) {
+            throw new Exception("Mail is not valid.");
         }
 
-        $matchedRoutes = $this->routes->match($email)->map(function (Route $route) use ($email) {
-            $route->run($email);
+        if (!$this->matchFound($email)) {
+            return false;
+        }
+
+        $this->isCallable() ? $this->runCallable($email) : $this->runClass($email);
+
+        return true;
+    }
+
+    protected function matchFound(InboundEmail $message): bool
+    {
+        $matchedPatterns = $this->filterPatterns($message);
+
+        return $this->matchEither ?
+            $this->isPartialMatch($matchedPatterns) : $this->isFullMatch($matchedPatterns);
+    }
+
+    protected function filterPatterns(InboundEmail $message): Collection
+    {
+        return collect($this->patterns)->filter(function (Pattern $pattern) use ($message) {
+
+            $matchedValues = $this->getMatchedValues($message, $pattern->matchBy);
+
+            return $this->valueMatchesRegex($matchedValues, $pattern->regex) !== null;
         });
+    }
 
-        if ($matchedRoutes->isEmpty() && $this->fallbackRoute) {
-            $matchedRoutes[] = $this->fallbackRoute;
-            $this->fallbackRoute->run($email);
+    protected function getMatchedValues(InboundEmail $message, string $matchBy): array
+    {
+        switch ($matchBy) {
+            case Pattern::FROM:
+                return [$message->from()];
+            case Pattern::TO:
+                return $this->convertMessageAddresses($message->to());
+            case Pattern::CC:
+                return $this->convertMessageAddresses($message->cc());
+            case Pattern::BCC:
+                return $this->convertMessageAddresses($message->bcc());
+            case Pattern::SUBJECT:
+                return [$message->subject()];
+            default:
+                return [];
         }
-
-        if ($this->shouldStoreInboundEmails() && $this->shouldStoreAllInboundEmails($matchedRoutes)) {
-            $this->storeEmail($email);
-        }
     }
 
-    protected function shouldStoreInboundEmails(): bool
+    protected function convertMessageAddresses($addresses): array
     {
-        return config('mailbox.store_incoming_emails_for_days') > 0;
+        return collect($addresses)->map(function (AddressPart $address) {
+            return $address->getEmail();
+        })->toArray();
     }
 
-    protected function shouldStoreAllInboundEmails(Collection $matchedRoutes): bool
+    protected function valueMatchesRegex(array $matchValues, string $regex): ?string
     {
-        return $matchedRoutes->isNotEmpty() ? true : ! config('mailbox.only_store_matching_emails');
+        return collect($matchValues)->first(function (string $matchValue) use ($regex) {
+            return $this->matchesRegularExpression($matchValue, $regex);
+        });
     }
 
-    protected function storeEmail(InboundEmail $email)
+    protected function isPartialMatch(Collection $matchedPatterns): bool
     {
-        $email->save();
+        return $matchedPatterns->isNotEmpty();
+    }
+
+    protected function isFullMatch(Collection $matchedPatterns): bool
+    {
+        return count($this->patterns) == $matchedPatterns->count();
+    }
+
+    protected function isCallable(): bool
+    {
+        return is_callable($this->action);
+    }
+
+    protected function runCallable(InboundEmail $email)
+    {
+        $callable = $this->action;
+
+        $parameters = $this->resolveMethodDependencies(
+            [$email] + $this->parametersWithoutNulls(), new ReflectionFunction($this->action)
+        );
+
+        return $callable(...array_values($parameters));
+    }
+
+    protected function runClass(InboundEmail $email)
+    {
+        $method = $this->getMailboxMethod();
+        $mailbox = $this->getMailbox();
+
+        $parameters = $this->resolveClassMethodDependencies(
+            [$email] + $this->parametersWithoutNulls(), $mailbox, $method
+        );
+
+        return $mailbox->{$method}(...array_values($parameters));
+    }
+
+    protected function getMailbox(): Mailbox
+    {
+        $class = $this->parseMailboxCallback()[0];
+
+        return $this->container->make(ltrim($class, '\\'));
+    }
+
+    protected function getMailboxMethod(): string
+    {
+        return $this->parseMailboxCallback()[1] ?? '__invoke';
+    }
+
+    protected function parseMailboxCallback(): array
+    {
+        return Str::parseCallback($this->action);
     }
 
     public function __call($method, $parameters)
@@ -115,10 +227,5 @@ class Mailbox
         return $this->forwardCallTo(
             $this->container->make(MailboxManager::class), $method, $parameters
         );
-    }
-
-    public function matchAll(bool $shouldMatch)
-    {
-        $this->matchAll = $shouldMatch;
     }
 }

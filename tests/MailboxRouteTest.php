@@ -28,10 +28,10 @@ class MailboxRouteTest extends TestCase
         $message = new InboundEmail(['message' => $testMail->toString()]);
 
         $route = new Route(Route::FROM, $successfulPattern, 'SomeAction@handle');
-        $this->assertTrue($route->matches($message));
+        $this->assertTrue($route->matchFound($message));
 
         $route = new Route(Route::FROM, $failingPattern, 'SomeAction@handle');
-        $this->assertFalse($route->matches($message));
+        $this->assertFalse($route->matchFound($message));
     }
 
     /**
@@ -46,10 +46,10 @@ class MailboxRouteTest extends TestCase
         $message = new InboundEmail(['message' => $testMail->toString()]);
 
         $route = new Route(Route::TO, $successfulPattern, 'SomeAction@handle');
-        $this->assertTrue($route->matches($message));
+        $this->assertTrue($route->matchFound($message));
 
         $route = new Route(Route::TO, $failingPattern, 'SomeAction@handle');
-        $this->assertFalse($route->matches($message));
+        $this->assertFalse($route->matchFound($message));
     }
 
     /**
@@ -64,10 +64,10 @@ class MailboxRouteTest extends TestCase
         $message = new InboundEmail(['message' => $testMail->toString()]);
 
         $route = new Route(Route::CC, $successfulPattern, 'SomeAction@handle');
-        $this->assertTrue($route->matches($message));
+        $this->assertTrue($route->matchFound($message));
 
         $route = new Route(Route::CC, $failingPattern, 'SomeAction@handle');
-        $this->assertFalse($route->matches($message));
+        $this->assertFalse($route->matchFound($message));
     }
 
     /**
@@ -82,10 +82,10 @@ class MailboxRouteTest extends TestCase
         $message = new InboundEmail(['message' => $testMail->toString()]);
 
         $route = new Route(Route::BCC, $successfulPattern, 'SomeAction@handle');
-        $this->assertTrue($route->matches($message));
+        $this->assertTrue($route->matchFound($message));
 
         $route = new Route(Route::BCC, $failingPattern, 'SomeAction@handle');
-        $this->assertFalse($route->matches($message));
+        $this->assertFalse($route->matchFound($message));
     }
 
     /**
@@ -100,10 +100,10 @@ class MailboxRouteTest extends TestCase
         $message = new InboundEmail(['message' => $testMail->toString()]);
 
         $route = new Route(Route::SUBJECT, $successfulPattern, 'SomeAction@handle');
-        $this->assertTrue($route->matches($message));
+        $this->assertTrue($route->matchFound($message));
 
         $route = new Route(Route::SUBJECT, $failingPattern, 'SomeAction@handle');
-        $this->assertFalse($route->matches($message));
+        $this->assertFalse($route->matchFound($message));
     }
 
     /** @test */
@@ -117,12 +117,12 @@ class MailboxRouteTest extends TestCase
         $route = new Route(Route::FROM, '{from}@domain.com', 'SomeAction@handle');
         $route->where('from', '[0-9]+');
 
-        $this->assertFalse($route->matches($message));
+        $this->assertFalse($route->matchFound($message));
 
         $route = new Route(Route::FROM, '{from}@domain.com', 'SomeAction@handle');
         $route->where('from', '[A-Za-z]+');
 
-        $this->assertTrue($route->matches($message));
+        $this->assertTrue($route->matchFound($message));
     }
 
     public function subjectDataProvider()
@@ -165,19 +165,19 @@ class MailboxRouteTest extends TestCase
         $message = new InboundEmail(['message' => $testMail->toString()]);
 
         $route = new Route(Route::FROM, 'someone@foo.com', 'SomeAction@handle');
-        $route->matches($message);
+        $route->matchFound($message);
 
         $this->assertSame([], $route->parameters());
 
         $route = new Route(Route::FROM, '{name}@foo.com', 'SomeAction@handle');
-        $route->matches($message);
+        $route->matchFound($message);
 
         $this->assertSame([
             'name' => 'my-email',
         ], $route->parameters());
 
         $route = new Route(Route::FROM, '{name}@{domain}.{tld}', 'SomeAction@handle');
-        $route->matches($message);
+        $route->matchFound($message);
 
         $this->assertSame([
             'name' => 'my-email',
@@ -186,7 +186,7 @@ class MailboxRouteTest extends TestCase
         ], $route->parameters());
 
         $route = new Route(Route::SUBJECT, '{a}/{b}/{c}', 'SomeAction@handle');
-        $route->matches($message);
+        $route->matchFound($message);
 
         $this->assertSame([
             'a' => 'ABC',
@@ -207,7 +207,7 @@ class MailboxRouteTest extends TestCase
             $this->assertSame($email, $message);
         });
 
-        $route->matches($message);
+        $route->matchFound($message);
 
         $route->run($message);
     }
@@ -224,7 +224,7 @@ class MailboxRouteTest extends TestCase
             $this->assertSame($name, 'marcel');
         });
 
-        $route->matches($message);
+        $route->matchFound($message);
 
         $route->run($message);
     }
