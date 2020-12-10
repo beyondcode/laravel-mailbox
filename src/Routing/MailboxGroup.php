@@ -11,7 +11,7 @@ class MailboxGroup
 
     protected bool $continuousMatching = false;
 
-    protected Mailbox $fallback;
+    protected ?Mailbox $fallback = null;
 
     public function add(Mailbox $mailbox): self
     {
@@ -47,7 +47,7 @@ class MailboxGroup
             }
         }
 
-        if (!$matchedAny && $this->fallback) {
+        if (!$matchedAny && $this->fallback !== null) {
             $this->fallback->run($email);
             $matchedAny = true;
         }
@@ -74,7 +74,7 @@ class MailboxGroup
 
     public function fallback($action): self
     {
-        $mailbox = new Mailbox();
+        $mailbox = app(Mailbox::class);
         $mailbox->action($action);
 
         $this->fallback = $mailbox;

@@ -22,8 +22,6 @@ class Mailbox
         RouteDependencyResolverTrait,
         ForwardsCalls;
 
-    protected ?Container $container;
-
     protected $action;
 
     protected array $matches = [];
@@ -35,11 +33,6 @@ class Mailbox
     protected int $priority = 0;
 
     protected bool $matchEither = false;
-
-    public function __construct(Container $container = null)
-    {
-        $this->container = $container ?: new Container;
-    }
 
     public function from(string $regex): self
     {
@@ -209,7 +202,7 @@ class Mailbox
     {
         $class = $this->parseMailboxCallback()[0];
 
-        return $this->container->make(ltrim($class, '\\'));
+        return app()->make(ltrim($class, '\\'));
     }
 
     protected function getMailboxMethod(): string
@@ -225,7 +218,7 @@ class Mailbox
     public function __call($method, $parameters)
     {
         return $this->forwardCallTo(
-            $this->container->make(MailboxManager::class), $method, $parameters
+            app(MailboxManager::class), $method, $parameters
         );
     }
 }

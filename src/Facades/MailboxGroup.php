@@ -5,12 +5,12 @@ namespace BeyondCode\Mailbox\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \BeyondCode\Mailbox\Routing\Mailbox
+ * @see \BeyondCode\Mailbox\Routing\MailboxGroup
  */
-class Mailbox extends Facade
+class MailboxGroup extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'mailbox';
+        return 'mailbox-group';
     }
 }

@@ -5,6 +5,7 @@ namespace BeyondCode\Mailbox;
 use BeyondCode\Mailbox\Drivers\DriverInterface;
 use BeyondCode\Mailbox\Http\Middleware\MailboxBasicAuthentication;
 use BeyondCode\Mailbox\Routing\Mailbox;
+use BeyondCode\Mailbox\Routing\MailboxGroup;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
@@ -41,9 +42,8 @@ class MailboxServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/mailbox.php', 'mailbox');
 
-        $this->app->bind('mailbox', function () {
-            return new Mailbox($this->app);
-        });
+        $this->app->bind(Mailbox::class);
+        $this->app->singleton('mailbox-group', MailboxGroup::class);
 
         $this->app->singleton(MailboxManager::class);
     }

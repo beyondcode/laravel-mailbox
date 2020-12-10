@@ -2,7 +2,7 @@
 
 namespace BeyondCode\Mailbox\Drivers;
 
-use BeyondCode\Mailbox\Facades\Mailbox;
+use BeyondCode\Mailbox\Facades\MailboxGroup;
 use BeyondCode\Mailbox\InboundEmail;
 use Illuminate\Mail\Events\MessageSent;
 
@@ -23,6 +23,6 @@ class Log implements DriverInterface
         $modelClass = config('mailbox.model');
         $email = $modelClass::fromMessage($event->message);
 
-        Mailbox::run($email);
+        MailboxGroup::run($email);
     }
 }

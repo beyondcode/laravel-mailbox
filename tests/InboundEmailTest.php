@@ -2,8 +2,9 @@
 
 namespace BeyondCode\Mailbox\Tests;
 
-use BeyondCode\Mailbox\Facades\Mailbox;
+use BeyondCode\Mailbox\Facades\MailboxGroup;
 use BeyondCode\Mailbox\InboundEmail;
+use BeyondCode\Mailbox\Routing\Mailbox;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Mail;
 
@@ -20,8 +21,12 @@ class InboundEmailTest extends TestCase
     /** @test */
     public function it_stores_inbound_emails()
     {
-        Mailbox::to('someone@beyondco.de', function ($email) {
-        });
+        $mailbox = (new Mailbox())
+            ->to('someone@beyondco.de')
+            ->action(function ($email) {
+            });
+
+        MailboxGroup::add($mailbox);
 
         Mail::to('someone@beyondco.de')->send(new TestMail);
         Mail::to('someone-else@beyondco.de')->send(new TestMail);
@@ -34,8 +39,12 @@ class InboundEmailTest extends TestCase
     {
         $this->app['config']['mailbox.only_store_matching_emails'] = false;
 
-        Mailbox::to('someone@beyondco.de', function ($email) {
-        });
+        $mailbox = (new Mailbox())
+            ->to('someone@beyondco.de')
+            ->action(function ($email) {
+            });
+
+        MailboxGroup::add($mailbox);
 
         Mail::to('someone@beyondco.de')->send(new TestMail);
         Mail::to('someone-else@beyondco.de')->send(new TestMail);
@@ -46,7 +55,7 @@ class InboundEmailTest extends TestCase
     /** @test */
     public function it_can_use_fallbacks()
     {
-        Mailbox::fallback(function (InboundEmail $email) {
+        MailboxGroup::fallback(function (InboundEmail $email) {
             Mail::fake();
 
             $email->reply(new ReplyMail);
@@ -60,7 +69,7 @@ class InboundEmailTest extends TestCase
     /** @test */
     public function it_stores_inbound_emails_with_fallback()
     {
-        Mailbox::fallback(function ($email) {
+        MailboxGroup::fallback(function ($email) {
         });
 
         Mail::to('someone@beyondco.de')->send(new TestMail);
@@ -74,8 +83,12 @@ class InboundEmailTest extends TestCase
     {
         $this->app['config']['mailbox.store_incoming_emails_for_days'] = 0;
 
-        Mailbox::from('example@beyondco.de', function ($email) {
-        });
+        $mailbox = (new Mailbox())
+            ->from('example@beyondco.de')
+            ->action(function ($email) {
+            });
+
+        MailboxGroup::add($mailbox);
 
         Mail::to('someone@beyondco.de')->send(new TestMail);
         Mail::to('someone@beyondco.de')->send(new TestMail);
@@ -86,11 +99,15 @@ class InboundEmailTest extends TestCase
     /** @test */
     public function it_can_reply_to_mails()
     {
-        Mailbox::from('example@beyondco.de', function (InboundEmail $email) {
-            Mail::fake();
+        $mailbox = (new Mailbox())
+            ->from('example@beyondco.de')
+            ->action(function (InboundEmail $email) {
+                Mail::fake();
 
-            $email->reply(new ReplyMail);
-        });
+                $email->reply(new ReplyMail);
+            });
+
+        MailboxGroup::add($mailbox);
 
         Mail::to('someone@beyondco.de')->send(new TestMail);
 
@@ -102,9 +119,11 @@ class InboundEmailTest extends TestCase
     {
         $this->app['config']['mailbox.model'] = ExtendedInboundEmail::class;
 
-        Mailbox::from('example@beyondco.de', function ($email) {
+        $mailbox = (new Mailbox())->from('example@beyondco.de')->action(function ($email) {
             $this->assertInstanceOf(ExtendedInboundEmail::class, $email);
         });
+
+        MailboxGroup::add($mailbox);
 
         Mail::to('someone@beyondco.de')->send(new TestMail);
     }
