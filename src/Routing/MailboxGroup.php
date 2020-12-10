@@ -9,11 +9,11 @@ use Illuminate\Routing\Route;
 
 class MailboxGroup
 {
-    protected $mailboxes = [];
+    protected array $mailboxes = [];
 
-    protected $stopAfterFirstMatch = false;
+    protected bool $stopAfterFirstMatch = false;
 
-    protected Route $fallbackRoute;
+    protected Mailbox $fallback;
 
     protected ?Container $container;
 
@@ -48,8 +48,8 @@ class MailboxGroup
             }
         }
 
-        if (!$matched && $this->fallbackRoute) {
-            $this->fallbackRoute->run($email);
+        if (!$matched && $this->fallback) {
+            $this->fallback->run($email);
             $matched = true;
         }
 
@@ -73,9 +73,14 @@ class MailboxGroup
         $email->save();
     }
 
-    public function fallback($action)
+    public function fallback($action): self
     {
-        $this->fallbackRoute = $this->createRoute(Route::FALLBACK, '', $action);
+        $mailbox = new Mailbox();
+        $mailbox->action($action);
+
+        $this->fallback = $mailbox;
+
+        return $this;
     }
 
     protected function createRoute(string $matchBy, string $pattern, $action): Route
