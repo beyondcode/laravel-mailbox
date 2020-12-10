@@ -7,7 +7,6 @@ use BeyondCode\Mailbox\Concerns\HandlesRegularExpressions;
 use BeyondCode\Mailbox\InboundEmail;
 use BeyondCode\Mailbox\MailboxManager;
 use Exception;
-use Illuminate\Container\Container;
 use Illuminate\Routing\RouteDependencyResolverTrait;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -97,11 +96,11 @@ class Mailbox
 
     public function run(InboundEmail $email): bool
     {
-        if (!$email->isValid()) {
-            throw new Exception("Mail is not valid.");
+        if (! $email->isValid()) {
+            throw new Exception('Mail is not valid.');
         }
 
-        if (!$this->matchFound($email)) {
+        if (! $this->matchFound($email)) {
             return false;
         }
 
@@ -121,7 +120,6 @@ class Mailbox
     protected function filterPatterns(InboundEmail $message): Collection
     {
         return collect($this->patterns)->filter(function (Pattern $pattern) use ($message) {
-
             $matchedValues = $this->getMatchedValues($message, $pattern->matchBy);
 
             return $this->valueMatchesRegex($matchedValues, $pattern->regex) !== null;

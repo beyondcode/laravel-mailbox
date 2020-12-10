@@ -12,7 +12,7 @@ trait HandlesRegularExpressions
 
         $this->matches = array_merge($this->matches, $matches);
 
-        return (bool)$matches;
+        return (bool) $matches;
     }
 
     /**

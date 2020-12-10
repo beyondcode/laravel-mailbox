@@ -7,7 +7,7 @@ trait HandlesParameters
     public function parametersWithoutNulls()
     {
         return array_filter($this->parameters(), function ($p) {
-            return !is_null($p);
+            return ! is_null($p);
         });
     }
 

@@ -17,7 +17,7 @@ class Pattern
 
     public function __construct(string $matchBy, string $regex)
     {
-        if (!in_array($matchBy, [self::FROM, self::TO, self::CC, self::BCC, self::SUBJECT])) {
+        if (! in_array($matchBy, [self::FROM, self::TO, self::CC, self::BCC, self::SUBJECT])) {
             throw new Exception('Invalid matchBy parameter.');
         }
 

@@ -33,21 +33,20 @@ class MailboxGroup
          * @var $mailbox Mailbox
          */
         foreach ($mailboxes as $mailbox) {
-
             $matched = $mailbox->run($email);
 
-            if (!$matched) {
+            if (! $matched) {
                 continue;
             }
 
             $matchedAny = true;
 
-            if (!$this->continuousMatching) {
+            if (! $this->continuousMatching) {
                 break;
             }
         }
 
-        if (!$matchedAny && $this->fallback !== null) {
+        if (! $matchedAny && $this->fallback !== null) {
             $this->fallback->run($email);
             $matchedAny = true;
         }
@@ -64,7 +63,7 @@ class MailboxGroup
 
     protected function shouldStoreAllInboundEmails(bool $matched): bool
     {
-        return $matched ? true : !config('mailbox.only_store_matching_emails');
+        return $matched ? true : ! config('mailbox.only_store_matching_emails');
     }
 
     protected function storeEmail(InboundEmail $email)
