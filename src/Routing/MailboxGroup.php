@@ -27,12 +27,12 @@ class MailboxGroup
     public function callMailboxes(InboundEmail $email): void
     {
         $matchedAny = false;
-        $ordered = collect($this->mailboxes)->sortByDesc('priority');
+        $mailboxes = collect($this->mailboxes)->sortByDesc('priority');
 
         /**
          * @var $mailbox Mailbox
          */
-        foreach ($ordered as $mailbox) {
+        foreach ($mailboxes as $mailbox) {
 
             $matched = $mailbox->run($email);
 
