@@ -11,7 +11,7 @@ class MailboxGroup
 {
     protected array $mailboxes = [];
 
-    protected bool $stopAfterFirstMatch = false;
+    protected bool $continuousMatching = false;
 
     protected Mailbox $fallback;
 
@@ -33,7 +33,7 @@ class MailboxGroup
      */
     public function callMailboxes(InboundEmail $email): void
     {
-        $matched = false;
+        $matchedAny = false;
         $ordered = collect($this->mailboxes)->sortByDesc('priority');
 
         /**
@@ -43,17 +43,23 @@ class MailboxGroup
 
             $matched = $mailbox->run($email);
 
-            if ($matched && $this->stopAfterFirstMatch) {
+            if (!$matched) {
+                continue;
+            }
+
+            $matchedAny = true;
+
+            if (!$this->continuousMatching) {
                 break;
             }
         }
 
-        if (!$matched && $this->fallback) {
+        if (!$matchedAny && $this->fallback) {
             $this->fallback->run($email);
-            $matched = true;
+            $matchedAny = true;
         }
 
-        if ($this->shouldStoreInboundEmails() && $this->shouldStoreAllInboundEmails($matched)) {
+        if ($this->shouldStoreInboundEmails() && $this->shouldStoreAllInboundEmails($matchedAny)) {
             $this->storeEmail($email);
         }
     }
@@ -89,8 +95,10 @@ class MailboxGroup
             ->setContainer($this->container);
     }
 
-    public function stopAfterFirstMatch(bool $stop): void
+    public function continuousMatching(): self
     {
-        $this->stopAfterFirstMatch = $stop;
+        $this->continuousMatching = true;
+
+        return $this;
     }
 }
