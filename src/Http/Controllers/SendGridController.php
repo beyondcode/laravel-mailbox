@@ -15,6 +15,6 @@ class SendGridController extends Controller
 
     public function __invoke(SendGridRequest $request)
     {
-        Mailbox::callMailboxes($request->email());
+        Mailbox::run($request->email());
     }
 }

@@ -21,7 +21,7 @@ class LogTest extends TestCase
     /** @test */
     public function it_catches_logged_mails()
     {
-        Mailbox::from('{name}@beyondco.de', function (InboundEmail $email, $name) {
+        Mailbox::from('{name}@beyondco.de')->action(function (InboundEmail $email, $name) {
             $this->assertSame($name, 'example');
             $this->assertSame($email->from(), 'example@beyondco.de');
             $this->assertSame($email->subject(), 'This is a subject');

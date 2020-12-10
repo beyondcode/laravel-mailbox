@@ -13,7 +13,7 @@ trait HandlesParameters
 
     public function parameters()
     {
-        return $this->matchToKeys(array_slice($this->matches, 1));
+        return $this->matchToKeys($this->matches);
     }
 
     protected function matchToKeys(array $matches)

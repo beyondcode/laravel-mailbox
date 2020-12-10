@@ -15,6 +15,6 @@ class MailCareController extends Controller
 
     public function __invoke(MailCareRequest $request)
     {
-        Mailbox::callMailboxes($request->email());
+        Mailbox::run($request->email());
     }
 }

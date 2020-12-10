@@ -16,7 +16,7 @@ trait HandlesRegularExpressions
             }
         }
 
-        $this->matches[] = $matches;
+        $this->matches = array_merge($this->matches, $matches);
 
         return (bool)$matches;
     }

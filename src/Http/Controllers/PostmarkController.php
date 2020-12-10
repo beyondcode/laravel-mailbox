@@ -15,6 +15,6 @@ class PostmarkController extends Controller
 
     public function __invoke(PostmarkRequest $request)
     {
-        Mailbox::callMailboxes($request->email());
+        Mailbox::run($request->email());
     }
 }

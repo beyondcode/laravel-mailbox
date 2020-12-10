@@ -9,6 +9,6 @@ class MailgunController
 {
     public function __invoke(MailgunRequest $request)
     {
-        Mailbox::callMailboxes($request->email());
+        Mailbox::run($request->email());
     }
 }
