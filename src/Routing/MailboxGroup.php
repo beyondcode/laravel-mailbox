@@ -4,8 +4,6 @@ namespace BeyondCode\Mailbox\Routing;
 
 use BeyondCode\Mailbox\InboundEmail;
 use Exception;
-use Illuminate\Container\Container;
-use Illuminate\Routing\Route;
 
 class MailboxGroup
 {
@@ -15,16 +13,11 @@ class MailboxGroup
 
     protected Mailbox $fallback;
 
-    protected ?Container $container;
-
-    public function __construct(Container $container = null)
-    {
-        $this->container = $container ?: new Container;
-    }
-
-    public function add(Mailbox $mailbox)
+    public function add(Mailbox $mailbox): self
     {
         $this->mailboxes[] = $mailbox;
+
+        return $this;
     }
 
     /**
@@ -87,12 +80,6 @@ class MailboxGroup
         $this->fallback = $mailbox;
 
         return $this;
-    }
-
-    protected function createRoute(string $matchBy, string $pattern, $action): Route
-    {
-        return (new Route($matchBy, $pattern, $action))
-            ->setContainer($this->container);
     }
 
     public function continuousMatching(): self
