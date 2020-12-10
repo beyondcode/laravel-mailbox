@@ -10,12 +10,6 @@ trait HandlesRegularExpressions
     {
         preg_match($this->getRegularExpression($regex), $matchValue, $matches);
 
-        foreach ($matches as $key => $value) {
-            if (is_int($key)) {
-                unset($matches[$key]);
-            }
-        }
-
         $this->matches = array_merge($this->matches, $matches);
 
         return (bool)$matches;

@@ -2,7 +2,7 @@
 
 namespace BeyondCode\Mailbox\Http\Controllers;
 
-use BeyondCode\Mailbox\Facades\Mailbox;
+use BeyondCode\Mailbox\Facades\MailboxGroup;
 use BeyondCode\Mailbox\Http\Requests\MailCareRequest;
 use Illuminate\Routing\Controller;
 
@@ -15,6 +15,6 @@ class MailCareController extends Controller
 
     public function __invoke(MailCareRequest $request)
     {
-        Mailbox::run($request->email());
+        MailboxGroup::run($request->email());
     }
 }

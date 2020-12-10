@@ -2,7 +2,7 @@
 
 namespace BeyondCode\Mailbox\Http\Controllers;
 
-use BeyondCode\Mailbox\Facades\Mailbox;
+use BeyondCode\Mailbox\Facades\MailboxGroup;
 use BeyondCode\Mailbox\Http\Requests\SendGridRequest;
 use Illuminate\Routing\Controller;
 
@@ -15,6 +15,6 @@ class SendGridController extends Controller
 
     public function __invoke(SendGridRequest $request)
     {
-        Mailbox::run($request->email());
+        MailboxGroup::run($request->email());
     }
 }

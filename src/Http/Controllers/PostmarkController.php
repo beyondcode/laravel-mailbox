@@ -2,7 +2,7 @@
 
 namespace BeyondCode\Mailbox\Http\Controllers;
 
-use BeyondCode\Mailbox\Facades\Mailbox;
+use BeyondCode\Mailbox\Facades\MailboxGroup;
 use BeyondCode\Mailbox\Http\Requests\PostmarkRequest;
 use Illuminate\Routing\Controller;
 
@@ -15,6 +15,6 @@ class PostmarkController extends Controller
 
     public function __invoke(PostmarkRequest $request)
     {
-        Mailbox::run($request->email());
+        MailboxGroup::run($request->email());
     }
 }
