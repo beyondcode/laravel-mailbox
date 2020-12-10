@@ -24,7 +24,7 @@ class MailboxGroup
      * @param InboundEmail $email
      * @throws Exception
      */
-    public function callMailboxes(InboundEmail $email): void
+    public function run(InboundEmail $email): void
     {
         $matchedAny = false;
         $mailboxes = collect($this->mailboxes)->sortByDesc('priority');
