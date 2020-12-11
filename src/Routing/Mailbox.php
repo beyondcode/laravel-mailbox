@@ -73,9 +73,9 @@ class Mailbox
         $this->patterns[] = new Pattern($matchBy, $pattern);
     }
 
-    public function matchEither(): self
+    public function matchEither(bool $match = true): self
     {
-        $this->matchEither = true;
+        $this->matchEither = $match;
 
         return $this;
     }
