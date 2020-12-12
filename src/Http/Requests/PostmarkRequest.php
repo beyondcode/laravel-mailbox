@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BeyondCode\Mailbox\Http\Requests;
 
 use BeyondCode\Mailbox\InboundEmail;
@@ -15,7 +17,7 @@ class PostmarkRequest extends FormRequest
         ]);
     }
 
-    public function email()
+    public function email(): InboundEmail
     {
         /** @var InboundEmail $modelClass */
         $modelClass = config('mailbox.model');

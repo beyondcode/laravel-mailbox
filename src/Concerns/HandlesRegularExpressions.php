@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BeyondCode\Mailbox\Concerns;
 
 use Symfony\Component\Routing\Route;
 
 trait HandlesRegularExpressions
 {
-    protected function matchesRegularExpression(string $matchValue, string $regex)
+    protected function matchesRegularExpression(string $matchValue, string $regex): bool
     {
         preg_match($this->getRegularExpression($regex), $matchValue, $matches);
 
@@ -47,7 +49,7 @@ trait HandlesRegularExpressions
         return $this;
     }
 
-    protected function parseWhere($name, $expression)
+    protected function parseWhere($name, $expression): array
     {
         return is_array($name) ? $name : [$name => $expression];
     }

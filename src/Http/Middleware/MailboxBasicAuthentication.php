@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BeyondCode\Mailbox\Http\Middleware;
 
 use Closure;

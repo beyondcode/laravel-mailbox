@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BeyondCode\Mailbox\Facades;
 
 use BeyondCode\Mailbox\InboundEmail;

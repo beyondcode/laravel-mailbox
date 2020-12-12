@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BeyondCode\Mailbox;
 
 use BeyondCode\Mailbox\Drivers\DriverInterface;
@@ -22,7 +24,7 @@ class MailboxManager extends Manager
         $this->registerDrivers();
     }
 
-    public function getDefaultDriver()
+    public function getDefaultDriver(): string
     {
         return $this->container['config']['mailbox.driver'];
     }

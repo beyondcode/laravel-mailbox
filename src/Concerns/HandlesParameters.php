@@ -1,22 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BeyondCode\Mailbox\Concerns;
 
 trait HandlesParameters
 {
-    public function parametersWithoutNulls()
+    public function parametersWithoutNulls(): array
     {
         return array_filter($this->parameters(), function ($p) {
             return ! is_null($p);
         });
     }
 
-    public function parameters()
+    public function parameters(): array
     {
         return $this->matchToKeys(array_slice($this->matches, 1));
     }
 
-    protected function matchToKeys(array $matches)
+    protected function matchToKeys(array $matches): array
     {
         if (empty($parameterNames = $this->parameterNames())) {
             return [];
@@ -29,7 +31,7 @@ trait HandlesParameters
         });
     }
 
-    public function parameterNames()
+    public function parameterNames(): array
     {
         $matches = [];
 

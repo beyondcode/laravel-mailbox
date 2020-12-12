@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BeyondCode\Mailbox\Routing;
 
 use BeyondCode\Mailbox\Concerns\HandlesParameters;

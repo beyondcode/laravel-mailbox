@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BeyondCode\Mailbox;
 
 use BeyondCode\Mailbox\Drivers\DriverInterface;
@@ -48,7 +50,7 @@ class MailboxServiceProvider extends ServiceProvider
         $this->app->singleton(MailboxManager::class);
     }
 
-    protected function registerDriver()
+    protected function registerDriver(): void
     {
         /**
          * @var $manager MailboxManager

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BeyondCode\Mailbox\Http\Requests;
 
 use BeyondCode\Mailbox\InboundEmail;
@@ -25,7 +27,7 @@ class MailgunRequest extends FormRequest
         return $validator;
     }
 
-    public function email()
+    public function email(): InboundEmail
     {
         /** @var InboundEmail $modelClass */
         $modelClass = config('mailbox.model');
@@ -33,15 +35,15 @@ class MailgunRequest extends FormRequest
         return $modelClass::fromMessage($this->get('body-mime'));
     }
 
-    protected function verifySignature()
+    protected function verifySignature(): void
     {
-        $data = $this->timestamp.$this->token;
+        $data = $this->request->get('timestamp').$this->request->get('token');
 
-        $signature = hash_hmac('sha256', $data, config('mailbox.services.mailgun.key'));
+        $signature = hash_hmac('sha256', $data, config('mailbox.services.mailgun.key') ?: '');
 
-        $signed = hash_equals($this->signature, $signature);
+        $signed = hash_equals($this->request->get('signature'), $signature);
 
-        abort_unless($signed && $this->isFresh($this->timestamp), 401, 'Invalid Mailgun signature or timestamp.');
+        abort_unless($signed && $this->isFresh($this->request->get('timestamp')), 401, 'Invalid Mailgun signature or timestamp.');
     }
 
     protected function isFresh($timestamp): bool
