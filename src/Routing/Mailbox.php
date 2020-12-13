@@ -7,7 +7,6 @@ namespace BeyondCode\Mailbox\Routing;
 use BeyondCode\Mailbox\Concerns\HandlesParameters;
 use BeyondCode\Mailbox\Concerns\HandlesRegularExpressions;
 use BeyondCode\Mailbox\InboundEmail;
-use BeyondCode\Mailbox\MailboxManager;
 use Exception;
 use Illuminate\Routing\RouteDependencyResolverTrait;
 use Illuminate\Support\Collection;
@@ -172,6 +171,10 @@ class Mailbox
 
     protected function isCallable(): bool
     {
+        if(!$this->action){
+            throw new Exception('Mailbox needs to have an action defined.');
+        }
+
         return is_callable($this->action);
     }
 
@@ -213,12 +216,5 @@ class Mailbox
     protected function parseMailboxCallback(): array
     {
         return Str::parseCallback($this->action);
-    }
-
-    public function __call($method, $parameters)
-    {
-        return $this->forwardCallTo(
-            app(MailboxManager::class), $method, $parameters
-        );
     }
 }

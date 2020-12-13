@@ -1,46 +1,14 @@
 <?php
 
-use BeyondCode\Mailbox\Drivers\Log;
-use BeyondCode\Mailbox\Drivers\MailCare;
-use BeyondCode\Mailbox\Drivers\Mailgun;
-use BeyondCode\Mailbox\Drivers\Postmark;
-use BeyondCode\Mailbox\Drivers\SendGrid;
 use BeyondCode\Mailbox\InboundEmail;
 
 return [
-
-    /**
-     * The driver to use when listening for incoming emails.
-     * It defaults to the mail driver that you are using.
-     */
-    'driver' => env('MAILBOX_DRIVER', 'log'),
-
-    /**
-     * Supported driver keys and what they map to. Can map to a class or a callback.
-     * If class is used, it must implement DriverInterface.
-     */
-    'supported_drivers' => [
-        'log'       => Log::class,
-        'mailgun'   => Mailgun::class,
-        'send_grid' => SendGrid::class,
-        'mail_care' => MailCare::class,
-        'postmark'  => Postmark::class,
-    ],
 
     /*
      * The model class to use when converting an incoming email to a message.
      * It must extend the default model class
      */
     'model' => InboundEmail::class,
-
-    /*
-     * The path for driver specific routes. This is where
-     * you need to point your driver specific callbacks
-     * to.
-     *
-     * For example: /laravel-mailbox/sendgrid/
-     */
-    'route_prefix' => 'laravel-mailbox',
 
     /*
      * The amount of days that incoming emails should be stored in your

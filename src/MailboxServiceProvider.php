@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BeyondCode\Mailbox;
 
-use BeyondCode\Mailbox\Drivers\DriverInterface;
 use BeyondCode\Mailbox\Http\Middleware\MailboxBasicAuthentication;
 use BeyondCode\Mailbox\Routing\Mailbox;
 use BeyondCode\Mailbox\Routing\MailboxGroup;
@@ -33,8 +32,6 @@ class MailboxServiceProvider extends ServiceProvider
         $this->commands([
             Console\CleanEmails::class,
         ]);
-
-        $this->registerDriver();
     }
 
     /**
@@ -46,22 +43,5 @@ class MailboxServiceProvider extends ServiceProvider
 
         $this->app->bind(Mailbox::class);
         $this->app->singleton('mailbox-group', MailboxGroup::class);
-
-        $this->app->singleton(MailboxManager::class);
-    }
-
-    protected function registerDriver(): void
-    {
-        /**
-         * @var $manager MailboxManager
-         */
-        $manager = app(MailboxManager::class);
-
-        /**
-         * @var $driver DriverInterface
-         */
-        $driver = $manager->driver();
-
-        $driver->register();
     }
 }

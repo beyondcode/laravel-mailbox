@@ -5,6 +5,7 @@ namespace BeyondCode\Mailbox\Tests;
 use BeyondCode\Mailbox\Facades\MailboxGroup;
 use BeyondCode\Mailbox\InboundEmail;
 use BeyondCode\Mailbox\Routing\Mailbox;
+use Illuminate\Mail\Events\MessageSent;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Mail;
 
@@ -14,8 +15,30 @@ class InboundEmailTest extends TestCase
     {
         parent::getEnvironmentSetUp($app);
 
-        $app['config']['mail.driver'] = 'log';
-        $app['config']['mailbox.driver'] = 'log';
+        $this->catchLocalEmails();
+    }
+
+    public function processLog(MessageSent $event)
+    {
+        /** @var InboundEmail $modelClass */
+        $modelClass = config('mailbox.model');
+        $email = $modelClass::fromMessage($event->message);
+
+        MailboxGroup::run($email);
+    }
+
+    /** @test */
+    public function it_catches_logged_mails()
+    {
+        $mailbox = (new Mailbox())->from('{name}@beyondco.de')->action(function (InboundEmail $email, $name) {
+            $this->assertSame($name, 'example');
+            $this->assertSame($email->from(), 'example@beyondco.de');
+            $this->assertSame($email->subject(), 'This is a subject');
+        });
+
+        MailboxGroup::add($mailbox);
+
+        Mail::to('someone@beyondco.de')->send(new TestMail);
     }
 
     /** @test */
@@ -37,7 +60,7 @@ class InboundEmailTest extends TestCase
     /** @test */
     public function it_stores_all_inbound_emails()
     {
-        $this->app['config']['mailbox.only_store_matching_emails'] = false;
+        config()->set('mailbox.only_store_matching_emails', false);
 
         $mailbox = (new Mailbox())
             ->to('someone@beyondco.de')

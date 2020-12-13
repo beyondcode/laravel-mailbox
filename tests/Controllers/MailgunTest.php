@@ -2,7 +2,9 @@
 
 namespace BeyondCode\Mailbox\Tests\Controllers;
 
+use BeyondCode\Mailbox\Http\Controllers\MailgunController;
 use BeyondCode\Mailbox\Tests\TestCase;
+use Illuminate\Support\Facades\Route;
 
 class MailgunTest extends TestCase
 {
@@ -10,7 +12,7 @@ class MailgunTest extends TestCase
     {
         parent::getEnvironmentSetUp($app);
 
-        $app['config']['mailbox.driver'] = 'mailgun';
+        Route::post('/laravel-mailbox/mailgun/mime', MailgunController::class);
     }
 
     /** @test */

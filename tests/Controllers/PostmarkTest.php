@@ -2,7 +2,9 @@
 
 namespace BeyondCode\Mailbox\Tests\Controllers;
 
+use BeyondCode\Mailbox\Http\Controllers\PostmarkController;
 use BeyondCode\Mailbox\Tests\TestCase;
+use Illuminate\Support\Facades\Route;
 
 class PostmarkTest extends TestCase
 {
@@ -10,7 +12,7 @@ class PostmarkTest extends TestCase
     {
         parent::getEnvironmentSetUp($app);
 
-        $app['config']['mailbox.driver'] = 'postmark';
+        Route::post('/laravel-mailbox/postmark', PostmarkController::class);
     }
 
     /** @test */
