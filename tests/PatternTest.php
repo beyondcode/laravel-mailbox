@@ -108,7 +108,6 @@ class PatternTest extends TestCase
     }
 }
 
-
 class PatternTestMail extends Mailable
 {
     public function build()

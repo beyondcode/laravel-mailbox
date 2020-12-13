@@ -171,7 +171,7 @@ class Mailbox
 
     protected function isCallable(): bool
     {
-        if(!$this->action){
+        if (! $this->action) {
             throw new Exception('Mailbox needs to have an action defined.');
         }
 
