@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
 
-class MailgunRequest extends FormRequest
+class MailgunRequest extends MailboxRequest
 {
     public function validator()
     {
@@ -25,14 +25,6 @@ class MailgunRequest extends FormRequest
         });
 
         return $validator;
-    }
-
-    public function email(): InboundEmail
-    {
-        /** @var InboundEmail $modelClass */
-        $modelClass = config('mailbox.model');
-
-        return $modelClass::fromMessage($this->get('body-mime'));
     }
 
     protected function verifySignature(): void

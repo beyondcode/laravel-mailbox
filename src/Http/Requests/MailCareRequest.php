@@ -8,20 +8,7 @@ use BeyondCode\Mailbox\InboundEmail;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
 
-class MailCareRequest extends FormRequest
+class MailCareRequest extends MailboxRequest
 {
-    public function validator()
-    {
-        return Validator::make($this->all(), [
-            'email' => 'required',
-        ]);
-    }
 
-    public function email(): InboundEmail
-    {
-        /** @var InboundEmail $modelClass */
-        $modelClass = config('mailbox.model');
-
-        return $modelClass::fromMessage($this->get('email'));
-    }
 }
