@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace BeyondCode\Mailbox\Http\Requests;
 
-use BeyondCode\Mailbox\InboundEmail;
 use Carbon\Carbon;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
 
 class MailgunRequest extends MailboxRequest
