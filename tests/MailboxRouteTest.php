@@ -4,7 +4,7 @@ namespace BeyondCode\Mailbox\Tests;
 
 use BeyondCode\Mailbox\InboundEmail;
 use BeyondCode\Mailbox\Routing\Route;
-use Zend\Mail\Message as TestMail;
+use Laminas\Mail\Message as TestMail;
 
 class MailboxRouteTest extends TestCase
 {

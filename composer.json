@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": "^7.3",
+        "php": "^7.3|^8.0",
         "illuminate/container": "^6.0|^7.0|^8.0",
         "illuminate/database": "^6.0|^7.0|^8.0",
         "illuminate/log": "^6.0|^7.0|^8.0",
@@ -26,10 +26,10 @@
         "zbateson/mail-mime-parser": "^1.1"
     },
     "require-dev": {
+        "laminas/laminas-mail": "^2.13",
         "mockery/mockery": "^1.2",
         "orchestra/testbench": "^4.0|^5.0",
-        "phpunit/phpunit": "^7.0|^8.0",
-        "zendframework/zend-mail": "^2.10"
+        "phpunit/phpunit": "^7.0|^8.0|^9.3"
     },
     "autoload": {
         "psr-4": {
@@ -44,7 +44,6 @@
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
     },
     "config": {
         "sort-packages": true
