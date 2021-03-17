@@ -16,6 +16,6 @@ class MailboxBasicAuthentication
             return $next($request);
         }
 
-        throw new UnauthorizedHttpException('Laravel Mailbox');
+        throw new UnauthorizedHttpException('Basic realm=Mailer','Laravel Mailbox');
     }
 }
