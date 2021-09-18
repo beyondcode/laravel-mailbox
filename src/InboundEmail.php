@@ -185,7 +185,7 @@ class InboundEmail extends Model
     {
         return $this->from() !== '' && ($this->isText() || $this->isHtml());
     }
-    
+
     public function isAutoReply($checkCommonSubjects = true): bool
     {
         if ($this->headerValue('x-autorespond')) {
