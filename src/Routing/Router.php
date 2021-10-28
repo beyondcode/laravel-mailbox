@@ -87,7 +87,7 @@ class Router
             if ($this->shouldStoreInboundEmails() && $this->shouldStoreAllInboundEmails($matchedRoutes)) {
                 $this->storeEmail($email);
             }
-            
+
             $matchedRoutes = $this->routes->match($email)->map(function (Route $route) use ($email) {
                 $route->run($email);
             });
