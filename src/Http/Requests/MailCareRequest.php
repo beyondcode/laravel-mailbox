@@ -11,12 +11,11 @@ class MailCareRequest extends FormRequest
     public function validator()
     {
         return Validator::make($this->all(), [
-            'email' => 'required',
         ]);
     }
 
     public function email()
     {
-        return InboundEmail::fromMessage($this->get('email'));
+        return InboundEmail::fromMessage(file_get_contents('php://input'));
     }
 }
