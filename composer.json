@@ -1,17 +1,25 @@
 {
-    "name": "beyondcode/laravel-mailbox",
+    "name": "cubewebsites/laravel-mailbox",
     "description": "Handle incoming emails in your Laravel application.",
     "keywords": [
         "beyondcode",
-        "laravel-mailbox"
+        "laravel-mailbox",
+        "inbound-mail",
+        "email"
     ],
-    "homepage": "https://github.com/beyondcode/laravel-mailbox",
+    "homepage": "https://github.com/cubewebsites/laravel-mailbox",
     "license": "MIT",
     "authors": [
         {
             "name": "Marcel Pociot",
             "email": "marcel@beyondco.de",
             "homepage": "https://beyondcode.de",
+            "role": "Original Developer"
+        },
+        {
+            "name": "Ashraf Vali",
+            "email": "github@cubewebsites.com",
+            "homepage": "https://cubewebsites.com",
             "role": "Developer"
         }
     ],
