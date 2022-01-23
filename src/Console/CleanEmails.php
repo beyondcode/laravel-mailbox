@@ -29,7 +29,7 @@ class CleanEmails extends Command
         /** @var InboundEmail $modelClass */
         $modelClass = config('mailbox.model');
 
-        $models = $modelClass::where('created_at', '<', $cutOffDate)->get();
+        $models = $modelClass::where('created_at', '<', $cutOffDate)->get('id');
 
         $models->each->delete();
 
