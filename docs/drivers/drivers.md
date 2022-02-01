@@ -62,9 +62,15 @@ Next you will need to configure MailCare, to send incoming emails to your applic
 
 See ["MailCare"](https://mailcare.io) for more information.
 
-## Local development / log driver
+## Local development
 
-When working locally, you might not want to use real incoming emails while testing your application. Out of the box, this package supports Laravel's "log" mail driver for incoming emails.
+When working locally, you might not want to use real emails while testing your application. Out of the box, this package supports Laravel's "log" and "array" mail drivers.
 
-To test incoming emails, set both your `MAIL_DRIVER` and your `MAILBOX_DRIVER`  in your `.env` file to "log".
-Now every time you send an email in your application, this email will appear in your `laravel.log` file and will try to call one of your configured Mailboxes.
+You can update your `.env` or `phpunit.xml` file:
+
+```xml
+<server name="MAIL_MAILER" value="array"/>
+<server name="MAILBOX_DRIVER" value="array"/>
+```
+
+If you want to log the emails (inside `storage/logs/laravel.log`), then set your Laravel `MAIL_MAILER` to "log".

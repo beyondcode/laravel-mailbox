@@ -40,9 +40,9 @@ return [
      * The driver to use when listening for incoming emails.
      * It defaults to the mail driver that you are using.
      *
-     * Supported drivers: "log", "mailgun", "sendgrid"
+     * Supported drivers: "mailgun", "sendgrid", "postmark", "array"
      */
-    'driver' => env('MAILBOX_DRIVER', 'log'),
+    'driver' => env('MAILBOX_DRIVER', 'array'),
 
     /*
      * The path for driver specific routes. This is where
