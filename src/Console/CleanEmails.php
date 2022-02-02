@@ -29,11 +29,7 @@ class CleanEmails extends Command
         /** @var InboundEmail $modelClass */
         $modelClass = config('mailbox.model');
 
-        $models = $modelClass::where('created_at', '<', $cutOffDate)->get('id');
-
-        $models->each->delete();
-
-        $amountDeleted = $models->count();
+        $amountDeleted = $modelClass::where('created_at', '<', $cutOffDate)->delete();
 
         $this->info("Deleted {$amountDeleted} record(s) from the Mailbox logs.");
 
