@@ -9,14 +9,6 @@ use Illuminate\Support\Facades\Mail;
 
 class InboundEmailTest extends TestCase
 {
-    protected function getEnvironmentSetUp($app)
-    {
-        parent::getEnvironmentSetUp($app);
-
-        $app['config']['mail.driver'] = 'log';
-        $app['config']['mailbox.driver'] = 'log';
-    }
-
     /** @test */
     public function it_stores_inbound_emails()
     {

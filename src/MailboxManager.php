@@ -2,7 +2,7 @@
 
 namespace BeyondCode\Mailbox;
 
-use BeyondCode\Mailbox\Drivers\Log;
+use BeyondCode\Mailbox\Drivers\ArrayDriver;
 use BeyondCode\Mailbox\Drivers\MailCare;
 use BeyondCode\Mailbox\Drivers\Mailgun;
 use BeyondCode\Mailbox\Drivers\Postmark;
@@ -14,11 +14,6 @@ class MailboxManager extends Manager
     public function mailbox($name = null)
     {
         return $this->driver($name);
-    }
-
-    public function createLogDriver()
-    {
-        return new Log;
     }
 
     public function createMailgunDriver()
@@ -39,6 +34,17 @@ class MailboxManager extends Manager
     public function createPostmarkDriver()
     {
         return new Postmark;
+    }
+
+    /** @deprecated */
+    public function createLogDriver()
+    {
+        return $this->createArrayDriver();
+    }
+
+    public function createArrayDriver()
+    {
+        return new ArrayDriver;
     }
 
     public function getDefaultDriver()

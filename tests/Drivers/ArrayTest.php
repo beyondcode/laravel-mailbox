@@ -8,19 +8,25 @@ use BeyondCode\Mailbox\Tests\TestCase;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Mail;
 
-class LogTest extends TestCase
+class ArrayTest extends TestCase
 {
-    protected function getEnvironmentSetUp($app)
+    /** @test */
+    public function it_catches_in_memory_array_mails()
     {
-        parent::getEnvironmentSetUp($app);
+        Mailbox::from('{name}@beyondco.de', function (InboundEmail $email, $name) {
+            $this->assertSame($name, 'example');
+            $this->assertSame($email->from(), 'example@beyondco.de');
+            $this->assertSame($email->subject(), 'This is a subject');
+        });
 
-        $app['config']['mail.driver'] = 'log';
-        $app['config']['mailbox.driver'] = 'log';
+        Mail::to('someone@beyondco.de')->send(new TestMail);
     }
 
     /** @test */
     public function it_catches_logged_mails()
     {
+        $app['config']['mail.driver'] = 'log';
+
         Mailbox::from('{name}@beyondco.de', function (InboundEmail $email, $name) {
             $this->assertSame($name, 'example');
             $this->assertSame($email->from(), 'example@beyondco.de');
