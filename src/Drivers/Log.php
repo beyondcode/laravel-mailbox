@@ -19,7 +19,7 @@ class Log implements DriverInterface
             return;
         }
 
-        if(app()->version() >= 9) {
+        if (app()->version() >= 9) {
             $message = $event->sent->toString();
         } else {
             $message = $event->message;
