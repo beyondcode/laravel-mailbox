@@ -9,6 +9,7 @@ jobs:
             fail-fast: true
             matrix:
                 os: [ubuntu-latest]
+                php: [7.3 8.0]
                 stability: [prefer-stable]
                 include:
                     -   laravel: 9.*
@@ -18,10 +19,10 @@ jobs:
                         testbench: 6.23
                         php: 8.0
                     -   laravel: 7.*
-                        testbench: 6.23
+                        testbench: 5.20.0
                         php: 7.3
                     -   laravel: 6.*
-                        testbench: 6.23
+                        testbench: 4.18.0
                         php: 7.3
 
         name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
