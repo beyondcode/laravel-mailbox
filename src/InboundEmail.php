@@ -154,7 +154,7 @@ class InboundEmail extends Model
             });
         }
 
-        return Mail::to($this->from())->send($mailable);
+        return Mail::to($this->headerValue('Reply-To') ?? $this->from())->send($mailable);
     }
 
     public function forward($recipients)
