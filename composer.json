@@ -1,5 +1,5 @@
 {
-    "name": "reefki/laravel-mailbox",
+    "name": "beyondcode/laravel-mailbox",
     "description": "Handle incoming emails in your Laravel application.",
     "keywords": [
         "beyondcode",
