@@ -4,7 +4,7 @@ namespace BeyondCode\Mailbox\Routing;
 
 use BeyondCode\Mailbox\InboundEmail;
 use BeyondCode\Mailbox\MailboxManager;
-use Illuminate\Container\Container;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\ForwardsCalls;
 
@@ -24,9 +24,9 @@ class Router
     /** @var Container */
     protected $container;
 
-    public function __construct(Container $container = null)
+    public function __construct(Container $container)
     {
-        $this->container = $container ?: new Container;
+        $this->container = $container;
 
         $this->routes = new RouteCollection;
     }

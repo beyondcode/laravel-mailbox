@@ -21,7 +21,8 @@ class Log implements DriverInterface
 
         /** @var InboundEmail $modelClass */
         $modelClass = config('mailbox.model');
-        $email = $modelClass::fromMessage($event->message);
+        $message = app()->version() >= 9 ? $event->message->toString() : $event->message;
+        $email = $modelClass::fromMessage($message);
 
         Mailbox::callMailboxes($email);
     }
