@@ -23,7 +23,7 @@
         "illuminate/routing": "^6.0|^7.0|^8.0|^9.0",
         "illuminate/support": "^6.0|^7.0|^8.0|^9.0",
         "willdurand/email-reply-parser": "^2.8",
-        "zbateson/mail-mime-parser": "^1.1"
+        "zbateson/mail-mime-parser": "^2.2"
     },
     "require-dev": {
         "laminas/laminas-mail": "^2.13",
