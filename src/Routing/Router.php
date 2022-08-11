@@ -84,7 +84,13 @@ class Router
     public function callMailboxes(InboundEmail $email)
     {
         if ($email->isValid()) {
-            $matchedRoutes = $this->routes->match($email)->map(function (Route $route) use ($email) {
+            $matchedRoutes = $this->routes->match($email);
+
+            if ($this->shouldStoreInboundEmails() && $this->shouldStoreAllInboundEmails($matchedRoutes)) {
+                $this->storeEmail($email);
+            }
+
+            $matchedRoutes->map(function (Route $route) use ($email) {
                 $route->run($email);
             });
 
@@ -97,10 +103,6 @@ class Router
                 $matchedRoutes[] = $this->catchAllRoute;
                 $this->catchAllRoute->run($email);
             }
-
-            if ($this->shouldStoreInboundEmails() && $this->shouldStoreAllInboundEmails($matchedRoutes)) {
-                $this->storeEmail($email);
-            }
         }
     }
 
@@ -111,7 +113,7 @@ class Router
 
     protected function shouldStoreAllInboundEmails(Collection $matchedRoutes): bool
     {
-        return $matchedRoutes->isNotEmpty() ? true : ! config('mailbox.only_store_matching_emails');
+        return $matchedRoutes->isNotEmpty() || ! config('mailbox.only_store_matching_emails');
     }
 
     protected function storeEmail(InboundEmail $email)

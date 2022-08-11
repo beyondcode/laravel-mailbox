@@ -44,6 +44,23 @@ class InboundEmailTest extends TestCase
     }
 
     /** @test */
+    public function it_stores_all_inbound_emails_on_exception()
+    {
+        $this->app['config']['mailbox.only_store_matching_emails'] = false;
+
+        Mailbox::to('someone@beyondco.de', function ($email) {
+            throw new \Exception("expect to fail");
+        });
+
+        try {
+            Mail::to('someone@beyondco.de')->send(new TestMail);
+        } catch(\Throwable $e){}
+        Mail::to('someone-else@beyondco.de')->send(new TestMail);
+
+        $this->assertSame(2, InboundEmail::query()->count());
+    }
+
+    /** @test */
     public function it_can_use_fallbacks()
     {
         Mailbox::fallback(function (InboundEmail $email) {
