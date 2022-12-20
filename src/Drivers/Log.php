@@ -19,11 +19,7 @@ class Log implements DriverInterface
             return;
         }
 
-        if (app()->version() >= 9) {
-            $message = $event->sent->toString();
-        } else {
-            $message = $event->message;
-        }
+        $message = version_compare(app()->version(), '9.0.0', '>') ? $event->sent->toString() : $event->message;
 
         /** @var InboundEmail $modelClass */
         $modelClass = config('mailbox.model');
