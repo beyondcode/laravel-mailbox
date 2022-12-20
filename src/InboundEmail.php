@@ -149,18 +149,20 @@ class InboundEmail extends Model
     public function reply(Mailable $mailable)
     {
         if ($mailable instanceof \Illuminate\Mail\Mailable) {
-            if (app()->version() >= 9) {
-                $mailable->withSwiftMessage(function (\Swift_Message $message) {
-                    $message->getHeaders()->addIdHeader('In-Reply-To', $this->id());
+            $usesSymfonyMailer = version_compare(app()->version(), '9.0.0', '>');
+
+            if ($usesSymfonyMailer) {
+                $mailable->withSymfonyMessage(function (\Symfony\Component\Mime\Email $email) {
+                    $email->getHeaders()->addIdHeader('In-Reply-To', $this->id());
                 });
             } else {
-                $mailable->withSymfonyMessage(function (\Swift_Message $message) {
+                $mailable->withSwiftMessage(function (\Swift_Message $message) {
                     $message->getHeaders()->addIdHeader('In-Reply-To', $this->id());
                 });
             }
         }
 
-        return Mail::to($this->from())->send($mailable);
+        return Mail::to($this->headerValue('Reply-To') ?: $this->from())->send($mailable);
     }
 
     public function forward($recipients)
