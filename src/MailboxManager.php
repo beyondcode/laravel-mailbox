@@ -5,6 +5,7 @@ namespace BeyondCode\Mailbox;
 use BeyondCode\Mailbox\Drivers\Log;
 use BeyondCode\Mailbox\Drivers\MailCare;
 use BeyondCode\Mailbox\Drivers\Mailgun;
+use BeyondCode\Mailbox\Drivers\Postal;
 use BeyondCode\Mailbox\Drivers\Postmark;
 use BeyondCode\Mailbox\Drivers\SendGrid;
 use Illuminate\Support\Manager;
@@ -39,6 +40,10 @@ class MailboxManager extends Manager
     public function createPostmarkDriver()
     {
         return new Postmark;
+    }
+
+    public function createPostalDriver() {
+        return new Postal();
     }
 
     public function getDefaultDriver()

@@ -7,8 +7,22 @@ order: 2
 
 Laravel Mailbox can be installed via composer:
 
+As this is a fork of beyondcode/laravel-mailbox, we need to tell composer to use the fork:  
+Add the following section to your composer.json:
+
+```
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/cubewebsites/laravel-mailbox"
+        }
+    ],
+```
+
+Then install the package.  This should install the cubewebsites fork of laravel-mailbox
+
 ```bash
-composer require beyondcode/laravel-mailbox
+composer require cubewebsites/laravel-mailbox
 ```
 
 The package will automatically register a service provider.

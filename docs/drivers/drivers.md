@@ -62,6 +62,21 @@ Next you will need to configure MailCare, to send incoming emails to your applic
 
 See ["MailCare"](https://mailcare.io) for more information.
 
+## Postal
+
+https://docs.postalserver.io/
+
+Note: This driver requires basic auth setup
+
+1. Set MAILBOX_DRIVER to `postal`
+2. Setup a HTTP Endpoint in Postal:
+   1. URL = `https://your-application.com/laravel-mailbox/postal`
+   2. Encoding = `Sent in the body as JSON`
+   3. Format = `Delivered as the raw message`
+   4. Strip Replies = Up to you 
+   5. Attachments = Doesn't matter because the RAW message always has attachments
+   6. Timeout = Tweak if needed
+
 ## Local development / log driver
 
 When working locally, you might not want to use real incoming emails while testing your application. Out of the box, this package supports Laravel's "log" mail driver for incoming emails.
