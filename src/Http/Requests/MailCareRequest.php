@@ -10,14 +10,14 @@ class MailCareRequest extends FormRequest
     public function rules()
     {
         return [
-            "content_type" => "required|in:message/rfc2822",
+            'content_type' => 'required|in:message/rfc2822',
         ];
     }
 
     public function prepareForValidation()
     {
         $this->merge([
-            "content_type" => $this->headers->get("Content-type"),
+            'content_type' => $this->headers->get('Content-type'),
         ]);
     }
 
