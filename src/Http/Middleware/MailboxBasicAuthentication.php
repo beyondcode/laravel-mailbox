@@ -12,7 +12,7 @@ class MailboxBasicAuthentication
         $user = $request->getUser();
         $password = $request->getPassword();
 
-        if (($user === config('mailbox.basic_auth.username') && $password === config('mailbox.basic_auth.password'))) {
+        if ($user === config('mailbox.basic_auth.username') && $password === config('mailbox.basic_auth.password')) {
             return $next($request);
         }
 

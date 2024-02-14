@@ -18,6 +18,7 @@ class MailboxRouteTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider emailDataProvider
      */
     public function it_matches_from_mails($fromMail, $successfulPattern, $failingPattern)
@@ -36,6 +37,7 @@ class MailboxRouteTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider emailDataProvider
      */
     public function it_matches_to_mails($toMail, $successfulPattern, $failingPattern)
@@ -54,6 +56,7 @@ class MailboxRouteTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider emailDataProvider
      */
     public function it_matches_cc_mails($ccMail, $successfulPattern, $failingPattern)
@@ -72,6 +75,7 @@ class MailboxRouteTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider emailDataProvider
      */
     public function it_matches_bcc_mails($bccMail, $successfulPattern, $failingPattern)
@@ -90,6 +94,7 @@ class MailboxRouteTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider subjectDataProvider
      */
     public function it_matches_subjects($subject, $successfulPattern, $failingPattern)
