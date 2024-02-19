@@ -4,19 +4,28 @@ namespace BeyondCode\Mailbox\Http\Requests;
 
 use BeyondCode\Mailbox\InboundEmail;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Validator;
 
 class MailCareRequest extends FormRequest
 {
-    public function validator()
+    public function rules()
     {
-        return Validator::make($this->all(), [
-            'email' => 'required',
+        return [
+            'content_type' => 'required|in:message/rfc2822',
+        ];
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'content_type' => $this->headers->get('Content-type'),
         ]);
     }
 
     public function email()
     {
-        return InboundEmail::fromMessage($this->get('email'));
+        /** @var InboundEmail $modelClass */
+        $modelClass = config('mailbox.model');
+
+        return $modelClass::fromMessage($this->getContent());
     }
 }
