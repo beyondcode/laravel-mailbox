@@ -109,6 +109,14 @@ class InboundEmail extends Model
     /**
      * @return AddressPart[]
      */
+    public function xForwardedTo(): array
+    {
+        return $this->convertAddressHeader($this->message()->getHeader('X-Forwarded-To'));
+    }
+
+    /**
+     * @return AddressPart[]
+     */
     public function cc(): array
     {
         return $this->convertAddressHeader($this->message()->getHeader('Cc'));

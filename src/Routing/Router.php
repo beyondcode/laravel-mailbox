@@ -41,6 +41,11 @@ class Router
         return $this->addRoute(Route::TO, $pattern, $action);
     }
 
+    public function xForwardedTo(string $pattern, $action): Route
+    {
+        return $this->addRoute(Route::X_FORWARDED_TO, $pattern, $action);
+    }
+
     public function cc(string $pattern, $action): Route
     {
         return $this->addRoute(Route::CC, $pattern, $action);

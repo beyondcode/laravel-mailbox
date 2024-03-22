@@ -20,6 +20,7 @@ class Route
 
     const FROM = 'from';
     const TO = 'to';
+    const X_FORWARDED_TO = 'x-forwarded-to';
     const CC = 'cc';
     const BCC = 'bcc';
     const SUBJECT = 'subject';
@@ -87,6 +88,9 @@ class Route
             case self::TO:
                 return $this->convertMessageAddresses($message->to());
             break;
+            case self::X_FORWARDED_TO:
+                return $this->convertMessageAddresses($message->xForwardedTo());
+                break;
             case self::CC:
                 return $this->convertMessageAddresses($message->cc());
             break;
