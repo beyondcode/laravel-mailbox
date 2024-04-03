@@ -53,12 +53,16 @@ Be sure the check the box labeled "Post the raw, full MIME message." when settin
 
 ## MailCare
 
+::: warning
+To use MailCare with Laravel Mailbox, you will need to generate a random password and store it as the `MAILBOX_HTTP_PASSWORD` environment variable. The default username is "laravel-mailbox", but you can change it using the `MAILBOX_HTTP_USERNAME` environment variable. 
+:::
+
 You can then set your `MAILBOX_DRIVER` to "mailcare".
 
-Next you will need to configure MailCare, to send incoming emails to your application at `/laravel-mailbox/mailcare`:
-- Activate authentication and automation features.
-- Create a new automation with the URL `https://your-application.com/laravel-mailbox/mailcare`
-- Be sure the check the box labeled "Post the raw, full MIME message."
+Next you will need to configure MailCare, to send incoming emails to your application at `/laravel-mailbox/mailcare`. 
+- Ask support to activate authentication and automation features.
+- Create a new automation, if your application is at `https://awesome-laravel.com`, it would be with the URL `https://MAILBOX_HTTP_USERNAME:MAILBOX_HTTP_PASSWORD@awesome-laravel.com/laravel-mailbox/mailcare`
+- Be sure the check the box labeled "Post the raw, full MIME message "
 
 See ["MailCare"](https://mailcare.io) for more information.
 
@@ -66,5 +70,5 @@ See ["MailCare"](https://mailcare.io) for more information.
 
 When working locally, you might not want to use real incoming emails while testing your application. Out of the box, this package supports Laravel's "log" mail driver for incoming emails.
 
-To test incoming emails, set both your `MAIL_DRIVER` and your `MAILBOX_DRIVER`  in your `.env` file to "log".
+To test incoming emails, set both your `MAIL_MAILER` and your `MAILBOX_DRIVER`  in your `.env` file to "log".
 Now every time you send an email in your application, this email will appear in your `laravel.log` file and will try to call one of your configured Mailboxes.

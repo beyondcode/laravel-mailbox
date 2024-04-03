@@ -8,7 +8,7 @@ use Laminas\Mail\Message as TestMail;
 
 class MailboxRouteTest extends TestCase
 {
-    public function emailDataProvider()
+    public static function emailDataProvider()
     {
         return [
             ['hello@beyondco.de', 'hello@beyondco.de', 'wrong@beyondco.de'],
@@ -18,6 +18,7 @@ class MailboxRouteTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider emailDataProvider
      */
     public function it_matches_from_mails($fromMail, $successfulPattern, $failingPattern)
@@ -36,6 +37,7 @@ class MailboxRouteTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider emailDataProvider
      */
     public function it_matches_to_mails($toMail, $successfulPattern, $failingPattern)
@@ -54,6 +56,7 @@ class MailboxRouteTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider emailDataProvider
      */
     public function it_matches_cc_mails($ccMail, $successfulPattern, $failingPattern)
@@ -72,6 +75,7 @@ class MailboxRouteTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider emailDataProvider
      */
     public function it_matches_bcc_mails($bccMail, $successfulPattern, $failingPattern)
@@ -90,6 +94,7 @@ class MailboxRouteTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider subjectDataProvider
      */
     public function it_matches_subjects($subject, $successfulPattern, $failingPattern)
@@ -125,7 +130,7 @@ class MailboxRouteTest extends TestCase
         $this->assertTrue($route->matches($message));
     }
 
-    public function subjectDataProvider()
+    public static function subjectDataProvider()
     {
         return [
             ['New Laravel Packages', 'New Laravel Packages', 'Old Laravel Packages'],

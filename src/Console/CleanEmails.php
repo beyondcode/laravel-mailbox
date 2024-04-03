@@ -12,6 +12,8 @@ class CleanEmails extends Command
 
     protected $description = 'Clean up old incoming email logs.';
 
+    protected $amountDeleted = 0;
+
     public function handle()
     {
         $this->comment('Cleaning old incoming email logs...');
@@ -29,13 +31,21 @@ class CleanEmails extends Command
         /** @var InboundEmail $modelClass */
         $modelClass = config('mailbox.model');
 
-        $models = $modelClass::where('created_at', '<', $cutOffDate)->get();
+        // chunk the deletion to avoid memory issues
 
-        $models->each->delete();
+        $this->amountDeleted = 0;
 
-        $amountDeleted = $models->count();
+        $modelClass::where('created_at', '<', $cutOffDate)
+            ->select('id')
+            ->chunk(100, function ($models) use ($modelClass) {
+                foreach ($models as $model) {
+                    $modelInstance = $modelClass::find($model->id);
+                    $modelInstance->delete();
+                    $this->amountDeleted++;
+                }
+            });
 
-        $this->info("Deleted {$amountDeleted} record(s) from the Mailbox logs.");
+        $this->info("Deleted {$this->amountDeleted} record(s) from the Mailbox logs.");
 
         $this->comment('All done!');
     }
