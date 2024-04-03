@@ -83,24 +83,24 @@ class Route
         switch ($this->subject) {
             case self::FROM:
                 return [$message->from()];
-            break;
+                break;
             case self::TO:
                 return $this->convertMessageAddresses($message->to());
-            break;
+                break;
             case self::CC:
                 return $this->convertMessageAddresses($message->cc());
-            break;
+                break;
             case self::BCC:
                 return $this->convertMessageAddresses($message->bcc());
                 break;
             case self::SUBJECT:
                 return [$message->subject()];
-            break;
+                break;
         }
     }
 
     /**
-     * @param $addresses AddressPart[]
+     * @param  $addresses  AddressPart[]
      * @return array
      */
     protected function convertMessageAddresses($addresses): array
