@@ -8,7 +8,7 @@ use Laminas\Mail\Message as TestMail;
 
 class MailboxRouteTest extends TestCase
 {
-    public function emailDataProvider()
+    public static function emailDataProvider()
     {
         return [
             ['hello@beyondco.de', 'hello@beyondco.de', 'wrong@beyondco.de'],
@@ -130,7 +130,7 @@ class MailboxRouteTest extends TestCase
         $this->assertTrue($route->matches($message));
     }
 
-    public function subjectDataProvider()
+    public static function subjectDataProvider()
     {
         return [
             ['New Laravel Packages', 'New Laravel Packages', 'Old Laravel Packages'],
