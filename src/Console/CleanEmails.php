@@ -45,7 +45,6 @@ class CleanEmails extends Command
                 }
             });
 
-
         $this->info("Deleted {$this->amountDeleted} record(s) from the Mailbox logs.");
 
         $this->comment('All done!');
