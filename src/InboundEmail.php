@@ -193,4 +193,43 @@ class InboundEmail extends Model
     {
         return $this->from() !== '' && ($this->isText() || $this->isHtml());
     }
+
+    public function isAutoReply($checkCommonSubjects = true): bool
+    {
+        if ($this->headerValue('x-autorespond')) {
+            return true;
+        }
+
+        if (in_array($this->headerValue('precedence'), ['auto_reply', 'bulk', 'junk'])) {
+            return true;
+        }
+
+        if (in_array($this->headerValue('x-precedence'), ['auto_reply', 'bulk', 'junk'])) {
+            return true;
+        }
+        if (in_array($this->headerValue('auto-submitted'), ['auto-replied', 'auto-generated'])) {
+            return true;
+        }
+
+        if ($checkCommonSubjects) {
+            return Str::startsWith($this->subject(), [
+                'Auto:',
+                'Automatic reply',
+                'Autosvar',
+                'Automatisk svar',
+                'Automatisch antwoord',
+                'Abwesenheitsnotiz',
+                'Risposta Non al computer',
+                'Automatisch antwoord',
+                'Auto Response',
+                'Respuesta automática',
+                'Fuori sede',
+                'Out of Office',
+                'Frånvaro',
+                'Réponse automatique',
+            ]);
+        }
+
+        return false;
+    }
 }
