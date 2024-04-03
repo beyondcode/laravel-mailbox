@@ -141,7 +141,7 @@ class InboundEmail extends Model
 
     public function message(): MimeMessage
     {
-        $this->mimeMessage = $this->mimeMessage ?: MimeMessage::from($this->message);
+        $this->mimeMessage = $this->mimeMessage ?: MimeMessage::from($this->message, true);
 
         return $this->mimeMessage;
     }
