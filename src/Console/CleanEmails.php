@@ -37,12 +37,9 @@ class CleanEmails extends Command
 
         $modelClass::where('created_at', '<', $cutOffDate)
             ->select('id')
-            ->chunk(100, function ($models) use ($modelClass) {
-                foreach ($models as $model) {
-                    $modelInstance = $modelClass::find($model->id);
-                    $modelInstance->delete();
-                    $this->amountDeleted++;
-                }
+            ->eachById(count: 100, callback: function ($model) {
+                $model->delete();
+                $this->amountDeleted++;
             });
 
         $this->info("Deleted {$this->amountDeleted} record(s) from the Mailbox logs.");
