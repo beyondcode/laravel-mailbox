@@ -40,8 +40,10 @@ class CleanEmails extends Command
             ->chunk(100, function ($models) use ($modelClass) {
                 foreach ($models as $model) {
                     $modelInstance = $modelClass::find($model->id);
-                    $modelInstance->delete();
-                    $this->amountDeleted++;
+                    if ($modelInstance) {
+                        $modelInstance->delete();
+                        $this->amountDeleted++;
+                    }
                 }
             });
 
