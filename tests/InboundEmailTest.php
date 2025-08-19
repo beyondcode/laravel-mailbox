@@ -17,8 +17,7 @@ class InboundEmailTest extends TestCase
         $app['config']['mailbox.driver'] = 'log';
     }
 
-    /** @test */
-    public function it_stores_inbound_emails()
+    public function test_stores_inbound_emails()
     {
         Mailbox::to('someone@beyondco.de', function ($email) {
         });
@@ -29,8 +28,7 @@ class InboundEmailTest extends TestCase
         $this->assertSame(1, InboundEmail::query()->count());
     }
 
-    /** @test */
-    public function it_stores_all_inbound_emails()
+    public function test_stores_all_inbound_emails()
     {
         $this->app['config']['mailbox.only_store_matching_emails'] = false;
 
@@ -43,8 +41,7 @@ class InboundEmailTest extends TestCase
         $this->assertSame(2, InboundEmail::query()->count());
     }
 
-    /** @test */
-    public function it_can_use_fallbacks()
+    public function test_can_use_fallbacks()
     {
         Mailbox::fallback(function (InboundEmail $email) {
             Mail::fake();
@@ -57,8 +54,7 @@ class InboundEmailTest extends TestCase
         Mail::assertSent(ReplyMail::class);
     }
 
-    /** @test */
-    public function it_can_use_catchall()
+    public function test_can_use_catchall()
     {
         Mailbox::to('someone@beyondco.de', function ($email) {
         });
@@ -74,8 +70,7 @@ class InboundEmailTest extends TestCase
         Mail::assertSent(ReplyMail::class);
     }
 
-    /** @test */
-    public function it_stores_inbound_emails_with_catchall()
+    public function test_stores_inbound_emails_with_catchall()
     {
         Mailbox::catchAll(function ($email) {
         });
@@ -86,8 +81,7 @@ class InboundEmailTest extends TestCase
         $this->assertSame(2, InboundEmail::query()->count());
     }
 
-    /** @test */
-    public function it_stores_inbound_emails_with_fallback()
+    public function test_stores_inbound_emails_with_fallback()
     {
         Mailbox::fallback(function ($email) {
         });
@@ -98,8 +92,7 @@ class InboundEmailTest extends TestCase
         $this->assertSame(2, InboundEmail::query()->count());
     }
 
-    /** @test */
-    public function it_stores_inbound_emails_with_fallback_and_catchall_only_once()
+    public function test_stores_inbound_emails_with_fallback_and_catchall_only_once()
     {
         Mailbox::fallback(function ($email) {
         });
@@ -113,8 +106,7 @@ class InboundEmailTest extends TestCase
         $this->assertSame(2, InboundEmail::query()->count());
     }
 
-    /** @test */
-    public function it_does_not_store_inbound_emails_if_configured()
+    public function test_does_not_store_inbound_emails_if_configured()
     {
         $this->app['config']['mailbox.store_incoming_emails_for_days'] = 0;
 
@@ -127,8 +119,7 @@ class InboundEmailTest extends TestCase
         $this->assertSame(0, InboundEmail::query()->count());
     }
 
-    /** @test */
-    public function it_can_reply_to_mails()
+    public function test_can_reply_to_mails()
     {
         Mailbox::from('example@beyondco.de', function (InboundEmail $email) {
             Mail::fake();
@@ -141,8 +132,7 @@ class InboundEmailTest extends TestCase
         Mail::assertSent(ReplyMail::class);
     }
 
-    /** @test */
-    public function it_uses_the_configured_model()
+    public function test_uses_the_configured_model()
     {
         $this->app['config']['mailbox.model'] = ExtendedInboundEmail::class;
 

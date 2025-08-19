@@ -18,8 +18,7 @@ class LogTest extends TestCase
         $app['config']['mailbox.driver'] = 'log';
     }
 
-    /** @test */
-    public function it_catches_logged_mails()
+    public function test_catches_logged_mails()
     {
         Mailbox::from('{name}@beyondco.de', function (InboundEmail $email, $name) {
             $this->assertSame($name, 'example');

@@ -20,8 +20,7 @@ class CleanEmailsTest extends TestCase
         $this->app['config']->set('mailbox.store_incoming_emails_for_days', 31);
     }
 
-    /** @test */
-    public function it_can_clean_the_statistics()
+    public function test_can_clean_the_statistics()
     {
         Collection::times(200)->each(function (int $index) {
             InboundEmail::forceCreate([
@@ -41,8 +40,7 @@ class CleanEmailsTest extends TestCase
         $this->assertCount(0, InboundEmail::where('created_at', '<', $cutOffDate)->get());
     }
 
-    /** @test */
-    public function it_errors_if_max_age_inf()
+    public function test_errors_if_max_age_inf()
     {
         $this->app['config']->set('mailbox.store_incoming_emails_for_days', INF);
 

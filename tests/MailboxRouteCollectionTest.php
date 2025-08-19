@@ -9,8 +9,7 @@ use Laminas\Mail\Message as TestMail;
 
 class MailboxRouteCollectionTest extends TestCase
 {
-    /** @test */
-    public function it_returns_all_matching_mailbox_routes()
+    public function test_returns_all_matching_mailbox_routes()
     {
         $collection = new RouteCollection();
 

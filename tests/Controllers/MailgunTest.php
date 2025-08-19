@@ -13,8 +13,7 @@ class MailgunTest extends TestCase
         $app['config']['mailbox.driver'] = 'mailgun';
     }
 
-    /** @test */
-    public function it_verifies_mailgun_signatures()
+    public function test_verifies_mailgun_signatures()
     {
         $this->post('/laravel-mailbox/mailgun/mime', [
             'body-mime' => 'mime',
@@ -38,8 +37,7 @@ class MailgunTest extends TestCase
         ])->assertStatus(200);
     }
 
-    /** @test */
-    public function it_verifies_fresh_timestamps()
+    public function test_verifies_fresh_timestamps()
     {
         $timestamp = now()->subMinutes(5)->timestamp;
         $token = uniqid();

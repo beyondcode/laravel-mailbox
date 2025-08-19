@@ -13,8 +13,7 @@ class PostmarkTest extends TestCase
         $app['config']['mailbox.driver'] = 'postmark';
     }
 
-    /** @test */
-    public function it_expects_to_receive_raw_email_field()
+    public function test_expects_to_receive_raw_email_field()
     {
         $this->withoutMiddleware();
 

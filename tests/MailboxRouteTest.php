@@ -5,6 +5,7 @@ namespace BeyondCode\Mailbox\Tests;
 use BeyondCode\Mailbox\InboundEmail;
 use BeyondCode\Mailbox\Routing\Route;
 use Laminas\Mail\Message as TestMail;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class MailboxRouteTest extends TestCase
 {
@@ -15,13 +16,10 @@ class MailboxRouteTest extends TestCase
             ['hello@beyondco.de', '{name}@beyondco.de', 'wrong@beyondco.com'],
         ];
     }
+    
 
-    /**
-     * @test
-     *
-     * @dataProvider emailDataProvider
-     */
-    public function it_matches_from_mails($fromMail, $successfulPattern, $failingPattern)
+    #[DataProvider('emailDataProvider')]
+    public function test_matches_from_mails($fromMail, $successfulPattern, $failingPattern)
     {
         $testMail = (new TestMail())
             ->setFrom($fromMail);
@@ -35,12 +33,9 @@ class MailboxRouteTest extends TestCase
         $this->assertFalse($route->matches($message));
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider emailDataProvider
-     */
-    public function it_matches_to_mails($toMail, $successfulPattern, $failingPattern)
+ 
+    #[DataProvider('emailDataProvider')]
+    public function test_matches_to_mails($toMail, $successfulPattern, $failingPattern)
     {
         $testMail = (new TestMail())
             ->setTo($toMail);
@@ -53,13 +48,10 @@ class MailboxRouteTest extends TestCase
         $route = new Route(Route::TO, $failingPattern, 'SomeAction@handle');
         $this->assertFalse($route->matches($message));
     }
+    
 
-    /**
-     * @test
-     *
-     * @dataProvider emailDataProvider
-     */
-    public function it_matches_cc_mails($ccMail, $successfulPattern, $failingPattern)
+    #[DataProvider('emailDataProvider')]
+    public function test_matches_cc_mails($ccMail, $successfulPattern, $failingPattern)
     {
         $testMail = (new TestMail())
             ->setCc($ccMail);
@@ -73,12 +65,9 @@ class MailboxRouteTest extends TestCase
         $this->assertFalse($route->matches($message));
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider emailDataProvider
-     */
-    public function it_matches_bcc_mails($bccMail, $successfulPattern, $failingPattern)
+    
+    #[DataProvider('emailDataProvider')]
+    public function test_matches_bcc_mails($bccMail, $successfulPattern, $failingPattern)
     {
         $testMail = (new TestMail())
             ->setBcc($bccMail);
@@ -92,12 +81,8 @@ class MailboxRouteTest extends TestCase
         $this->assertFalse($route->matches($message));
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider subjectDataProvider
-     */
-    public function it_matches_subjects($subject, $successfulPattern, $failingPattern)
+    #[DataProvider('subjectDataProvider')]
+    public function test_matches_subjects($subject, $successfulPattern, $failingPattern)
     {
         $testMail = (new TestMail())
             ->setSubject($subject);
@@ -111,8 +96,7 @@ class MailboxRouteTest extends TestCase
         $this->assertFalse($route->matches($message));
     }
 
-    /** @test */
-    public function it_matches_requirements()
+    public function test_matches_requirements()
     {
         $testMail = (new TestMail())
             ->setFrom('abc@domain.com');
@@ -138,8 +122,7 @@ class MailboxRouteTest extends TestCase
         ];
     }
 
-    /** @test */
-    public function it_returns_parameter_names()
+    public function test_returns_parameter_names()
     {
         $route = new Route(Route::FROM, 'someone@domain.com', 'SomeAction@handle');
 
@@ -160,8 +143,7 @@ class MailboxRouteTest extends TestCase
         ], $route->parameterNames());
     }
 
-    /** @test */
-    public function it_returns_parameter_values()
+    public function test_returns_parameter_values()
     {
         $testMail = (new TestMail())
             ->setFrom('my-email@foo.com')
@@ -200,8 +182,7 @@ class MailboxRouteTest extends TestCase
         ], $route->parameters());
     }
 
-    /** @test */
-    public function it_runs_callables()
+    public function test_runs_callables()
     {
         $testMail = (new TestMail())
             ->setFrom('marcel@beyondco.de');
@@ -217,8 +198,7 @@ class MailboxRouteTest extends TestCase
         $route->run($message);
     }
 
-    /** @test */
-    public function it_passes_parameters_to_callables()
+    public function test_passes_parameters_to_callables()
     {
         $testMail = (new TestMail())
             ->setFrom('marcel@beyondco.de');
