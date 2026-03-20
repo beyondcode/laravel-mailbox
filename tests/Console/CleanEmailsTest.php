@@ -8,6 +8,7 @@ use BeyondCode\Mailbox\Tests\TestCase;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use PHPUnit\Framework\Attributes\Test;
 
 class CleanEmailsTest extends TestCase
 {
@@ -20,7 +21,7 @@ class CleanEmailsTest extends TestCase
         $this->app['config']->set('mailbox.store_incoming_emails_for_days', 31);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_clean_the_statistics()
     {
         Collection::times(200)->each(function (int $index) {
@@ -41,7 +42,7 @@ class CleanEmailsTest extends TestCase
         $this->assertCount(0, InboundEmail::where('created_at', '<', $cutOffDate)->get());
     }
 
-    /** @test */
+    #[Test]
     public function it_errors_if_max_age_inf()
     {
         $this->app['config']->set('mailbox.store_incoming_emails_for_days', INF);

@@ -6,10 +6,11 @@ use BeyondCode\Mailbox\InboundEmail;
 use BeyondCode\Mailbox\Routing\Route;
 use BeyondCode\Mailbox\Routing\RouteCollection;
 use Laminas\Mail\Message as TestMail;
+use PHPUnit\Framework\Attributes\Test;
 
 class MailboxRouteCollectionTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_returns_all_matching_mailbox_routes()
     {
         $collection = new RouteCollection();
