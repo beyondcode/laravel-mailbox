@@ -3,6 +3,7 @@
 namespace BeyondCode\Mailbox\Tests\Controllers;
 
 use BeyondCode\Mailbox\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class MailgunTest extends TestCase
 {
@@ -13,7 +14,7 @@ class MailgunTest extends TestCase
         $app['config']['mailbox.driver'] = 'mailgun';
     }
 
-    /** @test */
+    #[Test]
     public function it_verifies_mailgun_signatures()
     {
         $this->post('/laravel-mailbox/mailgun/mime', [
@@ -38,7 +39,7 @@ class MailgunTest extends TestCase
         ])->assertStatus(200);
     }
 
-    /** @test */
+    #[Test]
     public function it_verifies_fresh_timestamps()
     {
         $timestamp = now()->subMinutes(5)->timestamp;

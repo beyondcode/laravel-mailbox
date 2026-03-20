@@ -5,6 +5,8 @@ namespace BeyondCode\Mailbox\Tests;
 use BeyondCode\Mailbox\InboundEmail;
 use BeyondCode\Mailbox\Routing\Route;
 use Laminas\Mail\Message as TestMail;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 
 class MailboxRouteTest extends TestCase
 {
@@ -16,11 +18,8 @@ class MailboxRouteTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider emailDataProvider
-     */
+    #[Test]
+    #[DataProvider('emailDataProvider')]
     public function it_matches_from_mails($fromMail, $successfulPattern, $failingPattern)
     {
         $testMail = (new TestMail())
@@ -35,11 +34,8 @@ class MailboxRouteTest extends TestCase
         $this->assertFalse($route->matches($message));
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider emailDataProvider
-     */
+    #[Test]
+    #[DataProvider('emailDataProvider')]
     public function it_matches_to_mails($toMail, $successfulPattern, $failingPattern)
     {
         $testMail = (new TestMail())
@@ -54,11 +50,8 @@ class MailboxRouteTest extends TestCase
         $this->assertFalse($route->matches($message));
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider emailDataProvider
-     */
+    #[Test]
+    #[DataProvider('emailDataProvider')]
     public function it_matches_cc_mails($ccMail, $successfulPattern, $failingPattern)
     {
         $testMail = (new TestMail())
@@ -73,11 +66,8 @@ class MailboxRouteTest extends TestCase
         $this->assertFalse($route->matches($message));
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider emailDataProvider
-     */
+    #[Test]
+    #[DataProvider('emailDataProvider')]
     public function it_matches_bcc_mails($bccMail, $successfulPattern, $failingPattern)
     {
         $testMail = (new TestMail())
@@ -92,11 +82,8 @@ class MailboxRouteTest extends TestCase
         $this->assertFalse($route->matches($message));
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider subjectDataProvider
-     */
+    #[Test]
+    #[DataProvider('subjectDataProvider')]
     public function it_matches_subjects($subject, $successfulPattern, $failingPattern)
     {
         $testMail = (new TestMail())
@@ -111,7 +98,7 @@ class MailboxRouteTest extends TestCase
         $this->assertFalse($route->matches($message));
     }
 
-    /** @test */
+    #[Test]
     public function it_matches_requirements()
     {
         $testMail = (new TestMail())
@@ -138,7 +125,7 @@ class MailboxRouteTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_parameter_names()
     {
         $route = new Route(Route::FROM, 'someone@domain.com', 'SomeAction@handle');
@@ -160,7 +147,7 @@ class MailboxRouteTest extends TestCase
         ], $route->parameterNames());
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_parameter_values()
     {
         $testMail = (new TestMail())
@@ -200,7 +187,7 @@ class MailboxRouteTest extends TestCase
         ], $route->parameters());
     }
 
-    /** @test */
+    #[Test]
     public function it_runs_callables()
     {
         $testMail = (new TestMail())
@@ -217,7 +204,7 @@ class MailboxRouteTest extends TestCase
         $route->run($message);
     }
 
-    /** @test */
+    #[Test]
     public function it_passes_parameters_to_callables()
     {
         $testMail = (new TestMail())

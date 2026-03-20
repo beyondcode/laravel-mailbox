@@ -7,6 +7,7 @@ use BeyondCode\Mailbox\InboundEmail;
 use BeyondCode\Mailbox\Tests\TestCase;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Mail;
+use PHPUnit\Framework\Attributes\Test;
 
 class LogTest extends TestCase
 {
@@ -18,7 +19,7 @@ class LogTest extends TestCase
         $app['config']['mailbox.driver'] = 'log';
     }
 
-    /** @test */
+    #[Test]
     public function it_catches_logged_mails()
     {
         Mailbox::from('{name}@beyondco.de', function (InboundEmail $email, $name) {
