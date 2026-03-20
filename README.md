@@ -36,14 +36,15 @@ The email service organizes emails into distinct inboxes for each application, e
 
 ![image](https://github.com/user-attachments/assets/6417907c-119d-43ac-9cf6-5638bafae24f)
 
+## Testing
 
-### Testing
+Inbound messages are parsed with [zbateson/mail-mime-parser](https://mail-mime-parser.org) (see the docs on [handling inbound email](https://docs.beyondco.de/laravel-mailbox/basic-usage/handling)). Run the package test suite with:
 
-``` bash
+```bash
 composer test
 ```
 
-### Changelog
+## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 

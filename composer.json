@@ -26,7 +26,6 @@
         "zbateson/mail-mime-parser": "^2.4|^3.0|^4.0"
     },
     "require-dev": {
-        "laminas/laminas-mail": "^2.13",
         "mockery/mockery": "^1.2",
         "orchestra/testbench": "^8.0|^9.0|^10.0|^11.0",
         "phpunit/phpunit": "^10.5|^11.0|^12.0"
