@@ -3,6 +3,7 @@
 namespace BeyondCode\Mailbox\Tests\Controllers;
 
 use BeyondCode\Mailbox\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class PostmarkTest extends TestCase
 {
@@ -13,7 +14,7 @@ class PostmarkTest extends TestCase
         $app['config']['mailbox.driver'] = 'postmark';
     }
 
-    /** @test */
+    #[Test]
     public function it_expects_to_receive_raw_email_field()
     {
         $this->withoutMiddleware();

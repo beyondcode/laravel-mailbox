@@ -16,20 +16,19 @@
         }
     ],
     "require": {
-        "php": "^8.0",
-        "illuminate/container": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
-        "illuminate/database": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
-        "illuminate/log": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
-        "illuminate/routing": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
-        "illuminate/support": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
+        "php": "^8.1",
+        "illuminate/container": "^10.0|^11.0|^12.0|^13.0",
+        "illuminate/database": "^10.0|^11.0|^12.0|^13.0",
+        "illuminate/log": "^10.0|^11.0|^12.0|^13.0",
+        "illuminate/routing": "^10.0|^11.0|^12.0|^13.0",
+        "illuminate/support": "^10.0|^11.0|^12.0|^13.0",
         "willdurand/email-reply-parser": "^2.8",
-        "zbateson/mail-mime-parser": "^1.1|^2.4|^3.0"
+        "zbateson/mail-mime-parser": "^2.4|^3.0|^4.0"
     },
     "require-dev": {
-        "laminas/laminas-mail": "^2.13",
         "mockery/mockery": "^1.2",
-        "orchestra/testbench": "^4.0|^5.0|^7.0|^8.0|^9.0|^10.0",
-        "phpunit/phpunit": "^7.0|^8.0|^9.3|^10.5|^11.5.3"
+        "orchestra/testbench": "^8.0|^9.0|^10.0|^11.0",
+        "phpunit/phpunit": "^10.5|^11.0|^12.0"
     },
     "autoload": {
         "psr-4": {
