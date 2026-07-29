@@ -66,6 +66,65 @@ Next you will need to configure MailCare, to send incoming emails to your applic
 
 See ["MailCare"](https://mailcare.io) for more information.
 
+## Resend
+
+Configure Resend to send the `email.received` event to:
+
+```text
+https://your-app.example/laravel-mailbox/resend
+```
+
+Then configure the driver:
+
+```dotenv
+MAILBOX_DRIVER=resend
+MAILBOX_RESEND_API_KEY=re_xxxxxxxxx
+MAILBOX_RESEND_WEBHOOK_SECRET=whsec_xxxxxxxxx
+MAILBOX_RESEND_QUEUE_CONNECTION=sync
+MAILBOX_RESEND_RATE_LIMIT=5
+```
+
+When upgrading an application with a previously published `config/mailbox.php`,
+the package fills in missing Resend service keys without replacing explicit
+Resend values. Rebuild Laravel's cached configuration after the upgrade so the
+new environment variables are captured.
+
+The Resend API key and the endpoint-specific `whsec_` webhook signing secret
+are different credentials. The incoming webhook contains metadata rather than
+the complete message. Laravel Mailbox uses the signed `email_id` to call
+Resend's Receiving API, then downloads the raw MIME so original headers,
+bodies, and attachments remain intact.
+
+### Queue processing
+
+The `sync` connection is the default and does not need a queue worker. API,
+download, MIME parsing, and mailbox exceptions return HTTP 5xx so Resend can
+retry the webhook.
+
+For high volume, set `MAILBOX_RESEND_QUEUE_CONNECTION` to `redis`, `database`,
+`sqs`, or another configured Laravel queue connection and run queue workers. A
+successful enqueue returns HTTP 200; later processing failures are retried by
+Laravel.
+
+Resend's default API limit is five requests per second per team, so
+`MAILBOX_RESEND_RATE_LIMIT` defaults to `5`. Lower it when other applications
+share the team's allowance. Only raise it after Resend has approved a higher
+limit for the team.
+
+The job timeout is 180 seconds. For Redis, database, and other connections with
+a `retry_after` setting, configure `retry_after` above 180 seconds. For SQS,
+set the queue's Default Visibility Timeout above 180 seconds instead. Keep the
+worker's `--timeout` below the applicable retry or visibility window.
+
+Per-second throttling uses Laravel's cache. Workers on multiple nodes must use
+the same shared cache store, and that store must support atomic increments,
+such as Redis. Workers must also have enough memory for the complete MIME
+message, including attachments.
+
+Webhook and queue delivery are at least once. Make mailbox handlers with side
+effects idempotent, preferably using the raw email's stable `Message-Id` as the
+business deduplication key.
+
 ## Local development / log driver
 
 When working locally, you might not want to use real incoming emails while testing your application. Out of the box, this package supports Laravel's "log" mail driver for incoming emails.

@@ -6,7 +6,7 @@ return [
      * The driver to use when listening for incoming emails.
      * It defaults to the mail driver that you are using.
      *
-     * Supported drivers: "log", "mailgun", "sendgrid", "postmark"
+     * Supported drivers: "log", "mailgun", "sendgrid", "postmark", "resend"
      */
     'driver' => env('MAILBOX_DRIVER', 'log'),
 
@@ -61,6 +61,13 @@ return [
 
         'mailgun' => [
             'key' => env('MAILBOX_MAILGUN_KEY'),
+        ],
+
+        'resend' => [
+            'api_key' => env('MAILBOX_RESEND_API_KEY'),
+            'webhook_secret' => env('MAILBOX_RESEND_WEBHOOK_SECRET'),
+            'queue_connection' => env('MAILBOX_RESEND_QUEUE_CONNECTION', 'sync'),
+            'rate_limit' => (int) env('MAILBOX_RESEND_RATE_LIMIT', 5),
         ],
 
     ],
