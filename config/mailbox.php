@@ -6,7 +6,7 @@ return [
      * The driver to use when listening for incoming emails.
      * It defaults to the mail driver that you are using.
      *
-     * Supported drivers: "log", "mailgun", "sendgrid", "postmark"
+     * Supported drivers: "log", "mailgun", "sendgrid", "postmark", "mailcare", "mailtrap"
      */
     'driver' => env('MAILBOX_DRIVER', 'log'),
 
@@ -61,6 +61,15 @@ return [
 
         'mailgun' => [
             'key' => env('MAILBOX_MAILGUN_KEY'),
+        ],
+
+        'mailtrap' => [
+            'api_token' => env('MAILBOX_MAILTRAP_API_TOKEN'),
+            'signing_secret' => env('MAILBOX_MAILTRAP_SIGNING_SECRET'),
+            'inbox_id' => env('MAILBOX_MAILTRAP_INBOX_ID'),
+            'queue_connection' => env('MAILBOX_MAILTRAP_QUEUE_CONNECTION', 'sync'),
+            'queue' => env('MAILBOX_MAILTRAP_QUEUE'),
+            'cache_store' => env('MAILBOX_MAILTRAP_CACHE_STORE'),
         ],
 
     ],

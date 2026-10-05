@@ -66,6 +66,12 @@ Next you will need to configure MailCare, to send incoming emails to your applic
 
 See ["MailCare"](https://mailcare.io) for more information.
 
+## Mailtrap
+
+The Mailtrap driver receives email through [Mailtrap Inbound Email](https://docs.mailtrap.io/inbound-email/receiving-emails).
+It authenticates incoming notifications and downloads the original email, including attachments.
+See the [Mailtrap setup instructions](mailtrap.md) for credentials, background processing, and retries.
+
 ## Local development / log driver
 
 When working locally, you might not want to use real incoming emails while testing your application. Out of the box, this package supports Laravel's "log" mail driver for incoming emails.

@@ -40,6 +40,7 @@ class MailboxServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../config/mailbox.php', 'mailbox');
+        $this->mergeMailtrapConfiguration();
 
         $this->app->singleton('mailbox', function () {
             return new Router($this->app);
@@ -53,5 +54,23 @@ class MailboxServiceProvider extends ServiceProvider
     protected function registerDriver()
     {
         Mailbox::mailbox()->register();
+    }
+
+    protected function mergeMailtrapConfiguration()
+    {
+        if ($this->app->configurationIsCached()) {
+            return;
+        }
+
+        // Laravel's top-level merge does not add services to published configuration.
+        $defaults = require __DIR__.'/../config/mailbox.php';
+        $configured = $this->app['config']->get('mailbox.services.mailtrap', []);
+
+        if (is_array($configured)) {
+            $this->app['config']->set('mailbox.services.mailtrap', array_replace(
+                $defaults['services']['mailtrap'],
+                $configured
+            ));
+        }
     }
 }

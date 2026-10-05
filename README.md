@@ -27,6 +27,8 @@ composer require beyondcode/laravel-mailbox
 
 Take a look at the [official documentation](https://docs.beyondco.de/laravel-mailbox).
 
+For Mailtrap Inbound Email, follow the [Mailtrap driver setup](docs/drivers/mailtrap.md).
+
 ## Catch, test and debug application mails with Laravel Herd
 
 Laravel Herd provides an integrated local email service, streamlining the process of testing and debugging application emails.
